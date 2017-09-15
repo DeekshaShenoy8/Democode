@@ -8,20 +8,54 @@
 
 /* Begin PBXBuildFile section */
 		1C3830BF1F61813400D1644F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3830BE1F61813400D1644F /* AppDelegate.swift */; };
-		1C3830C11F61813400D1644F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3830C01F61813400D1644F /* ViewController.swift */; };
 		1C3830C41F61813400D1644F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C3830C21F61813400D1644F /* Main.storyboard */; };
 		1C3830C61F61813400D1644F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C3830C51F61813400D1644F /* Assets.xcassets */; };
 		1C3830C91F61813400D1644F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C3830C71F61813400D1644F /* LaunchScreen.storyboard */; };
+		1C3830D11F6181B000D1644F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1C3830D01F6181B000D1644F /* GoogleService-Info.plist */; };
+		1C3830D31F61823200D1644F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C3830D21F61823200D1644F /* Foundation.framework */; };
+		1C3AC6271F6BEB9500F7E91F /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3AC6261F6BEB9500F7E91F /* BaseViewController.swift */; };
+		1C58F67B1F68F37900736CB8 /* AddRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58F6731F68F37900736CB8 /* AddRoomViewController.swift */; };
+		1C58F67C1F68F37900736CB8 /* AdminPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58F6741F68F37900736CB8 /* AdminPageViewController.swift */; };
+		1C58F67E1F68F37900736CB8 /* BookRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58F6761F68F37900736CB8 /* BookRoomViewController.swift */; };
+		1C58F67F1F68F37900736CB8 /* CalandarTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58F6771F68F37900736CB8 /* CalandarTableViewController.swift */; };
+		1C58F6801F68F37900736CB8 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58F6781F68F37900736CB8 /* RegistrationViewController.swift */; };
+		1C58F6811F68F37900736CB8 /* RoomsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58F6791F68F37900736CB8 /* RoomsTableViewController.swift */; };
+		1C58F6821F68F37900736CB8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58F67A1F68F37900736CB8 /* ViewController.swift */; };
+		1C58F68D1F68F85400736CB8 /* CalanderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58F68B1F68F85400736CB8 /* CalanderTableViewCell.swift */; };
+		1C58F68E1F68F85400736CB8 /* RoomsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58F68C1F68F85400736CB8 /* RoomsTableViewCell.swift */; };
+		1C58F6921F68F8E000736CB8 /* MeetingRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58F6901F68F8E000736CB8 /* MeetingRoom.swift */; };
+		1C58F6931F68F8E000736CB8 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58F6911F68F8E000736CB8 /* Utility.swift */; };
+		1C58F6951F68FC7600736CB8 /* FirebaseAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58F6941F68FC7600736CB8 /* FirebaseAuthentication.swift */; };
+		1C58F6971F69352E00736CB8 /* FirebaseDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C58F6961F69352E00736CB8 /* FirebaseDatabase.swift */; };
+		368085224D16F99A5C216EC8 /* Pods_MeetingRoomBooker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 167F44A7ECC173DE56C7B37A /* Pods_MeetingRoomBooker.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		134F97D313FA0E4D1852438F /* Pods-MeetingRoomBooker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeetingRoomBooker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MeetingRoomBooker/Pods-MeetingRoomBooker.debug.xcconfig"; sourceTree = "<group>"; };
+		167F44A7ECC173DE56C7B37A /* Pods_MeetingRoomBooker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeetingRoomBooker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C3830BB1F61813400D1644F /* MeetingRoomBooker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeetingRoomBooker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C3830BE1F61813400D1644F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1C3830C01F61813400D1644F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1C3830C31F61813400D1644F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1C3830C51F61813400D1644F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1C3830C81F61813400D1644F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1C3830CA1F61813400D1644F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1C3830D01F6181B000D1644F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1C3830D21F61823200D1644F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1C3AC6261F6BEB9500F7E91F /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		1C58F6731F68F37900736CB8 /* AddRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRoomViewController.swift; sourceTree = "<group>"; };
+		1C58F6741F68F37900736CB8 /* AdminPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminPageViewController.swift; sourceTree = "<group>"; };
+		1C58F6761F68F37900736CB8 /* BookRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookRoomViewController.swift; sourceTree = "<group>"; };
+		1C58F6771F68F37900736CB8 /* CalandarTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalandarTableViewController.swift; sourceTree = "<group>"; };
+		1C58F6781F68F37900736CB8 /* RegistrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
+		1C58F6791F68F37900736CB8 /* RoomsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomsTableViewController.swift; sourceTree = "<group>"; };
+		1C58F67A1F68F37900736CB8 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1C58F68B1F68F85400736CB8 /* CalanderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalanderTableViewCell.swift; sourceTree = "<group>"; };
+		1C58F68C1F68F85400736CB8 /* RoomsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomsTableViewCell.swift; sourceTree = "<group>"; };
+		1C58F6901F68F8E000736CB8 /* MeetingRoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingRoom.swift; sourceTree = "<group>"; };
+		1C58F6911F68F8E000736CB8 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		1C58F6941F68FC7600736CB8 /* FirebaseAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAuthentication.swift; sourceTree = "<group>"; };
+		1C58F6961F69352E00736CB8 /* FirebaseDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseDatabase.swift; sourceTree = "<group>"; };
+		61272F4A24C56EA64A22D0F9 /* Pods-MeetingRoomBooker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeetingRoomBooker.release.xcconfig"; path = "Pods/Target Support Files/Pods-MeetingRoomBooker/Pods-MeetingRoomBooker.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +63,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C3830D31F61823200D1644F /* Foundation.framework in Frameworks */,
+				368085224D16F99A5C216EC8 /* Pods_MeetingRoomBooker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +76,8 @@
 			children = (
 				1C3830BD1F61813400D1644F /* MeetingRoomBooker */,
 				1C3830BC1F61813400D1644F /* Products */,
+				D3FBD7F43B34892A91A09F5A /* Pods */,
+				3CB7BEAB17AD3F504BF0EC2C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +92,71 @@
 		1C3830BD1F61813400D1644F /* MeetingRoomBooker */ = {
 			isa = PBXGroup;
 			children = (
+				1C58F68F1F68F8E000736CB8 /* Model */,
+				1C58F68A1F68F85400736CB8 /* Views */,
+				1C58F6721F68F37900736CB8 /* ViewControllers */,
 				1C3830BE1F61813400D1644F /* AppDelegate.swift */,
-				1C3830C01F61813400D1644F /* ViewController.swift */,
 				1C3830C21F61813400D1644F /* Main.storyboard */,
 				1C3830C51F61813400D1644F /* Assets.xcassets */,
 				1C3830C71F61813400D1644F /* LaunchScreen.storyboard */,
 				1C3830CA1F61813400D1644F /* Info.plist */,
+				1C3830D01F6181B000D1644F /* GoogleService-Info.plist */,
 			);
 			path = MeetingRoomBooker;
+			sourceTree = "<group>";
+		};
+		1C58F6721F68F37900736CB8 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				1C58F6731F68F37900736CB8 /* AddRoomViewController.swift */,
+				1C3AC6261F6BEB9500F7E91F /* BaseViewController.swift */,
+				1C58F6741F68F37900736CB8 /* AdminPageViewController.swift */,
+				1C58F6761F68F37900736CB8 /* BookRoomViewController.swift */,
+				1C58F6781F68F37900736CB8 /* RegistrationViewController.swift */,
+				1C58F6791F68F37900736CB8 /* RoomsTableViewController.swift */,
+				1C58F6771F68F37900736CB8 /* CalandarTableViewController.swift */,
+				1C58F67A1F68F37900736CB8 /* ViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		1C58F68A1F68F85400736CB8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1C58F68B1F68F85400736CB8 /* CalanderTableViewCell.swift */,
+				1C58F68C1F68F85400736CB8 /* RoomsTableViewCell.swift */,
+			);
+			name = Views;
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		1C58F68F1F68F8E000736CB8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1C58F6901F68F8E000736CB8 /* MeetingRoom.swift */,
+				1C58F6961F69352E00736CB8 /* FirebaseDatabase.swift */,
+				1C58F6941F68FC7600736CB8 /* FirebaseAuthentication.swift */,
+				1C58F6911F68F8E000736CB8 /* Utility.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3CB7BEAB17AD3F504BF0EC2C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1C3830D21F61823200D1644F /* Foundation.framework */,
+				167F44A7ECC173DE56C7B37A /* Pods_MeetingRoomBooker.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D3FBD7F43B34892A91A09F5A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				134F97D313FA0E4D1852438F /* Pods-MeetingRoomBooker.debug.xcconfig */,
+				61272F4A24C56EA64A22D0F9 /* Pods-MeetingRoomBooker.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +166,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1C3830CD1F61813400D1644F /* Build configuration list for PBXNativeTarget "MeetingRoomBooker" */;
 			buildPhases = (
+				F4EA109E698B295A9F1A8EB6 /* [CP] Check Pods Manifest.lock */,
 				1C3830B71F61813400D1644F /* Sources */,
 				1C3830B81F61813400D1644F /* Frameworks */,
 				1C3830B91F61813400D1644F /* Resources */,
+				E447CFD9A77CABBEDB22CCC9 /* [CP] Embed Pods Frameworks */,
+				E0C68704DAF8A7E2EA8F2F45 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -96,7 +194,7 @@
 				TargetAttributes = {
 					1C3830BA1F61813400D1644F = {
 						CreatedOnToolsVersion = 8.3.2;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -124,6 +222,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C3830C91F61813400D1644F /* LaunchScreen.storyboard in Resources */,
+				1C3830D11F6181B000D1644F /* GoogleService-Info.plist in Resources */,
 				1C3830C61F61813400D1644F /* Assets.xcassets in Resources */,
 				1C3830C41F61813400D1644F /* Main.storyboard in Resources */,
 			);
@@ -131,13 +230,86 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		E0C68704DAF8A7E2EA8F2F45 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MeetingRoomBooker/Pods-MeetingRoomBooker-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E447CFD9A77CABBEDB22CCC9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-MeetingRoomBooker/Pods-MeetingRoomBooker-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MeetingRoomBooker/Pods-MeetingRoomBooker-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F4EA109E698B295A9F1A8EB6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MeetingRoomBooker-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		1C3830B71F61813400D1644F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1C3830C11F61813400D1644F /* ViewController.swift in Sources */,
+				1C58F67F1F68F37900736CB8 /* CalandarTableViewController.swift in Sources */,
+				1C58F6811F68F37900736CB8 /* RoomsTableViewController.swift in Sources */,
 				1C3830BF1F61813400D1644F /* AppDelegate.swift in Sources */,
+				1C58F6931F68F8E000736CB8 /* Utility.swift in Sources */,
+				1C58F6971F69352E00736CB8 /* FirebaseDatabase.swift in Sources */,
+				1C58F6821F68F37900736CB8 /* ViewController.swift in Sources */,
+				1C58F68E1F68F85400736CB8 /* RoomsTableViewCell.swift in Sources */,
+				1C58F68D1F68F85400736CB8 /* CalanderTableViewCell.swift in Sources */,
+				1C58F67B1F68F37900736CB8 /* AddRoomViewController.swift in Sources */,
+				1C58F67C1F68F37900736CB8 /* AdminPageViewController.swift in Sources */,
+				1C58F6801F68F37900736CB8 /* RegistrationViewController.swift in Sources */,
+				1C58F6921F68F8E000736CB8 /* MeetingRoom.swift in Sources */,
+				1C3AC6271F6BEB9500F7E91F /* BaseViewController.swift in Sources */,
+				1C58F6951F68FC7600736CB8 /* FirebaseAuthentication.swift in Sources */,
+				1C58F67E1F68F37900736CB8 /* BookRoomViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,7 +357,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jnanesh Nayak (QQ4E7JP8E3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jnanesh Nayak (QQ4E7JP8E3)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -204,9 +377,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "47cc41c6-2b37-4545-bcc1-f0dc4901ebf6";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -235,7 +409,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jnanesh Nayak (QQ4E7JP8E3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jnanesh Nayak (QQ4E7JP8E3)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -248,8 +423,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "47cc41c6-2b37-4545-bcc1-f0dc4901ebf6";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
@@ -258,24 +434,32 @@
 		};
 		1C3830CE1F61813400D1644F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 134F97D313FA0E4D1852438F /* Pods-MeetingRoomBooker.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = MeetingRoomBooker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = yml.MeetingRoomBooker;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yml.MeetingRoomBooker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		1C3830CF1F61813400D1644F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 61272F4A24C56EA64A22D0F9 /* Pods-MeetingRoomBooker.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = MeetingRoomBooker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = yml.MeetingRoomBooker;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yml.MeetingRoomBooker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -290,7 +474,7 @@
 				1C3830CC1F61813400D1644F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		1C3830CD1F61813400D1644F /* Build configuration list for PBXNativeTarget "MeetingRoomBooker" */ = {
 			isa = XCConfigurationList;
@@ -299,6 +483,7 @@
 				1C3830CF1F61813400D1644F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
