@@ -14,7 +14,7 @@ class FirebaseDatabase: NSObject {
     typealias callback = ([String: AnyObject])->()
    var databaseReference : DatabaseReference?
   
-    var roomlist = [MeetingRoom]()
+//    var roomlist = [MeetingRoom]()
         
     func fetchRoomsFromDatabase(entityName: String, complete : @escaping callback) {
           databaseReference = Database.database().reference()

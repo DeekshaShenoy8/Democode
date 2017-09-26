@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
-class CalandarTableViewController: BaseViewController, UITableViewDelegate , UITableViewDataSource{
+class CalandarTableViewController: BaseViewController{
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -26,17 +26,18 @@ class CalandarTableViewController: BaseViewController, UITableViewDelegate , UIT
     var startTimeArray = [String]()
     var roomNameArray = [String]()
     var endTimeArray = [String]()
-    
-    var buttonPressed = " "
-    
-    var selectedDate = " "
+//    
+//    var buttonPressed = " "
+//    
+//    var selectedDate = " "
     
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
         hideKeyboardWhenTappedAround()
-        tableView.delegate = self
-        tableView.dataSource = self
+       
         tableView.tableFooterView = UIView()
         
         
@@ -46,6 +47,10 @@ class CalandarTableViewController: BaseViewController, UITableViewDelegate , UIT
         Utility.dateFormatter.dateStyle = .short
         Utility.dateFormatter.timeStyle = .none
         
+        button4.backgroundColor = UIColor.gray
+        button1.backgroundColor = UIColor.black
+        button2.backgroundColor = UIColor.gray
+        button3.backgroundColor = UIColor.gray
         
         button1.setTitle(findDates(tag: button1.tag), for: .normal)
         button2.setTitle(findDates(tag: button2.tag), for: .normal)
@@ -54,60 +59,60 @@ class CalandarTableViewController: BaseViewController, UITableViewDelegate , UIT
         
         fetchTodaysRoomBook(dateString: findDates(tag: button1.tag) )
         
-        
-        //fetchTodaysRoomBook()
-        
+       
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        
-        // Dispose of any resources that can be recreated.
+
     }
+    
     
     
     func findDates( tag : Int)-> String
     {
+        
         return Utility.dateFormatter.string(from:Calendar.current.date(byAdding: .day, value: tag, to: Date())!)
         
     }
     
-    
+    //Fetch Booked rooms of selected date
     func fetchTodaysRoomBook(dateString: String) {
         startTimeArray = []
         roomNameArray = []
         endTimeArray = []
         var idkeys = [String]()
         
+        tableView.reloadData()
         
         if let query = dabaseReference?.child("RoomBooking").queryOrdered(byChild: "date").queryEqual(toValue: dateString){
-        startActivityIndicator()
-        
-        query.observeSingleEvent(of: .value, with: { (snapshot) in
+            startActivityIndicator()
             
-            for snap in snapshot.children.allObjects {
-                let id = snap as! DataSnapshot
-                idkeys.append(String(id.key))
-            }
-            
-            for keys in idkeys {
+            query.observeSingleEvent(of: .value, with: { (snapshot) in
                 
-                self.dabaseReference?.child("RoomBooking").child(keys).observeSingleEvent(of: .value, with: { (snapshots) in
+                for snap in snapshot.children.allObjects {
+                    let id = snap as! DataSnapshot
+                    idkeys.append(String(id.key))
+                }
+                
+                for keys in idkeys {
                     
-                    if let dictionary = snapshots.value as? [String: AnyObject] {
+                    self.dabaseReference?.child("RoomBooking").child(keys).observeSingleEvent(of: .value, with: { (snapshots) in
                         
-                        if let name = (dictionary["RoomName"] as? String), let startTime = (dictionary["startTime"] as? String), let endTime = (dictionary["endTime"] as? String) {
-                            self.roomNameArray.append(name)
-                            self.startTimeArray.append(startTime)
-                            self.endTimeArray.append(endTime)
-                            self.tableView.reloadData()
+                        if let dictionary = snapshots.value as? [String: AnyObject] {
+                            
+                            if let name = (dictionary["RoomName"] as? String), let startTime = (dictionary["startTime"] as? String), let endTime = (dictionary["endTime"] as? String) {
+                                self.roomNameArray.append(name)
+                                self.startTimeArray.append(startTime)
+                                self.endTimeArray.append(endTime)
+                                self.tableView.reloadData()
+                            }
                         }
-                    }
-                    
-                })
-            }
-            self.stopActivityIndicator()
-        })
+                        
+                    })
+                }
+                self.stopActivityIndicator()
+            })
         }
     }
     
@@ -116,9 +121,31 @@ class CalandarTableViewController: BaseViewController, UITableViewDelegate , UIT
     
     @IBAction func onDatesButtonClickAction(_ sender: UIButton) {
         
+//        button4.backgroundColor = UIColor.black
+//        button1.backgroundColor = UIColor.black
+//        button2.backgroundColor = UIColor.black
+//        button3.backgroundColor = UIColor.black
+        button4.backgroundColor = UIColor.gray
+        button1.backgroundColor = UIColor.gray
+        button2.backgroundColor = UIColor.gray
+        button3.backgroundColor = UIColor.gray
+        
         fetchTodaysRoomBook(dateString: findDates(tag: sender.tag))
+        
+        sender.backgroundColor = UIColor.black
+        
     }
     
+    func onClick(sender :UIButton) {
+        sender.backgroundColor = .purple
+    }
+    
+    func onRelease(sender: UIButton) {
+        sender.backgroundColor = .black
+    }
+}
+
+extension CalandarTableViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -139,16 +166,17 @@ class CalandarTableViewController: BaseViewController, UITableViewDelegate , UIT
         
     }
     
-    // func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-    
-    //   return UIView()
-    // }
-    
-    //to display title of section
-    /*     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-     return "Room Name Start Time(hr) EndTime(hr)"
-     }
-     
-     */
-    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        print(indexPath.row)
+        print("selected")
+    }
+
 }
+
+
+//extension UIButton {
+//    
+//    func setBackgroundColor(color: UIColor, forState: UIControlState) {
+//        
+//    }
+//}

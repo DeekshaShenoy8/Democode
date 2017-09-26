@@ -13,15 +13,18 @@ class Utility: NSObject {
           static let dateFormatter = DateFormatter()
     
 }
+
 extension UIViewController {
+    
+    //Alert controller function
     func addAlert(title:String,message:String,cancelTitle:String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: cancelTitle, style: UIAlertActionStyle.default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
-        return
+        //return
     }
     
-    
+    //Hide key board on tap gestyre recognization
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
         //tap.cancelsTouchesInView = false

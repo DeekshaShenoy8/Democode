@@ -12,21 +12,24 @@ import FirebaseAuth
 
 
 class ViewController: BaseViewController {
-
+    
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var userLOgin: UIButton!
     @IBOutlet weak var segmentControl: UISegmentedControl!
-   
+    //var window: UIWindow?
     
     let userData = UserDefaults.standard
-
+    
     @IBOutlet weak var loginButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         hideKeyboardWhenTappedAround()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "blue") , for: .default)
+       
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -45,14 +48,14 @@ class ViewController: BaseViewController {
     //MARK : User and admin Login Action
     @IBAction func loginAction(_ sender: Any) {
         
-
-//        spinner.frame = CGRect(x: 120.0, y: 16.0, width: 60.0, height: 60.0) // position
+        
+        //        spinner.frame = CGRect(x: 120.0, y: 16.0, width: 60.0, height: 60.0) // position
         let adminPassword = "admin123"
         let adminEmail = "admin@gmail.com"
         
         if let email = emailTextField.text, let password = passwordTextField.text , email.characters.count > 0, password.characters.count > 0 {
             
-           
+            
             
             if segmentControl.selectedSegmentIndex == 0 {
                 
@@ -72,7 +75,7 @@ class ViewController: BaseViewController {
         }
         else {
             self.addAlert(title: "PLEASE FILL ALL THE DETAIL", message: "Try again", cancelTitle: "OK")
-
+            
         }
         
     }
@@ -85,22 +88,25 @@ class ViewController: BaseViewController {
             if  let error = error  {
                 self.addAlert(title: "Error" , message: error.localizedDescription, cancelTitle: "OK")
             }
+         
             
             if user != nil {
-                let roomsTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RoomsTableViewController") as! RoomsTableViewController
-                self.navigationController?.pushViewController(roomsTableVC, animated: true)
-               // let userId:[String:String] = ["email": userEmail]
+                
                 self.userData.set(userEmail, forKey: "userName")
                 self.userData.set(userPassword, forKey: "userPassword")
-                self.userData.synchronize()
+                
+                let roomsTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RoomsTableViewController") as! RoomsTableViewController
+   
+                self.navigationController?.pushViewController(roomsTableVC, animated: true)
 
+                
             }
-             self.stopActivityIndicator()
-           
+            self.stopActivityIndicator()
+            
             
         })
-       
-
+        
+        
     }
     
     
@@ -109,30 +115,62 @@ class ViewController: BaseViewController {
     {
         let adminPassword = "admin123"
         let adminEmail = "admin@gmail.com"
-       
+        
         if(email == adminEmail) && (password == adminPassword) {
             
             startActivityIndicator()
             
             Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
-               
+                
                 if user != nil {
-                    let adminPageVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AdminPageViewController") as! AdminPageViewController
-                    self.navigationController?.pushViewController(adminPageVC, animated: true)
+                    
+                    self.userData.set(email, forKey: "userName")
+                    self.userData.set(password, forKey: "userPassword")
+                    
+//                    let mainVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
+//                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//                    appDelegate.window?.rootViewController = mainVC
+                    
+                    let adminPageTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AdminPageTableViewController") as! AdminPageTableViewController
+                    self.navigationController?.pushViewController(adminPageTableVC, animated: true)
+                    
                 }
                 self.stopActivityIndicator()
                 
-                self.userData.set(email, forKey: "userName")
-                self.userData.set(password, forKey: "userPassword")
-                self.userData.synchronize()
+                
+                //self.userData.synchronize()
             })
             
-                   }
+        }
         else {
-         
+            
             addAlert(title: "PLEASE ENTER CORRECT PASSWORD AND EMAIL ID", message: "Try again", cancelTitle: "OK")
         }
     }
+    
+}
 
+
+
+extension ViewController : UITextViewDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
+            
+            nextField.becomeFirstResponder()
+            
+        }
+            
+        else{
+            
+            textField.resignFirstResponder()
+            
+            return true;
+            
+        }
+        
+        return false
     }
-
+    
+}

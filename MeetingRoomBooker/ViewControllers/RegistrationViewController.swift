@@ -18,12 +18,14 @@ class RegistrationViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         hideKeyboardWhenTappedAround()
-        // Do any additional setup after loading the view.
+        navigationItem.title = "Registration"
+        userEmailTextField.delegate = self
+        userPasswordTextField.delegate = self
+        confirmPasswordTextField.delegate = self
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     //ON Register button click action
@@ -44,17 +46,55 @@ class RegistrationViewController: BaseViewController {
             Auth.auth().createUser(withEmail: email , password: password) { (user, error) in
                 
                 if user != nil {
-                   self.addAlert(title: "successful", message: "registered successfully", cancelTitle: "ok")
-                    let adminPageVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AdminPageViewController") as! AdminPageViewController
-                    self.navigationController?.pushViewController(adminPageVC, animated: true)
+                    self.alertRegistration(title: "Registered suceessfully", message: "Thank you", cancelTitle: "Ok")
+                  //  self.navigationController?.pushViewController(adminPageTableVC, animated: true)
                     
                 }
                 
                 //Error found
                 if  let error = error  {
                     self.addAlert(title: "Error" , message: error.localizedDescription, cancelTitle: "OK")
-                }        }
+                }
+            }
         }
+    }
+    
+    
+    
+    func alertRegistration(title: String, message :  String, cancelTitle : String) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: cancelTitle, style: UIAlertActionStyle.default, handler: {action in
+//            let index = navigationController?.viewControllers.index(of: AdminPageTableViewController)
+//            print (index)
+            if let controller = self.navigationController?.viewControllers[1] {
+                self.navigationController?.popToViewController(controller, animated: true)
+            }
+        }))
+        self.present(alertController, animated: true, completion: nil)
+        
+    }
+    
+}
+
+
+extension RegistrationViewController : UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.textColor = .black
+        if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
+            
+            nextField.becomeFirstResponder()
+            
+        } else {
+            
+            textField.resignFirstResponder()
+            
+            return true;
+            
+        }
+        
+        return false
     }
     
 }

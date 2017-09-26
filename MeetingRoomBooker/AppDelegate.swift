@@ -13,11 +13,39 @@ import Firebase
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
-        // Override point for customization after application launch.
+        let userData = UserDefaults.standard
+        let userEmail = userData.string(forKey: "userName")
+        print("in appdelegate page \(String(describing: userEmail))")
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        
+        if(userEmail == "admin@gmail.com")
+        {
+           
+            
+            let adminPageTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AdminPageTableViewController") as! AdminPageTableViewController
+            let navigationController = UINavigationController(rootViewController: adminPageTableVC)
+            self.window?.rootViewController = navigationController
+            self.window?.makeKeyAndVisible()
+        }        // Override point for customization after application launch.
+        else if (userEmail != nil) {
+            let roomsTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RoomsTableViewController") as! RoomsTableViewController
+            let navigationController = UINavigationController(rootViewController: roomsTableVC)
+            self.window?.rootViewController = navigationController
+            self.window?.makeKeyAndVisible()
+            
+        }
+        else if userEmail == nil {
+            let mainVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
+            let navigationController = UINavigationController(rootViewController: mainVC)
+            self.window?.rootViewController = navigationController
+            self.window?.makeKeyAndVisible()
+
+        }
+        
         return true
     }
 
