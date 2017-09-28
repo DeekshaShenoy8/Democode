@@ -22,6 +22,10 @@ class RegistrationViewController: BaseViewController {
         userEmailTextField.delegate = self
         userPasswordTextField.delegate = self
         confirmPasswordTextField.delegate = self
+        
+//        textFieldBorder(textField: userEmailTextField)
+//        textFieldBorder(textField: userPasswordTextField)
+//        textFieldBorder(textField: confirmPasswordTextField)
     }
     
     override func didReceiveMemoryWarning() {
@@ -30,6 +34,7 @@ class RegistrationViewController: BaseViewController {
     
     //ON Register button click action
     @IBAction func RegisterUserAction(_ sender: Any) {
+        
         let userEmail = userEmailTextField.text
         let userpassword = userPasswordTextField.text
         

@@ -46,6 +46,8 @@ class RoomsDetailViewController: BaseViewController {
                 self.navigationController?.pushViewController(roomBookingTableVC, animated: true)
         
     }
+    
+    
     func fetchRoomDetail()
     {
         databaseReference?.child("rooms").child(roomname!).observeSingleEvent(of: .value, with: { (snapshot) in

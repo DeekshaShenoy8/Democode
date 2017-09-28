@@ -136,13 +136,13 @@ class CalandarTableViewController: BaseViewController{
         
     }
     
-    func onClick(sender :UIButton) {
-        sender.backgroundColor = .purple
-    }
-    
-    func onRelease(sender: UIButton) {
-        sender.backgroundColor = .black
-    }
+//    func onClick(sender :UIButton) {
+//        sender.backgroundColor = .purple
+//    }
+//    
+//    func onRelease(sender: UIButton) {
+//        sender.backgroundColor = .black
+//    }
 }
 
 extension CalandarTableViewController: UITableViewDataSource, UITableViewDelegate {
@@ -170,10 +170,18 @@ extension CalandarTableViewController: UITableViewDataSource, UITableViewDelegat
         print(indexPath.row)
         print("selected")
     }
+    
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            tableView.beginUpdates()
+//            tableView.deleteRows(at: [indexPath], with: .automatic)
+//            tableView.endUpdates()
+//            
+//        }
+
+//}
 
 }
-
-
 //extension UIButton {
 //    
 //    func setBackgroundColor(color: UIColor, forState: UIControlState) {

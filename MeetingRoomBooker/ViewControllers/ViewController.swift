@@ -26,8 +26,30 @@ class ViewController: BaseViewController {
         super.viewDidLoad()
         hideKeyboardWhenTappedAround()
         navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "blue") , for: .default)
-       
+        //navigationController?.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "blue") , for: .default)
+        navigationController?.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "primaryHex") , for: .default)
+       segmentControl.setBackgroundImage(#imageLiteral(resourceName: "secondary803850"), for: .normal, barMetrics: .default)
+        userLOgin.setBackgroundImage(#imageLiteral(resourceName: "buttonGrey"), for: .normal)
+        
+        
+        textFieldBorder(textField: emailTextField)
+        textFieldBorder(textField: passwordTextField)
+        
+//        let emailBottomLine = CALayer()
+//        emailBottomLine.frame = CGRect(x: 0.0, y: emailTextField.frame.height - 1, width: emailTextField.frame.width, height: 1.0)
+//        emailBottomLine.backgroundColor = UIColor.black.cgColor
+//        emailTextField.borderStyle = UITextBorderStyle.none
+//        emailTextField.layer.addSublayer(emailBottomLine)
+//        
+//        
+//        
+//        let passwordBottomLine = CALayer()
+//        passwordBottomLine.frame = CGRect(x: 0.0, y: passwordTextField.frame.height - 1, width: passwordTextField.frame.width, height: 1.0)
+//        passwordBottomLine.backgroundColor = UIColor.black.cgColor
+//        passwordTextField.borderStyle = UITextBorderStyle.none
+//        passwordTextField.layer.addSublayer(passwordBottomLine)
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -40,6 +62,7 @@ class ViewController: BaseViewController {
     @IBAction func userAdminSegmentAction(_ sender: Any) {
         emailTextField.text = ""
         passwordTextField.text = ""
+        
     }
     
     

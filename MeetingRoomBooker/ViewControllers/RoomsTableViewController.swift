@@ -28,7 +28,12 @@ class RoomsTableViewController: BaseViewController {
         super.viewDidLoad()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Profile", style: .done, target: self, action: #selector(addTapped))
         navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "blue") , for: .default)
+        navigationController?.navigationBar.tintColor =  .white
+        
+        //navigationController?.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "blue") , for: .default)
+         navigationController?.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "primaryHex") , for: .default)
+//        navigationController?.navigationBar.backgroundColor = UIColor.init(red: 0x512645, green: 0x87314e, blue: 0xdf405a, alpha: 0.7)
+        navigationController?.navigationBar.backgroundColor = UIColor.init(red: 81, green: 38, blue: 69, alpha: 1.0)
         tableView.delegate = self
         databaseReference = Database.database().reference()
         tableView.tableFooterView = UIView()

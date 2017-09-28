@@ -40,5 +40,17 @@ class BaseViewController: UIViewController {
         spinner.stopAnimating()
     }
     
+    //calayer, textfield border for buttom
     
+    func textFieldBorder(textField : UITextField) {
+        
+    let bottomLine = CALayer()
+    bottomLine.frame = CGRect(x: 0.0, y: textField.frame.height  - 1, width: textField.frame.width, height: 1.0)
+    bottomLine.backgroundColor = UIColor.black.cgColor
+    textField.borderStyle = UITextBorderStyle.none
+    textField.layer.addSublayer(bottomLine)
+        
+    }
+    
+
 }

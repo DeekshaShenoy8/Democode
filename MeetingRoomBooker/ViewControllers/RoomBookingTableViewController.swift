@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseDatabase
+import EventKit
 
 class RoomBookingTableViewController: BaseViewController{// CellResponder  {
     
@@ -39,12 +40,13 @@ class RoomBookingTableViewController: BaseViewController{// CellResponder  {
     var endTime : String?
     var capacity : String = " "
     var facility = [String]()
-    
+    var eventId = " "
     let calendar = Calendar.current
     let dispatchGroup = DispatchGroup()
     var databaseReference : DatabaseReference?
     //var today : String = " "
-    
+    let eventStore = EKEventStore()
+
     
     
     override func viewDidLoad() {
@@ -212,8 +214,15 @@ class RoomBookingTableViewController: BaseViewController{// CellResponder  {
 //            }
             
             //start time must lesser then endtime
-            if (startTime >= endTime ) {
+//            if (startTime >= endTime ) {
+//                addAlert(title: "Enter valid Start and End Time", message: "Room booking is valid from 8am to 8pm", cancelTitle: "Ok")
+//                
+//            }
+
+            guard (startTime < endTime ) else {
                 addAlert(title: "Enter valid Start and End Time", message: "Room booking is valid from 8am to 8pm", cancelTitle: "Ok")
+                return
+                
             }
 
             
@@ -223,6 +232,7 @@ class RoomBookingTableViewController: BaseViewController{// CellResponder  {
             
             print(startTime)
             let today = Utility.dateFormatter.string(from: Date())
+            
             ///if let starttingTime = Int(startTime) {
             //start time must greater then, present time(if present day book)
            /* if selectedDate == today {
@@ -285,12 +295,33 @@ class RoomBookingTableViewController: BaseViewController{// CellResponder  {
     {
         //store booking in database
         startActivityIndicator()
+      
+//        if (EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized) {
+//            
+//            eventStore.requestAccess(to: .event, completion: { (granted, error) in
+//                
+//                self.createEvent(eventStore: self.eventStore, title: meetingname )
+//            })
+//        } else {
+//            
+//            createEvent(eventStore: eventStore, title: meetingname)
+//            
+//        }
+        
+        
         self.databaseReference?.child("RoomBooking").childByAutoId().setValue(["RoomName": self.roomname, "MeetingName": meetingname, "MeetingDescription": meetingDescription, "date" : dateTime, "startTime"
-            : startTime, "endTime": endTime, "email" : mailId, "Capacity" : capacity, "Facity" : facility ])
+            : startTime, "endTime": endTime, "email" : mailId, "Capacity" : capacity, "Facity" : facility,"EventId" :eventId ])
         stopActivityIndicator()
         print("added successfully")
         print("room is free")
         //        self.addAlert(title: "Room Booked Succesfully ", message: "Thank you", cancelTitle: "ok")
+        
+        
+        
+        //if let eventTitle = meetingTitleTextField.text {
+        
+        //}
+        
         
         self.alertBooking(title: "Room Booked Succesfully ", message: "Thank you", cancelTitle: "ok")
         
@@ -371,6 +402,64 @@ class RoomBookingTableViewController: BaseViewController{// CellResponder  {
         let calendarTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CalandarTableViewController") as! CalandarTableViewController
         self.navigationController?.pushViewController(calendarTableVC, animated: true)
     }
+    
+    
+    
+    
+ //MARK : Calendar Event
+    
+  /*  func update() {
+        
+        databaseReference?.child("RoomBooking").child(uid).updateChildValues(["EventId" : eventId], withCompletionBlock: { (error, databaseReference) in
+            if error != nil {
+                print("erroe during update\(String(describing: error))")
+            }
+        })
+    }*/
+    func createEvent(eventStore : EKEventStore, title : String ) {
+        
+        var string = " "
+        var endStringTime = " "
+        //        var eventId = " "
+        let event = EKEvent(eventStore: eventStore)
+        event.title = title
+        
+        if let date = self.selectedDate , let startAt = self.startTime, let endAt = self.endTime {
+            
+            string = date + " at " + startAt
+            endStringTime = date + " at " + endAt
+            Utility.dateFormatter.locale = Locale.current
+            //Utility.dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+            Utility.dateFormatter.dateFormat = "MM/dd/yy 'at' HH:mm" //"M/dd/yyyy 'at' h:mm a " //
+            
+            
+            event.startDate = Utility.dateFormatter.date(from: string) ?? Calendar.current.date(byAdding: .day, value: 5, to: Date())!//Date()
+            print(event.startDate.description(with: .current) )
+            
+            event.endDate =  Utility.dateFormatter.date(from: endStringTime) ?? Calendar.current.date(byAdding: .day, value: 5, to: Date())!//Date()
+            
+        }
+        print(event.startDate)
+        print(event.endDate)
+        
+        event.calendar = eventStore.defaultCalendarForNewEvents
+        
+        do {
+            try eventStore.save(event, span: .thisEvent, commit: true)
+            print("saved")
+            eventId = event.eventIdentifier
+            print(eventId)
+            //update(eventId: eventId)
+            //update()
+        } catch {
+            print(error)
+            print("bad thing  happnd")
+        }
+        
+        
+    }
+    
+
     
 }
 
@@ -523,13 +612,16 @@ extension RoomBookingTableViewController : UITableViewDataSource, UITableViewDel
         let button = UIButton(frame: CGRect(x: (footerView.frame.width/2) - 60, y: 20, width: 130, height: 30))
         button.setTitle("Book Room", for: .normal)
         button.backgroundColor = UIColor.init(red: 0, green: 0, blue: 1, alpha: 0.6)
+        button.setBackgroundImage(#imageLiteral(resourceName: "buttonHighlight"), for: .highlighted)
         button.addTarget(self, action: #selector(addRoomTooDatabase), for: .touchUpInside)
-        button.setBackgroundImage(#imageLiteral(resourceName: "blueButtonImage"), for: .normal)
+        button.setBackgroundImage(#imageLiteral(resourceName: "buttonGrey"), for: .normal)
+        //
         
         let viewSchedule = UIButton(frame: CGRect(x: (footerView.frame.width/2) - 60  , y: 70 , width: 130, height: 30))
         viewSchedule.setTitle("View Schedule", for: .normal)
         viewSchedule.backgroundColor = UIColor.init(red: 0, green: 0, blue: 1, alpha: 0.6)
-        viewSchedule.setBackgroundImage(#imageLiteral(resourceName: "blueButtonImage"), for: .normal)
+        viewSchedule.setBackgroundImage(#imageLiteral(resourceName: "buttonGrey"), for: .normal)
+        viewSchedule.setBackgroundImage(#imageLiteral(resourceName: "buttonHighlight"), for: .highlighted)
         viewSchedule.addTarget(self, action: #selector(viewScheduleTapped), for: .touchUpInside)
         
         tableView.tableFooterView = footerView
@@ -688,6 +780,12 @@ extension RoomBookingTableViewController  {
         }
     }
 }
+
+
+
+
+
+
 
 
 /*

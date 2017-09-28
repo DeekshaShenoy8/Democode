@@ -20,7 +20,10 @@ class AdminPageTableViewController: BaseViewController {
         super.viewDidLoad()
         
         navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "blue") , for: .default)
+       // navigationController?.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "blue") , for: .default)
+        //navigationController?.navigationBar.backgroundColor = UIColor.init(red: 135.0, green: 49.0, blue: 78.0, alpha: 1.0)
+        
+        navigationController?.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "primaryHex") , for: .default)
         tableView.tableFooterView = UIView()
         //tableView.allowsSelection = false
         navigationItem.hidesBackButton = true
