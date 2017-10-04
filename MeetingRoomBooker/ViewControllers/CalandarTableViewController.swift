@@ -1,10 +1,3 @@
-//
-//  CalandarTableViewController.swift
-//  MeetingRoomBooker
-//
-//  Created by Deeksha Shenoy on 11/09/17.
-//  Copyright © 2017 Deeksha Shenoy. All rights reserved.
-//
 
 import UIKit
 import Firebase
@@ -21,13 +14,8 @@ class CalandarTableViewController: BaseViewController{
     @IBOutlet weak var prevButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
     
-    var dabaseReference : DatabaseReference?
-    var databaaseHandle : DatabaseHandle?
+    var bookMeetingRoom = BookMeetingRoom()
     
-    
-    var startTimeArray = [String]()
-    var roomNameArray = [String]()
-    var endTimeArray = [String]()
     var tagValue : Int = 0
     
     
@@ -35,12 +23,8 @@ class CalandarTableViewController: BaseViewController{
         
         super.viewDidLoad()
         
-        hideKeyboardWhenTappedAround()
-        
         tableView.tableFooterView = UIView()
         prevButton.isEnabled = false
-        
-        dabaseReference = Database.database().reference()
         
         formatDate()
         
@@ -94,28 +78,23 @@ class CalandarTableViewController: BaseViewController{
     //MARK : Fetch particular date Room Booking From firebase
     func fetchTodaysRoomBook(dateString: String) {
         
-        startTimeArray = []
-        roomNameArray = []
-        endTimeArray = []
-        
-        let bookMeetingRoom = BookMeetingRoom()
-        tableView.reloadData()
-        startActivityIndicator()
+      //  startActivityIndicator()
         let userEmail = UserDefaults.standard.string(forKey: "userName")
-       
-        bookMeetingRoom.getBookedRoom(dateString: dateString, emailid : userEmail!, callback: { [weak self] (success, bookingid) in
+        
+        self.bookMeetingRoom.getBookedRoom(dateString: dateString, emailid : userEmail!, callback: { [weak self] (success, bookingid) in
             
-            self?.stopActivityIndicator()
+        //    self?.stopActivityIndicator()
             
             if success {
                 
-                self?.roomNameArray.append(bookMeetingRoom.roomDetail.RoomName)
-                self?.startTimeArray.append(bookMeetingRoom.roomDetail.startTime)
-                self?.endTimeArray.append(bookMeetingRoom.roomDetail.endTime)
-                self?.tableView.reloadData()
+                DispatchQueue.main.async(execute: {
                     
+                    self?.tableView.reloadData()
+                    
+                })
+                
             }
-
+            
         })
         
     }
@@ -128,6 +107,7 @@ class CalandarTableViewController: BaseViewController{
         button3.backgroundColor = UIColor.gray
         
         if let date = sender.title(for: .normal) {
+            tableView.reloadData()
             fetchTodaysRoomBook(dateString: date)
             tagValue = sender.tag
         }
@@ -138,6 +118,7 @@ class CalandarTableViewController: BaseViewController{
     
     
     @IBAction func previousButtonClick(_ sender: Any) {
+        
         fetchTodaysRoomBook(dateString:(findDates(tag:  tagValue)))
         
         button1.setTitle(findDates(tag: 0), for: .normal)
@@ -148,7 +129,6 @@ class CalandarTableViewController: BaseViewController{
         nextButton.isEnabled = true
         
     }
-    
     
     
     @IBAction func nextButtonAction(_ sender: Any) {
@@ -172,7 +152,8 @@ extension CalandarTableViewController: UITableViewDataSource, UITableViewDelegat
     //Number of rows in table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return roomNameArray.count
+        return bookMeetingRoom.roomDetails.count
+        //return roomNameArray.count
     }
     
     
@@ -182,9 +163,9 @@ extension CalandarTableViewController: UITableViewDataSource, UITableViewDelegat
         let cell = tableView.dequeueReusableCell(withIdentifier: "calandarCell", for: indexPath) as? CalanderTableViewCell
         // let timeString = timezone[indexPath.row]
         
-        cell?.timeCellLabel.text = startTimeArray[indexPath.row]
-        cell?.roomNameLbel.text = roomNameArray[indexPath.row]
-        cell?.durationLabel.text = endTimeArray[indexPath.row]
+        cell?.timeCellLabel.text = bookMeetingRoom.roomDetails[indexPath.row].startTime //startTimeArray[indexPath.row]
+        cell?.roomNameLbel.text = bookMeetingRoom.roomDetails[indexPath.row].RoomName //roomNameArray[indexPath.row]
+        cell?.durationLabel.text = bookMeetingRoom.roomDetails[indexPath.row].endTime //endTimeArray[indexPath.row]
         
         return cell!
         

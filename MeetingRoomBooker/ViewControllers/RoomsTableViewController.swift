@@ -1,10 +1,3 @@
-//
-//  RoomsTableViewController.swift
-//  MeetingRoomBooker
-//
-//  Created by Deeksha Shenoy on 09/09/17.
-//  Copyright © 2017 Deeksha Shenoy. All rights reserved.
-//
 
 import UIKit
 import Firebase
@@ -17,11 +10,7 @@ class RoomsTableViewController: BaseViewController {
     @IBOutlet weak var roomNameLabel: UILabel!
     @IBOutlet weak var nextArrowButton: UIButton!
     
-    var databaseReference : DatabaseReference?
-    var databaseHandle : DatabaseHandle?
-    
-    var roomlist = [MeetingRoom]()
-    
+    var meetingRoom = MeetingRoom()
     let cellId = "cell"
     
     override func viewDidLoad() {
@@ -31,7 +20,6 @@ class RoomsTableViewController: BaseViewController {
         setNavigationBarDetails()
         
         tableView.delegate = self
-        databaseReference = Database.database().reference()
         tableView.tableFooterView = UIView()
         
         //To display meeting rooms name
@@ -88,51 +76,46 @@ class RoomsTableViewController: BaseViewController {
         }
         
     }
+   
     
     //fetch room detail from firebase
     func fetchmeetingRoom()  {
         
-        fetchRoomsFromDatabase(entityName: "rooms", complete : {
-        })
-    }
-    
-    
-    //Fetch rooms from firebase database
-    func fetchRoomsFromDatabase(entityName: String, complete : ()->()) {
+        tableView.reloadData()
+        startActivityIndicator()
         
-        self.startActivityIndicator()
+       meetingRoom.fetchRoomsFromDatabase(entityName: "rooms", complete : { [weak self] (success) in
         
-        databaseReference?.child(entityName).observe(.childAdded, with: { (snapshot) in
-            if let dictionary = snapshot.value as? [String: AnyObject] {
+       self?.stopActivityIndicator()
+        if success {
+            
+            DispatchQueue.main.async(execute: {
                 
-                let meetingRoom = MeetingRoom()
+                self?.tableView.reloadData()
                 
-                meetingRoom.setValuesForKeys(dictionary)
-                self.roomlist.append(meetingRoom)
-                //print(meetingRoom)
-                DispatchQueue.main.async(execute: {
-                    self.tableView.reloadData()
-                    self.stopActivityIndicator()
-                })
-            }
+            })
+        }
+
         })
     }
 }
 
 
+
 extension RoomsTableViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return roomlist.count
+        
+        return meetingRoom.roomdetails.count
     }
     
     //display room name in table view cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? RoomsTableViewCell
-        //let cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellId)
-        cell?.roomsNameLabel.text = roomlist[indexPath.row].RoomName
+       
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! RoomsTableViewCell
+        cell.roomsNameLabel.text =  meetingRoom.roomdetails[indexPath.row].RoomName
+        return cell
         
-        return cell!
     }
     
     
@@ -141,7 +124,8 @@ extension RoomsTableViewController : UITableViewDelegate, UITableViewDataSource 
         
         
         let roomsDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RoomsDetailViewController") as! RoomsDetailViewController
-        roomsDetailVC.roomname = roomlist[indexPath.row].RoomName
+        //roomsDetailVC.roomname = meetingRoom.roomdetails[indexPath.row].RoomName
+        roomsDetailVC.meetingRoomdetails = meetingRoom
         self.navigationController?.pushViewController(roomsDetailVC, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }

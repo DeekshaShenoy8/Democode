@@ -1,20 +1,57 @@
-//
-//  MeetingRoom.swift
-//  MeetingRoomBooker
-//
-//  Created by Deeksha Shenoy on 09/09/17.
-//  Copyright © 2017 Deeksha Shenoy. All rights reserved.
-//
 
 import UIKit
 import FirebaseDatabase
 import Firebase
 
-class MeetingRoom: NSObject {
 
+struct  RoomsDetail {
+    
     var RoomName : String = ""
     var Capacity : String = ""
     var facility = [String]()
     
+
 }
+
+class MeetingRoom: NSObject {
+    
+    var roomdetail = RoomsDetail()
+    var roomdetails = [RoomsDetail]()
+    var databaseReference : DatabaseReference?
+    
+
+    
+    //Fetch rooms from firebase database
+    func fetchRoomsFromDatabase(entityName: String, complete : @escaping (Bool)->()) {
+        
+        var success = false
+        
+        databaseReference = Database.database().reference()
+        databaseReference?.child(entityName).observe(.value, with: { (snapshot) in
+            
+            
+            if let snapshots = snapshot.value as? [String: Any] {
+                let keys = snapshots.keys
+                for key in keys {
+                
+                let obj = snapshots[key] as? [String: Any]
+                
+                if let name = (obj?["RoomName"] as? String), let capacity = (obj?["Capacity"] as? String) {
+                    
+                self.roomdetail.RoomName = name
+                
+                    self.roomdetail.Capacity = capacity
+                    self.roomdetail.facility = obj?["facility"] as! [String]
+                    self.roomdetails.append(self.roomdetail)
+                    
+                }
+                success = true
+                }
+                
+            }
+            complete(success)
+        })
+    }
+
+    }
 

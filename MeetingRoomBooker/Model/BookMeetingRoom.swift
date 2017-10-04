@@ -33,25 +33,25 @@ class BookMeetingRoom: NSObject {
     
     
     //TO get detail of Rooms
-    func getRoomDetail(roomname: String, callback: @escaping(Bool) -> ()){
-        var sucess = false
-        
-        databaseReference = Database.database().reference()
-        
-        databaseReference?.child("rooms").child(roomname).observeSingleEvent(of: .value, with: { (snapshot) in
-            if let dictionary = snapshot.value as? [String: AnyObject] {
-                
-                self.roomDetail.RoomName = (dictionary["RoomName"] as? String)!
-                self.roomDetail.Capacity = (dictionary["Capacity"] as? String)!
-                self.roomDetail.Facility = dictionary["facility"] as! [String]
-                
-            }
-            sucess = true
-            
-            callback(sucess)
-        })
-        
-    }
+//    func getRoomDetail(roomname: String, callback: @escaping(Bool) -> ()){
+//        var sucess = false
+//        
+//        databaseReference = Database.database().reference()
+//        
+//        databaseReference?.child("rooms").child(roomname).observeSingleEvent(of: .value, with: { (snapshot) in
+//            if let dictionary = snapshot.value as? [String: AnyObject] {
+//                
+//                self.roomDetail.RoomName = (dictionary["RoomName"] as? String)!
+//                self.roomDetail.Capacity = (dictionary["Capacity"] as? String)!
+//                self.roomDetail.Facility = dictionary["facility"] as! [String]
+//                
+//            }
+//            sucess = true
+//            
+//            callback(sucess)
+//        })
+//        
+//    }
     
     
     //To fetch booking of particular day
@@ -59,7 +59,7 @@ class BookMeetingRoom: NSObject {
         var success = false
         var idkeys = [String]()
         var bookingid = [String]()
-
+        roomDetails = []
         databaseReference = Database.database().reference()
         if let query = databaseReference?.child("RoomBooking").queryOrdered(byChild: "date").queryEqual(toValue: dateString){
             //startActivityIndicator()

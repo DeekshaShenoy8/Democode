@@ -17,9 +17,7 @@ class ViewController: BaseViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var userLOgin: UIButton!
     @IBOutlet weak var segmentControl: UISegmentedControl!
-    //var window: UIWindow?
-    
-    
+
     @IBOutlet weak var userButton: UIButton!
     @IBOutlet weak var userView: UIView!
     

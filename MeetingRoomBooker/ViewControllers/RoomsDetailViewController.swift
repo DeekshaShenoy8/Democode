@@ -11,16 +11,17 @@ class RoomsDetailViewController: BaseViewController {
     
     @IBOutlet weak var facilityTextView: UITextView!
     
-    var facilityArray = [String]()
-    var roomname :String?
-    var databaseReference : DatabaseReference?
+    var meetingRoomdetails = MeetingRoom()
+   // var facilityArray = [String]()
+   // var roomname :String?
+   // var databaseReference : DatabaseReference?
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         navigationItem.title = "Room Detail "
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "BookRoom", style: .done, target: self, action: #selector(bookRoomTapped))
-        databaseReference = Database.database().reference()
+       // databaseReference = Database.database().reference()
         fetchDetail()
         
     }
@@ -34,11 +35,11 @@ class RoomsDetailViewController: BaseViewController {
     func bookRoomTapped() {
         
         let roomBookingTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RoomBookingTableViewController") as! RoomBookingTableViewController
-        if let selectedRoomName = roomname , let roomCapacity = capacityTextField.text  {
-            roomBookingTableVC.roomname = selectedRoomName
-            roomBookingTableVC.actualCapacity = roomCapacity
-            roomBookingTableVC.facilityArray = facilityArray
-        }
+        
+            roomBookingTableVC.roomname = meetingRoomdetails.roomdetail.RoomName
+            roomBookingTableVC.actualCapacity = meetingRoomdetails.roomdetail.Capacity
+            roomBookingTableVC.facilityArray = meetingRoomdetails.roomdetail.facility
+        
         self.navigationController?.pushViewController(roomBookingTableVC, animated: true)
         
     }
@@ -46,18 +47,13 @@ class RoomsDetailViewController: BaseViewController {
     
     //MARK: ACCESS DETAIL OF PARTICULAR ROOMNAME
     func fetchDetail(){
-        let bookMeetingRoom = BookMeetingRoom()
-        bookMeetingRoom.getRoomDetail(roomname: roomname!) {[weak self] (success) in
-            if success {
-                self?.roomNameTextField.text = bookMeetingRoom.roomDetail.RoomName
-                self?.capacityTextField.text = bookMeetingRoom.roomDetail.Capacity
-                for facilities in (bookMeetingRoom.roomDetail.Facility) {
-                    self?.facilityArray.append(facilities)
-                    self?.facilityTextView.text.append(facilities)
-                    self?.facilityTextView.text.append("\n")
+        
+                self.roomNameTextField.text = meetingRoomdetails.roomdetail.RoomName
+                self.capacityTextField.text = meetingRoomdetails.roomdetail.Capacity
+                for facilities in (meetingRoomdetails.roomdetail.facility) {
+                    //self.facilityArray.append(facilities)
+                    self.facilityTextView.text.append(facilities)
+                    self.facilityTextView.text.append("\n")
                 }
             }
         }
-    }
-    
-}

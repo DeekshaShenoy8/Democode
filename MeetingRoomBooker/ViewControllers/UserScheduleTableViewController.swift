@@ -1,10 +1,3 @@
-//
-//  UserScheduleTableViewController.swift
-//  MeetingRoomBooker
-//
-//  Created by Deeksha Shenoy on 19/09/17.
-//  Copyright © 2017 Deeksha Shenoy. All rights reserved.
-//
 
 import UIKit
 import Firebase
@@ -33,43 +26,21 @@ class UserScheduleTableViewController: BaseViewController {
     var meetingTitle = [String]()
     let calendar = Calendar.current
     var tagValue : Int = 0
+    var bookMeetingRoom = BookMeetingRoom()
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+        tableView.tableFooterView = UIView()
+        prevButton.isEnabled = false
         dabaseReference = Database.database().reference()
-        setButtonTitle()
-        Utility.dateFormatter.dateFormat = "MM/dd/yyyy"
-        Utility.dateFormatter.dateStyle = .short
-        Utility.dateFormatter.timeStyle = .none
-        
-        
+        button1.backgroundColor = UIColor(red: 81.0/255.0, green: 38.0/255.0, blue: 69.0/255.0, alpha: 1.0)
+
+        setTitleToButton()
         fetchTodaysRoomBook(dateString: findDates(tag: button1.tag) )
         
-        prevButton.isEnabled = false
         
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
         
-        super.viewWillAppear(animated)
-        button1.isEnabled = true
-        button2.isEnabled = true
-        button3.isEnabled = true
-        button4.isEnabled = true
-        tableView.reloadData()
-        //fetchTodaysRoomBook(dateString: findDates(tag: button1.tag) )
-        
-    }
-    
-    func setButtonTitle() {
-        button1.backgroundColor = UIColor(red: 81.0/255.0, green: 38.0/255.0, blue: 69.0/255.0, alpha: 1.0)
-        
-        button1.setTitle(findDates(tag: button1.tag), for: .normal)
-        button2.setTitle(findDates(tag: button2.tag), for: .normal)
-        button3.setTitle(findDates(tag: button3.tag), for: .normal)
-        button4.setTitle(findDates(tag: button4.tag), for: .normal)
     }
     
     override func didReceiveMemoryWarning() {
@@ -77,6 +48,29 @@ class UserScheduleTableViewController: BaseViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    func setTitleToButton() {
+        
+        Utility.dateFormatter.dateFormat = "MM/dd/yyyy"
+        Utility.dateFormatter.dateStyle = .short
+        Utility.dateFormatter.timeStyle = .none
+        
+        button1.setTitle(findDates(tag: button1.tag), for: .normal)
+        button2.setTitle(findDates(tag: button2.tag), for: .normal)
+        button3.setTitle(findDates(tag: button3.tag), for: .normal)
+        button4.setTitle(findDates(tag: button4.tag), for: .normal)
+        
+    }
+    
+    
+        func findDates(tag : Int) -> String  {
+            selectedDate = Utility.dateFormatter.string(from:Calendar.current.date(byAdding: .day, value: tag, to: Date())!)
+            return Utility.dateFormatter.string(from:Calendar.current.date(byAdding: .day, value: tag, to: Date())!)
+            // return selectedDate
+        }
+   
+    
+  
     
     //On Dates BUtton click Action
     
@@ -125,12 +119,7 @@ class UserScheduleTableViewController: BaseViewController {
         
     }
     
-    
-    func findDates(tag : Int) -> String  {
-        selectedDate = Utility.dateFormatter.string(from:Calendar.current.date(byAdding: .day, value: tag, to: Date())!)
-        return Utility.dateFormatter.string(from:Calendar.current.date(byAdding: .day, value: tag, to: Date())!)
-        // return selectedDate
-    }
+
     
     
     //Fetch Booked rooms of selected date of particular user
@@ -145,15 +134,21 @@ class UserScheduleTableViewController: BaseViewController {
         let bookMeetingRoom = BookMeetingRoom()
         
         tableView.reloadData()
-        startActivityIndicator()
+        //startActivityIndicator()
         
         bookMeetingRoom.getBookedRoom(dateString: dateString, emailid : userEmail!, callback: { [weak self] (success, bookingid) in
-            
-            self?.stopActivityIndicator()
-            
+            //self?.stopActivityIndicator()
+
             if success {
                 
+
                 if ( bookMeetingRoom.roomDetail.email == userEmail) {
+                    
+//                    self?.bookMeetingRoom = bookMeetingRoom
+//                    self?.bookMeetingRoom.roomDetail.RoomName = bookMeetingRoom.roomDetail.RoomName
+//                    self?.bookMeetingRoom.roomDetail.startTime = bookMeetingRoom.roomDetail.startTime
+//                    self?.bookMeetingRoom.roomDetail.endTime = bookMeetingRoom.roomDetail.endTime
+//                    self?.bookMeetingRoom.roomDetail.MeetingName = bookMeetingRoom.roomDetail.MeetingName
                     
                     self?.roomNameArray.append(bookMeetingRoom.roomDetail.RoomName)
                     self?.startTimeArray.append(bookMeetingRoom.roomDetail.startTime)
@@ -168,6 +163,7 @@ class UserScheduleTableViewController: BaseViewController {
                     
                 }
             }
+            
         })
         
     }
@@ -245,6 +241,7 @@ extension UserScheduleTableViewController : UITableViewDataSource ,UITableViewDe
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+        //return bookMeetingRoom.roomDetails.count
         return roomNameArray.count
     }
     
@@ -255,9 +252,9 @@ extension UserScheduleTableViewController : UITableViewDataSource ,UITableViewDe
         tableView.tableFooterView = UIView()
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "userScheduleTableViewCell", for: indexPath) as! UserScheduleTableViewCell
-        cell.startTimeLabel.text = startTimeArray[indexPath.row]
-        cell.roomNameLabel.text = roomNameArray[indexPath.row]
-        cell.endTimeLabel.text = endTimeArray[indexPath.row]
+        cell.startTimeLabel.text = startTimeArray[indexPath.row] //bookMeetingRoom.roomDetails[indexPath.row].startTime //
+        cell.roomNameLabel.text = roomNameArray[indexPath.row] //bookMeetingRoom.roomDetails[indexPath.row].RoomName//
+        cell.endTimeLabel.text = endTimeArray[indexPath.row] //bookMeetingRoom.roomDetails[indexPath.row].endTime//
         
         return cell
         
@@ -266,8 +263,6 @@ extension UserScheduleTableViewController : UITableViewDataSource ,UITableViewDe
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        //validMeeting(startTimeArray[indexPath.row])
-        
         let hour = calendar.component(.hour, from: Date())
         
         let hours : String
@@ -275,10 +270,12 @@ extension UserScheduleTableViewController : UITableViewDataSource ,UITableViewDe
             hours = "0" + String(hour)
             
         }
+            
         else {
             hours = String(hour)
         }
-        print(hours)
+        
+        //print(hours)
         let today = Utility.dateFormatter.string(from: Date())
         if selectedDate == today {
             if(startTimeArray[indexPath.row] <= hours) {
@@ -288,10 +285,10 @@ extension UserScheduleTableViewController : UITableViewDataSource ,UITableViewDe
         
         let meetingInviteVC = self.storyboard?.instantiateViewController(withIdentifier: "MeetingInviteViewController") as! MeetingInviteViewController
         tableView.deselectRow(at: indexPath, animated: true)
-        meetingInviteVC.roomname = roomNameArray[indexPath.row]
-        meetingInviteVC.startTime = startTimeArray[indexPath.row]
-        meetingInviteVC.endTime = endTimeArray[indexPath.row]
-        meetingInviteVC.selectedDate = selectedDate
+        meetingInviteVC.roomname = roomNameArray[indexPath.row] //bookMeetingRoom.roomDetails[indexPath.row].RoomName //
+        meetingInviteVC.startTime = startTimeArray[indexPath.row] //bookMeetingRoom.roomDetails[indexPath.row].startTime//
+        meetingInviteVC.endTime = endTimeArray[indexPath.row] //bookMeetingRoom.roomDetails[indexPath.row].endTime//
+        meetingInviteVC.selectedDate =  selectedDate //bookMeetingRoom.roomDetails[indexPath.row].date //
         self.navigationController?.pushViewController(meetingInviteVC, animated: true)
         
     }

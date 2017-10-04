@@ -526,17 +526,65 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MeetingRoomBooker/ViewControllers/UserScheduleTableViewController.swift"
-            timestampString = "528795493.886054"
+            filePath = "MeetingRoomBooker/ViewControllers/RoomsTableViewController.swift"
+            timestampString = "528819448.892836"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "200"
-            endingLineNumber = "200"
-            landmarkName = "fetchEventsFromCalendar(calendarTitle:startAt:endAt:)"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
+            landmarkName = "fetchmeetingRoom()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MeetingRoomBooker/ViewControllers/RoomsTableViewController.swift"
+            timestampString = "528819448.892836"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
+            landmarkName = "fetchmeetingRoom()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MeetingRoomBooker.RoomsTableViewController.(fetchmeetingRoom () -&gt; ()).(closure #1)"
+                  moduleName = "MeetingRoomBooker"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/deekshashenoy/Documents/Tried/MeetingRoomBooker/MeetingRoomBooker/ViewControllers/RoomsTableViewController.swift"
+                  timestampString = "528808674.431044"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "103"
+                  endingLineNumber = "103"
+                  offsetFromSymbolStart = "185">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MeetingRoomBooker.RoomsTableViewController.(fetchmeetingRoom () -&gt; ()).(closure #1).(closure #1)"
+                  moduleName = "MeetingRoomBooker"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/deekshashenoy/Documents/Tried/MeetingRoomBooker/MeetingRoomBooker/ViewControllers/RoomsTableViewController.swift"
+                  timestampString = "528808674.432346"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "103"
+                  endingLineNumber = "103"
+                  offsetFromSymbolStart = "380">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -545,62 +593,61 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MeetingRoomBooker/ViewControllers/UserScheduleTableViewController.swift"
-            timestampString = "528795493.886054"
+            filePath = "MeetingRoomBooker/Model/BookMeetingRoom.swift"
+            timestampString = "528819614.049213"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "221"
-            endingLineNumber = "221"
-            landmarkName = "fetchEventsFromCalendar(calendarTitle:startAt:endAt:)"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
+            landmarkName = "getBookedRoom(dateString:emailid:callback:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MeetingRoomBooker/ViewControllers/UserScheduleTableViewController.swift"
-            timestampString = "528795493.886054"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "228"
-            endingLineNumber = "228"
-            landmarkName = "fetchEventsFromCalendar(calendarTitle:startAt:endAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MeetingRoomBooker/ViewControllers/UserScheduleTableViewController.swift"
-            timestampString = "528795493.886054"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "224"
-            endingLineNumber = "224"
-            landmarkName = "fetchEventsFromCalendar(calendarTitle:startAt:endAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MeetingRoomBooker/ViewControllers/UserScheduleTableViewController.swift"
-            timestampString = "528795493.886054"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "223"
-            endingLineNumber = "223"
-            landmarkName = "fetchEventsFromCalendar(calendarTitle:startAt:endAt:)"
-            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MeetingRoomBooker.BookMeetingRoom.getBookedRoom (dateString : Swift.String, emailid : Swift.String, callback : (Swift.Bool, Swift.Array&lt;Swift.String&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "MeetingRoomBooker"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/deekshashenoy/Documents/Tried/MeetingRoomBooker/MeetingRoomBooker/Model/BookMeetingRoom.swift"
+                  timestampString = "528819614.367569"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "59"
+                  endingLineNumber = "59"
+                  offsetFromSymbolStart = "208">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MeetingRoomBooker.BookMeetingRoom.(getBookedRoom (dateString : Swift.String, emailid : Swift.String, callback : (Swift.Bool, Swift.Array&lt;Swift.String&gt;) -&gt; ()) -&gt; ()).(closure #1)"
+                  moduleName = "MeetingRoomBooker"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/deekshashenoy/Documents/Tried/MeetingRoomBooker/MeetingRoomBooker/Model/BookMeetingRoom.swift"
+                  timestampString = "528819614.369539"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "59"
+                  endingLineNumber = "59"
+                  offsetFromSymbolStart = "78">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MeetingRoomBooker.BookMeetingRoom.(getBookedRoom (dateString : Swift.String, emailid : Swift.String, callback : (Swift.Bool, Swift.Array&lt;Swift.String&gt;) -&gt; ()) -&gt; ()).(closure #1).(closure #1)"
+                  moduleName = "MeetingRoomBooker"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/deekshashenoy/Documents/Tried/MeetingRoomBooker/MeetingRoomBooker/Model/BookMeetingRoom.swift"
+                  timestampString = "528819614.370883"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "59"
+                  endingLineNumber = "59"
+                  offsetFromSymbolStart = "87">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

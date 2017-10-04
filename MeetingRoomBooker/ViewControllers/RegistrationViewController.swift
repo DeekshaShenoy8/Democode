@@ -1,11 +1,3 @@
-//
-//  RegistrationViewController.swift
-//  MeetingRoomBooker
-//
-//  Created by Deeksha Shenoy on 08/09/17.
-//  Copyright © 2017 Deeksha Shenoy. All rights reserved.
-//
-
 import UIKit
 import FirebaseAuth
 
