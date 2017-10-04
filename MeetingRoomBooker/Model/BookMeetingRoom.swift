@@ -22,10 +22,10 @@ struct MeetingRoomDetail {
     var endTime : String = " "
     var startTime : String = " "
     
-
+    
 }
 class BookMeetingRoom: NSObject {
-
+    
     
     var roomDetail = MeetingRoomDetail()
     var roomDetails = [MeetingRoomDetail]()
@@ -47,21 +47,20 @@ class BookMeetingRoom: NSObject {
                 
             }
             sucess = true
-
+            
             callback(sucess)
         })
-
+        
     }
     
     
     //To fetch booking of particular day
-    func getBookedRoom(dateString : String, callback: @escaping (Bool) -> () ) {
+    func getBookedRoom(dateString : String, emailid : String, callback: @escaping (Bool, [String]) -> () ) {
         var success = false
         var idkeys = [String]()
-//        var bookMeetingRooms = [BookMeetingRoom]()
-//        let bookMeetingRoom = BookMeetingRoom()
-        
-         databaseReference = Database.database().reference()
+        var bookingid = [String]()
+
+        databaseReference = Database.database().reference()
         if let query = databaseReference?.child("RoomBooking").queryOrdered(byChild: "date").queryEqual(toValue: dateString){
             //startActivityIndicator()
             
@@ -78,27 +77,31 @@ class BookMeetingRoom: NSObject {
                         
                         if let dictionary = snapshots.value as? [String: AnyObject] {
                             
-                            if let name = (dictionary["RoomName"] as? String), let startTime = (dictionary["startTime"] as? String), let endTime = (dictionary["endTime"] as? String) {
+                            if let name = (dictionary["RoomName"] as? String), let startTime = (dictionary["startTime"] as? String), let endTime = (dictionary["endTime"] as? String) ,let email = (dictionary["email"] as? String), let meetingName =  (dictionary["MeetingName"] as? String) {
                                 
                                 self.roomDetail.RoomName = name
                                 self.roomDetail.startTime = startTime
                                 self.roomDetail.endTime = endTime
+                                self.roomDetail.email = email
+                                self.roomDetail.MeetingName = meetingName
+                                
+                                if( emailid == email) {
+                                bookingid.append(keys)
+                                }
                                 self.roomDetails.append(self.roomDetail)
-
                                 success = true
                             }
                         }
-                        callback(success)
+                        callback(success,bookingid)
                     })
                 }
-            //self.stopActivityIndicator()
             })
         }
         
     }
     
-
     
-
+    
+    
     
 }

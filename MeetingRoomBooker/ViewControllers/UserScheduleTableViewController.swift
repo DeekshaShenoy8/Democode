@@ -125,7 +125,7 @@ class UserScheduleTableViewController: BaseViewController {
         
     }
     
-  
+    
     func findDates(tag : Int) -> String  {
         selectedDate = Utility.dateFormatter.string(from:Calendar.current.date(byAdding: .day, value: tag, to: Date())!)
         return Utility.dateFormatter.string(from:Calendar.current.date(byAdding: .day, value: tag, to: Date())!)
@@ -134,72 +134,45 @@ class UserScheduleTableViewController: BaseViewController {
     
     
     //Fetch Booked rooms of selected date of particular user
+    
     func fetchTodaysRoomBook(dateString: String){
         
         startTimeArray = []
         roomNameArray = []
         endTimeArray = []
-        eventId = []
-        tableView.reloadData()
-        var idkeys = [String]()
         uid = []
-        meetingTitle = []
-        
         let userEmail = UserDefaults.standard.string(forKey: "userName")
+        let bookMeetingRoom = BookMeetingRoom()
         
-        if let query = dabaseReference?.child("RoomBooking").queryOrdered(byChild: "date").queryEqual(toValue: dateString){
+        tableView.reloadData()
+        startActivityIndicator()
+        
+        bookMeetingRoom.getBookedRoom(dateString: dateString, emailid : userEmail!, callback: { [weak self] (success, bookingid) in
             
-            startActivityIndicator()
+            self?.stopActivityIndicator()
             
-            query.observeSingleEvent(of: .value, with: { (snapshot) in
+            if success {
                 
-                for snap in snapshot.children.allObjects {
-                    let id = snap as! DataSnapshot
+                if ( bookMeetingRoom.roomDetail.email == userEmail) {
                     
-                    idkeys.append(String(id.key))
-                }
-                print(idkeys)
-                
-                for keys in idkeys {
+                    self?.roomNameArray.append(bookMeetingRoom.roomDetail.RoomName)
+                    self?.startTimeArray.append(bookMeetingRoom.roomDetail.startTime)
+                    self?.endTimeArray.append(bookMeetingRoom.roomDetail.endTime)
+                    self?.meetingTitle.append(bookMeetingRoom.roomDetail.MeetingName)
                     
-                    self.dabaseReference?.child("RoomBooking").child(keys).observeSingleEvent(of: .value, with: { (snapshots) in
-                        
-                        if let dictionary = snapshots.value as? [String: AnyObject] {
-                            
-                            
-                            if let name = (dictionary["RoomName"] as? String), let startTime = (dictionary["startTime"] as? String), let endTime = (dictionary["endTime"] as? String), let email = (dictionary["email"] as? String), let meetingName =  (dictionary["MeetingName"] as? String) {
-                                //, let eventIdentity = (dictionary["EventId"] as? String)
-                                if( email == userEmail) {
-                                    
-                                    self.roomNameArray.append(name)
-                                    self.startTimeArray.append(startTime)
-                                    self.endTimeArray.append(endTime)
-                                    self.meetingTitle.append(meetingName)
-                                    // self.eventId.append(eventIdentity)
-                                    self.uid.append(keys)
-                                    
-                                    //            if let eventIdentity = (dictionary["EventId"] as? String) {
-                                    //                self.eventId.append(eventIdentity)
-                                    //            }
-                                    
-                                    self.tableView.reloadData()
-                                    /*if snapshot.hasChild("EventId") {
-                                     if let  eventIdentity = (dictionary["EventId"] as? String)
-                                     {
-                                     self.eventId.append(eventIdentity)
-                                     }
-                                     }*/
-                                }
-                            }
-                        }
-                    })
+                    for id in bookingid {
+                        self?.uid.append(id)
+                    }
+                    
+                    self?.tableView.reloadData()
+                    
                 }
-                self.stopActivityIndicator()
-            })
-        }
+            }
+        })
+        
     }
     
-    
+
     
     //MARK: Delete based on event identifier
     func deleteEvent( eventIdentifier : String) {
@@ -227,8 +200,8 @@ class UserScheduleTableViewController: BaseViewController {
         let eventStore = EKEventStore()
         var string = " "
         var endStringTime = " "
-        let event = EKEvent(eventStore: eventStore)
-      
+//        let event = EKEvent(eventStore: eventStore)
+        
         string = selectedDate + " at " + startAt
         endStringTime = selectedDate + " at " + endAt
         
@@ -239,10 +212,11 @@ class UserScheduleTableViewController: BaseViewController {
         let startDate = Utility.dateFormatter.date(from: string) ?? Calendar.current.date(byAdding: .day, value: 5, to: Date())!//Date()
         
         let endDate = Utility.dateFormatter.date(from: endStringTime) ?? Calendar.current.date(byAdding: .day, value: 5, to: Date())!//Date()
-        event.startDate = Utility.dateFormatter.date(from: string) ?? Calendar.current.date(byAdding: .day, value: 5, to: Date())!//Date()
-        print(event.startDate.description(with: .current) )
         
-        event.endDate =  Utility.dateFormatter.date(from: endStringTime) ?? Calendar.current.date(byAdding: .day, value: 5, to: Date())!//Date()
+//        event.startDate = Utility.dateFormatter.date(from: string) ?? Calendar.current.date(byAdding: .day, value: 5, to: Date())!//Date()
+//        print(event.startDate.description(with: .current) )
+//        
+//        event.endDate =  Utility.dateFormatter.date(from: endStringTime) ?? Calendar.current.date(byAdding: .day, value: 5, to: Date())!//Date()
         
         let predicate = eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: nil)
         let existingEvents = eventStore.events(matching: predicate)
@@ -306,10 +280,10 @@ extension UserScheduleTableViewController : UITableViewDataSource ,UITableViewDe
         }
         print(hours)
         let today = Utility.dateFormatter.string(from: Date())
-                if selectedDate == today {
-                        if(startTimeArray[indexPath.row] <= hours) {
-                                addAlert(title: "meeting is already over", message: "You Canot Edit the Meeting Now", cancelTitle: "ok")
-                        }
+        if selectedDate == today {
+            if(startTimeArray[indexPath.row] <= hours) {
+                addAlert(title: "meeting is already over", message: "You Canot Edit the Meeting Now", cancelTitle: "ok")
+            }
         }
         
         let meetingInviteVC = self.storyboard?.instantiateViewController(withIdentifier: "MeetingInviteViewController") as! MeetingInviteViewController
@@ -330,7 +304,7 @@ extension UserScheduleTableViewController : UITableViewDataSource ,UITableViewDe
         
         let bookingUid = uid[indexPath.row]
         let eventTitle = meetingTitle[indexPath.row]
-        print("indexpath uid= \(bookingUid)")
+        // print("indexpath uid= \(bookingUid)")
         print("meeting name is \(eventTitle)")
         print("start time = \(startTimeArray[indexPath.row])")
         print("start time = \(endTimeArray[indexPath.row])")
@@ -343,7 +317,6 @@ extension UserScheduleTableViewController : UITableViewDataSource ,UITableViewDe
                 
                 let eventuid = self.eventId[indexPath.row]
                 
-                // self.fetchEventsFromCalendar(calendarTitle: , startAt: <#T##String#>, endAt: <#T##String#>)
                 self.deleteEvent(eventIdentifier: eventuid)
                 print("deleted")
                 //print(self.eventId)

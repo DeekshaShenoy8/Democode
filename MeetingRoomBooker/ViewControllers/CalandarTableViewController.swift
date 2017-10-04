@@ -101,7 +101,9 @@ class CalandarTableViewController: BaseViewController{
         let bookMeetingRoom = BookMeetingRoom()
         tableView.reloadData()
         startActivityIndicator()
-        bookMeetingRoom.getBookedRoom(dateString: dateString, callback: { [weak self] (success) in
+        let userEmail = UserDefaults.standard.string(forKey: "userName")
+       
+        bookMeetingRoom.getBookedRoom(dateString: dateString, emailid : userEmail!, callback: { [weak self] (success, bookingid) in
             
             self?.stopActivityIndicator()
             

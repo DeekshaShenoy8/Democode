@@ -1,10 +1,3 @@
-//
-//  UserProfileTableViewController.swift
-//  MeetingRoomBooker
-//
-//  Created by Deeksha Shenoy on 19/09/17.
-//  Copyright © 2017 Deeksha Shenoy. All rights reserved.
-//
 
 import UIKit
 import MessageUI
@@ -15,17 +8,39 @@ class UserProfileTableViewController: BaseViewController {
     let userEmail = UserDefaults.standard.string(forKey: "userName")
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-       navigationItem.title = "Profile"
-        // Do any additional setup after loading the view.
+        navigationItem.title = "Profile"
+        
     }
     
     override func didReceiveMemoryWarning() {
+        
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+    }
+    
+    //MARK : Logout action
+    func userLogout() {
+        
+        let userData = UserDefaults.standard
+        userData.removeObject(forKey: "userName") //We Will delete the userDefaults
+        userData.removeObject(forKey: "userPassword")
+        userData.synchronize()
+        
+        let mainVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let navigationController = UINavigationController(rootViewController: mainVC)
+        appDelegate.window?.rootViewController = navigationController
+        
+        self.navigationController?.popToRootViewController(animated: true)
+        
     }
     
 }
+
 
 extension UserProfileTableViewController : UITableViewDelegate, UITableViewDataSource {
     
@@ -52,11 +67,11 @@ extension UserProfileTableViewController : UITableViewDelegate, UITableViewDataS
         {
             tableView.allowsSelection = true
             cell.userProfileEmailTextField.isHidden = true
-         
-                cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+            
+            cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
             
         }
-         tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
         return cell
     }
     
@@ -73,34 +88,15 @@ extension UserProfileTableViewController : UITableViewDelegate, UITableViewDataS
             
             let calendarTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CalandarTableViewController") as! CalandarTableViewController
             self.navigationController?.pushViewController(calendarTableVC, animated: true)
-
+            
         }
-     
+        
         if(indexPath.row == 3) {
             userLogout()
             
         }
         
     }
-    
-    func userLogout() {
-        
-        let userData = UserDefaults.standard
-        userData.removeObject(forKey: "userName") //We Will delete the userDefaults
-        userData.removeObject(forKey: "userPassword")
-        userData.synchronize()
-        
-        let mainVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        let navigationController = UINavigationController(rootViewController: mainVC)
-        appDelegate.window?.rootViewController = navigationController
-        
-        self.navigationController?.popToRootViewController(animated: true)
-        
-    }
-    
     
 }
 

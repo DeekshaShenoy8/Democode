@@ -1,10 +1,3 @@
-//
-//  RoomBookingTableViewController.swift
-//  MeetingRoomBooker
-//
-//  Created by Deeksha Shenoy on 19/09/17.
-//  Copyright © 2017 Deeksha Shenoy. All rights reserved.
-//
 
 import UIKit
 import Firebase
@@ -15,7 +8,7 @@ class RoomBookingTableViewController: BaseViewController{// CellResponder  {
     
     @IBOutlet weak var tableView: UITableView!
     
-    //let sectionTitle = ["Rooms Detail","Book Room"]
+    
     var roomname : String = " "
     var actualCapacity : String = " "
     var facilityArray = [String]()
@@ -46,7 +39,7 @@ class RoomBookingTableViewController: BaseViewController{// CellResponder  {
     var databaseReference : DatabaseReference?
     var startHour : Int = 0
     var startMinute: Int = 0
-    //var today : String = " "
+    
     let eventStore = EKEventStore()
     
     
@@ -59,17 +52,14 @@ class RoomBookingTableViewController: BaseViewController{// CellResponder  {
         
         tableView.tableFooterView = UIView()
         tableView.allowsSelection = false
-        //tableView.contentInset = UIEdgeInsetsMake(64,0,0,0);
+        
         databaseReference = Database.database().reference()
         self.navigationItem.title = roomname
-        //tableView.contentSize.height = tableView.contentSize.height + 50
         
         hideKeyboardWhenTappedAround()
         
         createDatePicker()
         startTimePickerCreation()
-        
-        //endTimePickerCreation()
         
         toolbar.sizeToFit()
         toolbar2.sizeToFit()
@@ -81,12 +71,6 @@ class RoomBookingTableViewController: BaseViewController{// CellResponder  {
         super.didReceiveMemoryWarning()
     }
     
-    //    override func viewDidLayoutSubviews() {
-    //        if let rect = self.navigationController?.navigationBar.frame {
-    //            let y = rect.size.height + rect.origin.y
-    //            self.tableView.contentInset = UIEdgeInsetsMake( y, 0, 0, 0)
-    //        }
-    //    }
     
     // Date picker creation
     func createDatePicker() {
@@ -147,10 +131,7 @@ class RoomBookingTableViewController: BaseViewController{// CellResponder  {
         endTimePicker.frame = CGRect(x: 0.0, y: (self.view.frame.height/2 + 60), width: self.view.frame.width, height: 150.0)
         endTimePicker.backgroundColor = UIColor.white
         endTimePicker.locale = Locale(identifier: "en_GB")
-        //formatter.locale = Locale(identifier: "en_GB")
-        //var minimumTime = calendar.dateComponents([.hour], from: Date())
         
-        // minimum end time is start time
         let minimumEndTime =  calendar.dateComponents([.hour,.minute], from: startTimePicker.date)
         
         var maximumTime = calendar.dateComponents([.hour], from: Date())
@@ -173,13 +154,8 @@ class RoomBookingTableViewController: BaseViewController{// CellResponder  {
     
     func setEndTime()
     {
-        
-        //formatter.timeStyle = .short
-        //        print(startTimePicker.date)
-        //endTimeText.text = Utility.dateFormatter.string(from: endTimePicker.date)
+
         endTime = formatter.string(from: endTimePicker.date)
-        
-        
         tableView.reloadData()
         self.view.endEditing(true)
         
@@ -238,8 +214,7 @@ class RoomBookingTableViewController: BaseViewController{// CellResponder  {
         print(startTime)
         let today = Utility.dateFormatter.string(from: Date())
         let  timeTitle = "Time is Alredy" + "\(hours)" + ":" + "\(minute)"
-        ///if let starttingTime = Int(startTime) {
-        //start time must greater then, present time(if present day book)
+        
         if selectedDate == today {
             
             if(startHour < hour) {
@@ -256,7 +231,6 @@ class RoomBookingTableViewController: BaseViewController{// CellResponder  {
             }
             
         }
-        //}
         
         print("capacity entered = \(requiredCapacity), real capacity = \(actualCapacity)")
         //compare booking detail with firebase already booked detail
@@ -301,9 +275,6 @@ class RoomBookingTableViewController: BaseViewController{// CellResponder  {
     
     
     
-    //  }
-    
-    
     // Successfully loaded function
     
     func loadToFirebase(roomname: String, meetingname: String, meetingDescription: String, dateTime: String, startTime : String, endTime:String, mailId : String)
@@ -319,7 +290,7 @@ class RoomBookingTableViewController: BaseViewController{// CellResponder  {
             }
         }
         
-        
+        //store booking details into firebase
         self.databaseReference?.child("RoomBooking").childByAutoId().setValue(["RoomName": self.roomname, "MeetingName": meetingname, "MeetingDescription": meetingDescription, "date" : dateTime, "startTime"
             : startTime, "endTime": endTime, "email" : mailId, "Capacity" : capacity ?? self.actualCapacity, "Facity" : facility ])
         stopActivityIndicator()
@@ -327,6 +298,7 @@ class RoomBookingTableViewController: BaseViewController{// CellResponder  {
         print("room is free")
         self.alertBooking(title: "Room Booked Succesfully ", message: "Thank you", cancelTitle: "ok")
     }
+    
     
     // MARK :- alert action, on Cancel title press move to other VC
     func alertBooking(title: String, message :  String, cancelTitle : String) {
@@ -359,7 +331,7 @@ class RoomBookingTableViewController: BaseViewController{// CellResponder  {
             var name : String = " "
             var beginningtime : String = " "
             var endingtime : String = " "
-                       
+            
             dispatchGroup.enter()
             
             self.databaseReference?.child("RoomBooking").child(keys).observeSingleEvent(of: .value, with: { (snapshot) in
@@ -454,7 +426,7 @@ extension RoomBookingTableViewController : UITableViewDataSource, UITableViewDel
     
     //NUMBER OF ROWS IN EACH SECTIONS
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       
+        
         switch section {
         case 0:
             return roomsDetail.count
@@ -568,6 +540,7 @@ extension RoomBookingTableViewController : UITableViewDataSource, UITableViewDel
     
     //    Footer for table view
     func setupTableFooterView() {
+        
         let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 120))
         footerView.backgroundColor = .white
         
@@ -608,31 +581,30 @@ extension RoomBookingTableViewController : UITableViewDataSource, UITableViewDel
     }
     
     func checkBoxClickAction(button : UIButton) {
+        
         print(button.isSelected)
         button.isSelected = !button.isSelected
-        //var facilityString : String = " "
-        print(button.isSelected)
+        
         switch button.tag {
         case 0:
             if button.isSelected == true {
-                //append projector
                 facility.append(facilityArray[0])
                 
             }
             else {
-                //remove
-                // facility.remove(at: 0)
+                
                 if let index = facility.index(of: facilityArray[0]) {
                     facility.remove(at: index)
+                    
                 }
-                print(index)
+                
             }
         case 1:
             if button.isSelected == true {
                 facility.append(facilityArray[1])
             }
             else {
-                //facility.remove(at: 1)
+                
                 if let index = facility.index(of: facilityArray[1]) {
                     facility.remove(at: index)
                 }
@@ -652,7 +624,7 @@ extension RoomBookingTableViewController : UITableViewDataSource, UITableViewDel
                 facility.append(facilityArray[3])
             }
             else {
-                //facility.remove(at: 3)
+                
                 if let index = facility.index(of: facilityArray[3]) {
                     facility.remove(at: index)
                 }
@@ -688,11 +660,14 @@ extension RoomBookingTableViewController : UITextFieldDelegate {
     
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        
         if(textField.tag == 6) {
             moveTextField(textField, moveDistance: -250, up: true)
         }
     }
+    
     func moveTextField(_ textField: UITextField, moveDistance: Int, up: Bool) {
+        
         let moveDuration = 0.3
         let movement: CGFloat = CGFloat(up ? moveDistance : -moveDistance)
         
@@ -701,11 +676,15 @@ extension RoomBookingTableViewController : UITextFieldDelegate {
         UIView.setAnimationDuration(moveDuration)
         self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
         UIView.commitAnimations()
+        
     }
+    
     // Finish Editing The Text Field
     func textFieldDidEndEditing(_ textField: UITextField) {
+        
         if(textField.tag == 6) {
             moveTextField(textField, moveDistance: -250, up: false)
+            
         }
     }
 }
