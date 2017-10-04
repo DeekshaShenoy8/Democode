@@ -76,6 +76,7 @@ class MeetingInviteViewController: BaseViewController {
             fetchTodaysRoomBook(dateString: selectedDate)
         }
         
+        
         hideKeyboardWhenTappedAround()
         
         createDatePicker()
@@ -89,6 +90,14 @@ class MeetingInviteViewController: BaseViewController {
         
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let selectedDate = selectedDate {
+            fetchTodaysRoomBook(dateString: selectedDate)
+        }
+
+    }
+    
     override func didReceiveMemoryWarning() {
     
         super.didReceiveMemoryWarning()
@@ -219,25 +228,19 @@ class MeetingInviteViewController: BaseViewController {
     func setEndTime()
     {
         
-        //formatter.timeStyle = .short
-        //        print(startTimePicker.date)
-        //endTimeText.text = Utility.dateFormatter.string(from: endTimePicker.date)
-       // endTime = formatter.string(from: endTimePicker.date)
         endTimeTextField.text = formatter.string(from: endTimePicker.date)
-
         self.view.endEditing(true)
+        
     }
     
     func setTime()
     {
         
-        //formatter.timeStyle = .short
-        //        startTimeText.text = Utility.dateFormatter.string(from: startTimePicker.date)
         startTime = formatter.string(from: startTimePicker.date)
         startTimeTextField.text = formatter.string(from: startTimePicker.date)
         self.view.endEditing(true)
-     
         endTimePickerCreation()
+        
     }
     
 
@@ -319,24 +322,12 @@ class MeetingInviteViewController: BaseViewController {
 
 
     
-  /*  func update() {
-        
-        dabaseReference?.child("RoomBooking").child(uid).updateChildValues(["EventId" : eventId], withCompletionBlock: { (error, databaseReference) in
-            if error != nil {
-                print("erroe during update\(String(describing: error))")
-            }
-        })
-    }
- */
-    //on update button click, allow text field editing
+     //on update button click, allow text field editing
     //Update the changes into database
     @IBAction func updateButtonAction(_ sender: Any) {
         
         updateButton.isSelected = !updateButton.isSelected
         if updateButton.isSelected {
-            
-            // updateButton.setTitle("Sve", for: .selected)
-            //updateButton.backgroundColor = .green
             
             prevMeetingTitle = meetingTitleTextField.text!
             prevMeetingDate = dateTextField.text!
@@ -346,6 +337,7 @@ class MeetingInviteViewController: BaseViewController {
             updateButton.setBackgroundImage(#imageLiteral(resourceName: "secondary803850"), for: .selected)
             updateButton.tintColor = .blue
             editable = true
+            
             meetingTitleTextField.isEnabled = true
             roomnameTextField.isEnabled = true
             meetingDescriptionTextView.isEditable = true
@@ -357,10 +349,6 @@ class MeetingInviteViewController: BaseViewController {
             
         }
         else {
-            //update()
-           
-            
-            
             
             searchInDatabaseForUpload()
             editable = false
@@ -379,9 +367,9 @@ class MeetingInviteViewController: BaseViewController {
     
     //MARK: Invite button click action, send mails
     @IBAction func inviteAction(_ sender: Any) {
-        //sendEmail()
-        
+
         addEvent()
+      
     }
     
     
@@ -390,25 +378,14 @@ class MeetingInviteViewController: BaseViewController {
     
     //Add event to calendar
     @IBAction func addEventButtonTapAction(_ sender: Any) {
-
-//        let eventStore = EKEventStore()
-//        let eventStore = EKEventStore()
+        
         if let eventTitle = meetingTitleTextField.text {
-        if (EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized) {
-           
-            eventStore.requestAccess(to: .event, completion: { (granted, error) in
-                
-               
-                self.fetchEventsFromCalendar(eventStore: self.eventStore, calendarTitle: eventTitle)
-            })
-        } else {
             
-           
-            fetchEventsFromCalendar(eventStore: eventStore, calendarTitle: eventTitle)
+         fetchEventsFromCalendar(eventStore: eventStore, calendarTitle: eventTitle)
             
         }
-        }
-    
+
+        
     }
     
     
@@ -416,11 +393,8 @@ class MeetingInviteViewController: BaseViewController {
     
     //MARK: Create New Calendar Event
     
-    func createEvent(eventStore : EKEventStore, title : String , startDate : NSDate, endDate: NSDate) {
-        
-//        var string = " "
-//        var endStringTime = " "
-//        //        var eventId = " "
+ /*   func createEvent(eventStore : EKEventStore, title : String , startDate : NSDate, endDate: NSDate) {
+
         let event = EKEvent(eventStore: eventStore)
         event.startDate = startDate as Date
         event.endDate = endDate as Date
@@ -442,63 +416,17 @@ class MeetingInviteViewController: BaseViewController {
         }
         
         
-    }
-//
-//    
-//    
-//    func createEvent(eventStore : EKEventStore, title : String ) {
-//        
-//        var string = " "
-//        var endStringTime = " "
-//        //        var eventId = " "
-//        let event = EKEvent(eventStore: eventStore)
-//        event.title = title
-//        
-//        if let date = self.selectedDate , let startAt = self.startTime, let endAt = self.endTime {
-//            
-//            string = date + " at " + startAt
-//            endStringTime = date + " at " + endAt
-//            Utility.dateFormatter.locale = Locale.current
-//            //Utility.dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-//            Utility.dateFormatter.dateFormat = "MM/dd/yy 'at' HH:mm" //"M/dd/yyyy 'at' h:mm a " //
-//            
-//            
-//            event.startDate = Utility.dateFormatter.date(from: string) ?? Calendar.current.date(byAdding: .day, value: 5, to: Date())!//Date()
-//            print(event.startDate.description(with: .current) )
-//            
-//            event.endDate =  Utility.dateFormatter.date(from: endStringTime) ?? Calendar.current.date(byAdding: .day, value: 5, to: Date())!//Date()
-//            
-//        }
-//        print(event.startDate)
-//        print(event.endDate)
-//        
-//        event.calendar = eventStore.defaultCalendarForNewEvents
-//        
-//        do {
-//            try eventStore.save(event, span: .thisEvent, commit: true)
-//            print("saved")
-//            eventId = event.eventIdentifier
-//            print(eventId)
-//            //update(eventId: eventId)
-//            //update()
-//        } catch {
-//            print(error)
-//            print("bad thing  happnd")
-//        }
-//        
-//        
-//    }
-//
-    
+    }*/
+
     
     //Alert if already current event is exist
     //MARK: Fetch events from calendar, and compare with current event
     func fetchEventsFromCalendar(eventStore : EKEventStore, calendarTitle: String) {
-        //let eventStore = EKEventStore()
+       
         var string = " "
         var endStringTime = " "
-        let event = EKEvent(eventStore: eventStore)
         var eventFound = false
+        
         if let date = self.selectedDate , let startAt = self.startTime, let endAt = self.endTime {
             
             string = date + " at " + startAt
@@ -508,61 +436,40 @@ class MeetingInviteViewController: BaseViewController {
             Utility.dateFormatter.dateFormat = "MM/dd/yy 'at' HH:mm" //"M/dd/yyyy 'at' h:mm a " //
             
             
-        let startDate = Utility.dateFormatter.date(from: string) ?? Calendar.current.date(byAdding: .day, value: 5, to: Date())!//Date()
-
-        let endDate = Utility.dateFormatter.date(from: endStringTime) ?? Calendar.current.date(byAdding: .day, value: 5, to: Date())!//Date()
-            let predicate = eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: nil)
-        let existingEvents = eventStore.events(matching: predicate)
-        for singleEvent in existingEvents {
-            if singleEvent.title == calendarTitle && singleEvent.startDate ==  Utility.dateFormatter.date(from: string) {
-               print("event exist")
-                do {
-                    
-                     print("event found")
-                    addAlert(title: "event is already added", message: "Warning", cancelTitle: "ok")
-                           eventFound = true
-                    //try eventStore.remove(singleEvent, span: .thisEvent, commit: true)
-                } catch {
-                    print("error during fetch delete\(error)")
-                }
-                
-            }
+            let startDate = Utility.dateFormatter.date(from: string) ?? Calendar.current.date(byAdding: .day, value: 5, to: Date())!//Date()
             
-        }
-            if(eventFound == false) {
+            let endDate = Utility.dateFormatter.date(from: endStringTime) ?? Calendar.current.date(byAdding: .day, value: 5, to: Date())!//Date()
+            let predicate = eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: nil)
+            let existingEvents = eventStore.events(matching: predicate)
+            for singleEvent in existingEvents {
                 
-                event.calendar = eventStore.defaultCalendarForNewEvents
-                
-                do {
+                if singleEvent.title == calendarTitle && singleEvent.startDate ==  Utility.dateFormatter.date(from: string) {
                     
-                    if let meetingTitle = meetingTitleTextField.text {
-                        event.title = meetingTitle
-                        event.startDate = startDate
-                        event.endDate = endDate
-                        event.calendar = eventStore.defaultCalendarForNewEvents
-                        try eventStore.save(event, span: .thisEvent, commit: true)
-                   // createEvent(eventStore: eventStore, title: meetingTitle)
-
+                    do {
+                        
+                        eventFound = true
+                        try eventStore.remove(singleEvent, span: .thisEvent, commit: true)
+                        addAlert(title: "Event removed from Calendar", message: "Successfully removed", cancelTitle: "ok")
+                        
+                    } catch {
+                        print("error during fetch delete\(error)")
                     }
                     
-                    print("saved")
-//                    eventId = event.eventIdentifier
-//                    print(eventId)
-                    addAlert(title: "Event added Into Calendar", message: "Thank You", cancelTitle: "ok")
-                    //update(eventId: eventId)
-                    //update()
-                } catch {
-                    
-                    print(error)
-                    print("bad thing  happnd")
-                    
                 }
-
+                
             }
             
-    }
+            if (eventFound == false) {
+                    
+                    addAlert(title: "Event is not found", message: "Add event to calendar event", cancelTitle: "ok")
+                
+            }
+
+            
+        }
         
     }
+    
     
     //Find Calendar event is already present, then delete it before update
     
@@ -573,7 +480,7 @@ class MeetingInviteViewController: BaseViewController {
         var string = " "
         var endStringTime = " "
         let event = EKEvent(eventStore: eventStore)
-        var eventFound = false
+       
         if let date = dateTextField.text , let startAt = startTimeTextField.text , let endAt = endTimeTextField.text, let meetingTitle = meetingTitleTextField.text {
         
             prevstring = prevMeetingDate + " at " + prevMeetingStartAt
@@ -616,23 +523,6 @@ class MeetingInviteViewController: BaseViewController {
        }
     
     }
-
-
-    
-
-//    @IBAction func updateButtonAction(_ sender: Any) {
-//        
-//      update()
-//        if let meetinName = meetingTitleTextField.text {
-//            fetchEventsFromCalendar(calendarTitle: meetinName)
-//        }
-//        print("has to delete\(eventId)")
-        //deleteEvent(eventIdentifier: eventId)
-        //update(eventId: eventId)
-//        
-//    }
-    
-    
     
     
     
@@ -650,42 +540,57 @@ class MeetingInviteViewController: BaseViewController {
         var foundNameTime : Bool = false
         
         //Check for emty fields condition
-        guard !( (meetingDescriptionTextView.text?.isEmpty)! || (meetingDescriptionTextView.text!.isEmpty) || (dateTextField.text?.isEmpty)! || (startTimeTextField.text?.isEmpty)! || (endTimeTextField.text?.isEmpty)!) else {
+        
+        guard  let startTime = startTimeTextField.text , let endTime = endTimeTextField.text , let dateTime = dateTextField.text, let meetingname = meetingTitleTextField.text, let meetingDescription = meetingDescriptionTextView.text, let roomName = roomnameTextField.text,  !( (meetingname.isEmpty) || (meetingDescription.isEmpty) || (dateTime.isEmpty) || (startTime.isEmpty) || (endTime.isEmpty)) else {
             
             addAlert(title: "PLEASE FILL ALL THE DETAIL", message: "Try again", cancelTitle: "ok")
             return
         }
         
-    
         
-        
-        if let startTime = startTimeTextField.text , let endTime = endTimeTextField.text , let dateTime = dateTextField.text, let meetingname = meetingTitleTextField.text, let meetingDescription = meetingDescriptionTextView.text, let userEmail = userNameTextField.text, let roomName = roomnameTextField.text {
-            
-            
             if (self.startTime == startTime && self.endTime == endTime && self.selectedDate == dateTime){
                 
                 noChangeIndate()
                 
             } else {
             
-            //            guard (startTime < endTime ) else {
-            //                addAlert(title: "Enter valid Start and End Time", message: "Room booking is valid from 8am to 8pm", cancelTitle: "Ok")
-            //                return
-            //            }
             
-            //start time must lesser then endtime
-            if (startTime >= endTime ) {
-                addAlert(title: "Enter valid Start and End Time", message: "Room booking is valid from 8am to 8pm", cancelTitle: "Ok")
-            }
-            
-            
-            let hour = calendar.component(.hour, from: Date())
-            let hours = String(hour)
-            print(hours)
-            
-            print(startTime)
-           // let today = Utility.dateFormatter.string(from: Date())
-            
+                //start time must lesser then endtime
+                
+                
+                guard (startTime < endTime ) else {
+                    addAlert(title: "Enter valid Start and End Time", message: "Room booking is valid from 8am to 8pm", cancelTitle: "Ok")
+                    return
+                    
+                }
+                let hour = calendar.component(.hour, from: Date())
+                let hours : String
+                if(hour <= 9){
+                    hours = "0" + String(hour)
+                    
+                }
+                else {
+                    hours = String(hour)
+                }
+                print(hours)
+                
+                print(startTime)
+                let today = Utility.dateFormatter.string(from: Date())
+                
+                ///if let starttingTime = Int(startTime) {
+                //start time must greater then, present time(if present day book)
+                if selectedDate == today {
+                    
+                    if(startTime < hours) {
+                        
+                        let  timeTitle = "Time is Alredy" + "\(hours)"
+                        addAlert(title: timeTitle, message: "select any other valid time", cancelTitle: "Ok")
+                        
+                    }
+                }
+
+          
+
             
             
             //compare booking detail with firebase already booked detail
@@ -725,7 +630,7 @@ class MeetingInviteViewController: BaseViewController {
             }
         }
         
-        }
+      //  }
         
     }
     
@@ -750,14 +655,6 @@ class MeetingInviteViewController: BaseViewController {
                     name = (dictionary["RoomName"] as? String)!
                     beginningtime = (dictionary["startTime"] as? String)!
                     endingtime = (dictionary["endTime"] as? String)!
-                    
-                    //                    if let roomCapacity = actualCapacity {
-//                    if(self.capacity > self.actualCapacity) {
-//                        
-//                        self.addAlert(title: "Warning", message: "Entered capacity is more then room actual capacity", cancelTitle: "ok")
-//                    }
-                    //}
-                    
                     
                     
                     // condition to check roomname and booked time
@@ -831,78 +728,6 @@ class MeetingInviteViewController: BaseViewController {
 }
 
 
-
-extension MeetingInviteViewController: MFMailComposeViewControllerDelegate {
-    func sendEmail() {
-        let mailComposeViewController = configuredMailComposeViewController()
-
-        if MFMailComposeViewController.canSendMail() {
-            self.present(mailComposeViewController, animated: true, completion: nil)
-        } else {
-            self.showSendMailErrorAlert()
-        }
-    }
-
-    func configuredMailComposeViewController() -> MFMailComposeViewController {
-        let mailComposerVC = MFMailComposeViewController()
-        mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
-
-        //mailComposerVC.setToRecipients(["deeksha.shenoy@ymedialabs.com"])
-
-        
-        if let meetingTitle = meetingTitleTextField.text , let meetingDescription = meetingDescriptionTextView.text , let date = dateTextField.text, let roomname = roomnameTextField.text, let startTime = startTimeTextField.text , let endTime = endTimeTextField.text {
-        mailComposerVC.setSubject(meetingTitle)
-        mailComposerVC.setMessageBody("Meetingi scheduled on \(date)  plz be gather in \(roomname), at \(startTime)", isHTML: false)
-        }
-        return mailComposerVC
-    }
-
-    func showSendMailErrorAlert() {
-
-        let sendMailErrorAlert = UIAlertView(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", delegate: self, cancelButtonTitle: "OK")
-        sendMailErrorAlert.show()
-
-    }
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        controller.dismiss(animated: true, completion: nil)
-    }
-}
-
-
-
-
-//MARK : Textfield delegate extension class
-//extension MeetingInviteViewController : UITextFieldDelegate {
-//    
-//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-//        if(editable == true) {
-//            return true
-//        }
-//        else {
-//            return false
-//        }
-//    }
-//    
-//}
-
-
-
-//delete event
-///if let starttingTime = Int(startTime) {
-//start time must greater then, present time(if present day book)
-/* if selectedDate == today {
- 
- if(startTime < hours) {
- 
- let  timeTitle = "Time is Alredy" + "\(hours)"
- addAlert(title: timeTitle, message: "select any other valid time", cancelTitle: "Ok")
- 
- }
- }*/
-//}
-
-
-
 extension MeetingInviteViewController : UIPickerViewDelegate, UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -923,45 +748,8 @@ extension MeetingInviteViewController : UIPickerViewDelegate, UIPickerViewDataSo
         roomnameTextField.text = roomNameArray[row]
     }
 }
-/* @IBAction func remainderAction(_ sender: Any) {
- 
- let eventStore = EKEventStore()
- let reminder = EKReminder(eventStore: eventStore)
- 
- reminder.title = "Go to the meeting"
- reminder.calendar = eventStore.defaultCalendarForNewReminders()
- 
- do {
- try eventStore.save(reminder,
- commit: true)
- } catch let error {
- print("Reminder failed with error \(error.localizedDescription)")
- }
- 
- //        var eventStore: EKEventStore!
- //
- //        let reminder = EKReminder(eventStore: eventStore)
- //        reminder.title = "meeting"
- //        let appDelegate = UIApplication.shared.delegate as! AppDelegate
- //
- //         if let date = self.selectedDate , let startAt = self.startTime, let endAt = self.endTime {
- //        let string = date + " at " + startAt
- //
- //        let dueDateComponents =  Utility.dateFormatter.date(from: string) ?? Date()
- //        //appDelegate.dateComponentFromNSDate(self.datePicker.date)
- //        reminder.dueDateComponents = dueDateComponents
- //        }
- //        reminder.calendar = eventStore.defaultCalendarForNewReminders()
- //        // 2
- //        do {
- //            try eventStore.save(reminder, commit: true)
- //            dismiss(animated: true, completion: nil)
- //        }catch{
- //            print("Error creating and saving new reminder : \(error)")
- //        }
- 
- 
- }*/
+
+
 
 extension MeetingInviteViewController :  EKEventEditViewDelegate {//EKEventViewDelegate,
     
@@ -1001,7 +789,7 @@ extension MeetingInviteViewController :  EKEventEditViewDelegate {//EKEventViewD
         let status = EKEventStore.authorizationStatus(for: EKEntityType.event)
         switch status {
         case .authorized:
-            //self.setNavBarAppearanceStandard()
+            
             DispatchQueue.main.async(execute: { () -> Void in
                 self.present(addController, animated: true, completion: nil)
             })
@@ -1015,12 +803,15 @@ extension MeetingInviteViewController :  EKEventEditViewDelegate {//EKEventViewD
                     })
                 }
             })
+            
         case .denied, .restricted:
-            UIAlertView(title: "Access Denied", message: "Permission is needed to access the calendar. Go to Settings > Privacy > Calendars to allow access for the Be Collective app.", delegate: nil, cancelButtonTitle: "OK").show()
+            
+            addAlert(title: "Access Denied", message: "Permission is needed to access the calendar. Go to Settings > Privacy > Calendars to allow access for the Be Collective app.", cancelTitle: "ok")
+//            UIAlertView(title: "Access Denied", message: "Permission is needed to access the calendar. Go to Settings > Privacy > Calendars to allow access for the Be Collective app.", delegate: nil, cancelButtonTitle: "OK").show()
             return
         }
         
-       // self.present(addController, animated: true, completion: nil)
+       
     }
     
     func eventEditViewController(_ controller: EKEventEditViewController, didCompleteWith action: EKEventEditViewAction) {
@@ -1028,9 +819,6 @@ extension MeetingInviteViewController :  EKEventEditViewDelegate {//EKEventViewD
         self.dismiss(animated: true, completion: nil)
         
     }
-    
-//    func eventEditViewControllerDefaultCalendar(forNewEvents controller: EKEventEditViewController) -> EKCalendar {
-//        
-//    }
+
     
 }

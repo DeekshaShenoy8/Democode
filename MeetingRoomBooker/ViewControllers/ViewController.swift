@@ -19,36 +19,37 @@ class ViewController: BaseViewController {
     @IBOutlet weak var segmentControl: UISegmentedControl!
     //var window: UIWindow?
     
+    
+    @IBOutlet weak var userButton: UIButton!
+    @IBOutlet weak var userView: UIView!
+    
+    @IBOutlet weak var adminButton: UIButton!
+    @IBOutlet weak var adminView: UIView!
+    
+    
     let userData = UserDefaults.standard
     
     @IBOutlet weak var loginButton: UIButton!
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         hideKeyboardWhenTappedAround()
+        
         navigationController?.navigationBar.isTranslucent = true
-        //navigationController?.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "blue") , for: .default)
         navigationController?.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "primaryHex") , for: .default)
-       segmentControl.setBackgroundImage(#imageLiteral(resourceName: "secondary803850"), for: .normal, barMetrics: .default)
-        userLOgin.setBackgroundImage(#imageLiteral(resourceName: "buttonGrey"), for: .normal)
         
+        view.layer.backgroundColor = UIColor(red: 81.0/255.0, green: 38.0/255.0, blue: 69.0/255.0, alpha: 1.0).cgColor
+        emailTextField.backgroundColor = UIColor(red: 81.0/255.0, green: 38.0/255.0, blue: 69.0/255.0, alpha: 1.0)
+        passwordTextField.backgroundColor = UIColor(red: 81.0/255.0, green: 38.0/255.0, blue: 69.0/255.0, alpha: 1.0)
         
-        textFieldBorder(textField: emailTextField)
-        textFieldBorder(textField: passwordTextField)
+
+        let x = emailTextField.frame.width
+        print("width =\(x)")
+        textFieldBorder(textField: emailTextField, color : .white, edge : 80)
+        textFieldBorder(textField: passwordTextField, color : .white, edge : 80)
         
-//        let emailBottomLine = CALayer()
-//        emailBottomLine.frame = CGRect(x: 0.0, y: emailTextField.frame.height - 1, width: emailTextField.frame.width, height: 1.0)
-//        emailBottomLine.backgroundColor = UIColor.black.cgColor
-//        emailTextField.borderStyle = UITextBorderStyle.none
-//        emailTextField.layer.addSublayer(emailBottomLine)
-//        
-//        
-//        
-//        let passwordBottomLine = CALayer()
-//        passwordBottomLine.frame = CGRect(x: 0.0, y: passwordTextField.frame.height - 1, width: passwordTextField.frame.width, height: 1.0)
-//        passwordBottomLine.backgroundColor = UIColor.black.cgColor
-//        passwordTextField.borderStyle = UITextBorderStyle.none
-//        passwordTextField.layer.addSublayer(passwordBottomLine)
-        
+        adminView.isHidden = true
+        userButton.isSelected = true
         
     }
     
@@ -58,19 +59,32 @@ class ViewController: BaseViewController {
     }
     
     
+    @IBAction func userButtonAction(_ sender: Any) {
+        userButton.isSelected = true
+        adminButton.isSelected = false
+        adminView.isHidden = true
+        userView.isHidden = false
+        emailTextField.text = ""
+        passwordTextField.text = ""
+    }
     
-    @IBAction func userAdminSegmentAction(_ sender: Any) {
+
+    
+    
+    @IBAction func adminButtonAction(_ sender: Any) {
+        userButton.isSelected = false
+        adminButton.isSelected = true
+        adminView.isHidden = false
+        userView.isHidden = true
         emailTextField.text = ""
         passwordTextField.text = ""
         
     }
-    
-    
+
     
     
     //MARK : User and admin Login Action
     @IBAction func loginAction(_ sender: Any) {
-        
         
         //        spinner.frame = CGRect(x: 120.0, y: 16.0, width: 60.0, height: 60.0) // position
         let adminPassword = "admin123"
@@ -80,7 +94,7 @@ class ViewController: BaseViewController {
             
             
             
-            if segmentControl.selectedSegmentIndex == 0 {
+            if  userButton.isSelected == true { //segmentControl.selectedSegmentIndex == 0
                 
                 if(email == adminEmail) && (password == adminPassword) {
                     addAlert(title: "Canot login as a user", message: "try again", cancelTitle: "ok")
@@ -149,10 +163,6 @@ class ViewController: BaseViewController {
                     
                     self.userData.set(email, forKey: "userName")
                     self.userData.set(password, forKey: "userPassword")
-                    
-//                    let mainVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
-//                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//                    appDelegate.window?.rootViewController = mainVC
                     
                     let adminPageTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AdminPageTableViewController") as! AdminPageTableViewController
                     self.navigationController?.pushViewController(adminPageTableVC, animated: true)

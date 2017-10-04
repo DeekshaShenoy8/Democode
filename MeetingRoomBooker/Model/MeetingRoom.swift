@@ -17,3 +17,4 @@ class MeetingRoom: NSObject {
     var facility = [String]()
     
 }
+

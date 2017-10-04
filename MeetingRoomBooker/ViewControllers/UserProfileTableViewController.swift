@@ -16,7 +16,7 @@ class UserProfileTableViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+       navigationItem.title = "Profile"
         // Do any additional setup after loading the view.
     }
     
@@ -44,13 +44,19 @@ extension UserProfileTableViewController : UITableViewDelegate, UITableViewDataS
             
             tableView.allowsSelection = false
             cell.userProfileEmailTextField.text = userEmail
+            cell.accessoryType = .none
+            cell.selectionStyle = .none
             
         }
         else
         {
             tableView.allowsSelection = true
             cell.userProfileEmailTextField.isHidden = true
+         
+                cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+            
         }
+         tableView.deselectRow(at: indexPath, animated: true)
         return cell
     }
     

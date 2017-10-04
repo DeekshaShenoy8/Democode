@@ -24,14 +24,16 @@ class AddRoomViewController: BaseViewController {
     var databaseHandle :DatabaseHandle?
     
     var facility = [String]()
-
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         hideKeyboardWhenTappedAround()
         databaseref = Database.database().reference()
+        
         navigationItem.title = "Add Room"
+        
         projectorChechbox.isSelected = false
         wifiCheckbox.isSelected = false
         laptopCheckbox.isSelected = false
@@ -39,6 +41,9 @@ class AddRoomViewController: BaseViewController {
         
         roomNameTextField.delegate = self
         roomCapacityTextField.delegate = self
+        
+        textFieldBorder(textField: roomNameTextField, color : .black, edge: 40)
+        textFieldBorder(textField: roomCapacityTextField, color : .black, edge: 40)
         
     }
     
@@ -49,7 +54,7 @@ class AddRoomViewController: BaseViewController {
     
     //set check image on checkbox button click
     func checkBoxClicked(button : UIButton, checkBoxString : String) {
-
+        
         button.setImage(#imageLiteral(resourceName: "check"), for: .normal)
         facility.append(checkBoxString)
     }
@@ -63,24 +68,24 @@ class AddRoomViewController: BaseViewController {
         }
     }
     
-
+    
     //checkbox button click action
     @IBAction func onCheckBoxClickAction(_ sender: UIButton) {
         var checkBoxString = " "
-
+        
         switch sender.tag {
         case 0: checkBoxString = "projector"
-                projectorChechbox.isSelected = !projectorChechbox.isSelected
+        projectorChechbox.isSelected = !projectorChechbox.isSelected
         case 1: checkBoxString = "wifi"
-                wifiCheckbox.isSelected = !wifiCheckbox.isSelected
+        wifiCheckbox.isSelected = !wifiCheckbox.isSelected
         case 2: checkBoxString = "laptop"
-                laptopCheckbox.isSelected = !laptopCheckbox.isSelected
+        laptopCheckbox.isSelected = !laptopCheckbox.isSelected
         case 3: checkBoxString = "microphone"
-                microphoneCheckbox.isSelected = !microphoneCheckbox.isSelected
+        microphoneCheckbox.isSelected = !microphoneCheckbox.isSelected
             
         default:
             break
-
+            
         }
         
         if sender.isSelected == true {
@@ -90,7 +95,6 @@ class AddRoomViewController: BaseViewController {
             checkBoxUnchecked(button: sender, checkBoxString: checkBoxString)
             
         }
-
         
     }
     
@@ -126,9 +130,6 @@ class AddRoomViewController: BaseViewController {
         
         addAlert(title: "PLEASE FILL ALL THE DETAIL", message: "Try again", cancelTitle: "OK")
     }
-    
-    
-    
     
 }
 

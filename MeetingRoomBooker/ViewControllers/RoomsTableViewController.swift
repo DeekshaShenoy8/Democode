@@ -25,25 +25,22 @@ class RoomsTableViewController: BaseViewController {
     let cellId = "cell"
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Profile", style: .done, target: self, action: #selector(addTapped))
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.tintColor =  .white
         
-        //navigationController?.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "blue") , for: .default)
-         navigationController?.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "primaryHex") , for: .default)
-//        navigationController?.navigationBar.backgroundColor = UIColor.init(red: 0x512645, green: 0x87314e, blue: 0xdf405a, alpha: 0.7)
-        navigationController?.navigationBar.backgroundColor = UIColor.init(red: 81, green: 38, blue: 69, alpha: 1.0)
+        super.viewDidLoad()
+        //To set navigationBar color, text
+        setNavigationBarDetails()
+        
         tableView.delegate = self
         databaseReference = Database.database().reference()
         tableView.tableFooterView = UIView()
         
+        //To display meeting rooms name
         fetchmeetingRoom()
         
         let userData = UserDefaults.standard
         let userEmail = userData.string(forKey: "userName")
         navigationItem.title = "Rooms "
-       
+        
         if(userEmail != "admin@gmail.com")
         {
             navigationItem.hidesBackButton = true
@@ -55,7 +52,17 @@ class RoomsTableViewController: BaseViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    func setNavigationBarDetails() {
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Profile", style: .done, target: self, action: #selector(addTapped))
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.tintColor =  .white
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        navigationController?.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "primaryHex") , for: .default)
+        navigationController?.navigationBar.backgroundColor = UIColor.init(red: 81, green: 38, blue: 69, alpha: 1.0)
+        
+    }
     
     //On navigation bar view schedule tap action
     func addTapped() {
@@ -75,10 +82,9 @@ class RoomsTableViewController: BaseViewController {
         print(navigationController?.viewControllers[0] as Any)
         print(navigationController?.viewControllers[1] as Any)
         
-        
-//        let mainVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! MeetingRoomBooker.ViewController
+
         if let mainVC = navigationController?.viewControllers[0] {
-       self.navigationController?.popToViewController(mainVC, animated: true)
+            self.navigationController?.popToViewController(mainVC, animated: true)
         }
         
     }
@@ -88,35 +94,7 @@ class RoomsTableViewController: BaseViewController {
         
         fetchRoomsFromDatabase(entityName: "rooms", complete : {
         })
-        // here perfom call back to firebaseDatabase class
-        //        let firebaseDatabase = FirebaseDatabase()
-        //        let meetingRoom = MeetingRoom()
-        //        firebaseDatabase.fetchRoomsFromDatabase(entityName: "rooms", complete : { [weak self] roomsData in
-        //
-        //            print("completion task")
-        //
-        //
-        //            for keys in roomsData.keys {
-        //                if let data = roomsData[keys] as? [String: AnyObject]
-        //                {
-        //
-        //                    meetingRoom.RoomName = data["RoomName"] as! String
-        //                    meetingRoom.Capacity = data["Capacity"] as! String
-        //                    meetingRoom.facility = data["facility"] as! [String]
-        //                    self?.roomlist.append(meetingRoom)
-        //
-        //                }
-        //                DispatchQueue.main.async(execute: {
-        //                    self?.tableView.reloadData()
-        //
-        //                })
-        //            }
-        //
-        //        })
     }
-    
-    
-    
     
     
     //Fetch rooms from firebase database
@@ -137,14 +115,10 @@ class RoomsTableViewController: BaseViewController {
                     self.stopActivityIndicator()
                 })
             }
-            
         })
-        
     }
-    
-    
-    
 }
+
 
 extension RoomsTableViewController : UITableViewDelegate, UITableViewDataSource {
     
@@ -167,7 +141,7 @@ extension RoomsTableViewController : UITableViewDelegate, UITableViewDataSource 
         
         
         let roomsDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RoomsDetailViewController") as! RoomsDetailViewController
-         roomsDetailVC.roomname = roomlist[indexPath.row].RoomName
+        roomsDetailVC.roomname = roomlist[indexPath.row].RoomName
         self.navigationController?.pushViewController(roomsDetailVC, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }

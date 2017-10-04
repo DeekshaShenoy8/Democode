@@ -28,7 +28,7 @@ class BaseViewController: UIViewController {
         spinner.center = self.view.center
         spinner.hidesWhenStopped = true
         spinner.activityIndicatorViewStyle =  UIActivityIndicatorViewStyle.gray
-        spinner.frame = CGRect(x: 150, y: 300, width: 40.0, height: 40.0)
+       // spinner.frame = CGRect(x: 150, y: 300, width: 40.0, height: 40.0)
         view.addSubview(spinner)
         view.bringSubview(toFront: spinner)
         spinner.startAnimating()
@@ -42,11 +42,12 @@ class BaseViewController: UIViewController {
     
     //calayer, textfield border for buttom
     
-    func textFieldBorder(textField : UITextField) {
+    func textFieldBorder(textField : UITextField, color : UIColor, edge : CGFloat) {
         
     let bottomLine = CALayer()
-    bottomLine.frame = CGRect(x: 0.0, y: textField.frame.height  - 1, width: textField.frame.width, height: 1.0)
-    bottomLine.backgroundColor = UIColor.black.cgColor
+    bottomLine.frame = CGRect(x: 0.0, y: textField.frame.height  - 1, width: view.frame.size.width - edge, height: 1.15)
+        print("border y\(textField.frame.width)")
+    bottomLine.backgroundColor = color.cgColor
     textField.borderStyle = UITextBorderStyle.none
     textField.layer.addSublayer(bottomLine)
         
