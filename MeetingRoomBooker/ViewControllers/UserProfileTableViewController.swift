@@ -8,17 +8,15 @@ class UserProfileTableViewController: BaseViewController {
     let userEmail = UserDefaults.standard.string(forKey: "userName")
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         navigationItem.title = "Profile"
         
     }
     
     override func didReceiveMemoryWarning() {
-        
         super.didReceiveMemoryWarning()
-        
     }
+    
     
     //MARK : Logout action
     func userLogout() {
@@ -28,10 +26,8 @@ class UserProfileTableViewController: BaseViewController {
         userData.removeObject(forKey: "userPassword")
         userData.synchronize()
         
-        let mainVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
-        
+        let mainVC = self.storyboard?.instantiateViewController(withIdentifier: "ViewController") as! ViewController
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
         let navigationController = UINavigationController(rootViewController: mainVC)
         appDelegate.window?.rootViewController = navigationController
         
@@ -67,7 +63,6 @@ extension UserProfileTableViewController : UITableViewDelegate, UITableViewDataS
         {
             tableView.allowsSelection = true
             cell.userProfileEmailTextField.isHidden = true
-            
             cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
             
         }
@@ -79,14 +74,14 @@ extension UserProfileTableViewController : UITableViewDelegate, UITableViewDataS
         
         if(indexPath.row == 1) {
             
-            let userScheduleVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserScheduleTableViewController") as! UserScheduleTableViewController
+            let userScheduleVC = self.storyboard?.instantiateViewController(withIdentifier: "UserScheduleTableViewController") as! UserScheduleTableViewController
             self.navigationController?.pushViewController(userScheduleVC, animated: true)
             
             
         }
         if(indexPath.row == 2 ){
             
-            let calendarTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CalandarTableViewController") as! CalandarTableViewController
+            let calendarTableVC = self.storyboard?.instantiateViewController(withIdentifier: "CalandarTableViewController") as! CalandarTableViewController
             self.navigationController?.pushViewController(calendarTableVC, animated: true)
             
         }

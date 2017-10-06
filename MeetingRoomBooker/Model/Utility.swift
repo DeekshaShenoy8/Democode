@@ -21,13 +21,13 @@ extension UIViewController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: cancelTitle, style: UIAlertActionStyle.default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
-        //return
+        
     }
     
     //Hide key board on tap gestyre recognization
     func hideKeyboardWhenTappedAround() {
+        
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
-        //tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }
     

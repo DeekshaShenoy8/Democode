@@ -15,7 +15,6 @@ class CalandarTableViewController: BaseViewController{
     @IBOutlet weak var nextButton: UIButton!
     
     var bookMeetingRoom = BookMeetingRoom()
-    
     var tagValue : Int = 0
     
     
@@ -42,6 +41,7 @@ class CalandarTableViewController: BaseViewController{
         
     }
     
+    //To set dateformat
     func formatDate() {
         Utility.dateFormatter.dateFormat = "MM/dd/yyyy"
         Utility.dateFormatter.dateStyle = .short
@@ -68,6 +68,7 @@ class CalandarTableViewController: BaseViewController{
         
     }
     
+    //To find date based on button tag value
     func findDates( tag : Int)-> String
     {
         
@@ -75,20 +76,20 @@ class CalandarTableViewController: BaseViewController{
         
     }
     
-    //MARK : Fetch particular date Room Booking From firebase
+    
+    //MARK: Fetch particular date Room Booking From firebase
     func fetchTodaysRoomBook(dateString: String) {
         
-      //  startActivityIndicator()
+        //  startActivityIndicator()
         let userEmail = UserDefaults.standard.string(forKey: "userName")
         
         self.bookMeetingRoom.getBookedRoom(dateString: dateString, emailid : userEmail!, callback: { [weak self] (success, bookingid) in
             
-        //    self?.stopActivityIndicator()
+            //   self?.stopActivityIndicator()
             
             if success {
                 
                 DispatchQueue.main.async(execute: {
-                    
                     self?.tableView.reloadData()
                     
                 })
@@ -99,6 +100,7 @@ class CalandarTableViewController: BaseViewController{
         
     }
     
+    //MARK: On dates button click , fetch & display booked room of that date
     @IBAction func onDatesButtonClickAction(_ sender: UIButton) {
         
         button4.backgroundColor = UIColor.gray
@@ -107,7 +109,12 @@ class CalandarTableViewController: BaseViewController{
         button3.backgroundColor = UIColor.gray
         
         if let date = sender.title(for: .normal) {
-            tableView.reloadData()
+            
+            DispatchQueue.main.async(execute: {
+                self.tableView.reloadData()
+                
+            })
+            
             fetchTodaysRoomBook(dateString: date)
             tagValue = sender.tag
         }
@@ -117,6 +124,7 @@ class CalandarTableViewController: BaseViewController{
     }
     
     
+    //On left most side (previous "<") button click action
     @IBAction func previousButtonClick(_ sender: Any) {
         
         fetchTodaysRoomBook(dateString:(findDates(tag:  tagValue)))
@@ -125,12 +133,14 @@ class CalandarTableViewController: BaseViewController{
         button2.setTitle(findDates(tag: 1), for: .normal)
         button3.setTitle(findDates(tag: 2), for: .normal)
         button4.setTitle(findDates(tag: 3), for: .normal)
+        
         prevButton.isEnabled = false
         nextButton.isEnabled = true
         
     }
     
     
+    //On right most (next ">") button click action
     @IBAction func nextButtonAction(_ sender: Any) {
         
         fetchTodaysRoomBook(dateString:(findDates(tag: 4 + tagValue)))
@@ -153,7 +163,7 @@ extension CalandarTableViewController: UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return bookMeetingRoom.roomDetails.count
-        //return roomNameArray.count
+        
     }
     
     
@@ -161,7 +171,6 @@ extension CalandarTableViewController: UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "calandarCell", for: indexPath) as? CalanderTableViewCell
-        // let timeString = timezone[indexPath.row]
         
         cell?.timeCellLabel.text = bookMeetingRoom.roomDetails[indexPath.row].startTime //startTimeArray[indexPath.row]
         cell?.roomNameLbel.text = bookMeetingRoom.roomDetails[indexPath.row].RoomName //roomNameArray[indexPath.row]

@@ -1,10 +1,3 @@
-//
-//  AddRoomViewController.swift
-//  MeetingRoomBooker
-//
-//  Created by Deeksha Shenoy on 08/09/17.
-//  Copyright © 2017 Deeksha Shenoy. All rights reserved.
-//
 
 import UIKit
 import Firebase
@@ -16,7 +9,6 @@ class AddRoomViewController: BaseViewController {
     @IBOutlet weak var wifiCheckbox: UIButton!
     @IBOutlet weak var laptopCheckbox: UIButton!
     @IBOutlet weak var microphoneCheckbox: UIButton!
-    
     @IBOutlet weak var roomNameTextField: UITextField!
     @IBOutlet weak var roomCapacityTextField: UITextField!
     
@@ -25,10 +17,9 @@ class AddRoomViewController: BaseViewController {
     
     var facility = [String]()
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         hideKeyboardWhenTappedAround()
         databaseref = Database.database().reference()
         
@@ -52,14 +43,17 @@ class AddRoomViewController: BaseViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    //set check image on checkbox button click
+    
+    //Set check image on checkbox button click
     func checkBoxClicked(button : UIButton, checkBoxString : String) {
         
         button.setImage(#imageLiteral(resourceName: "check"), for: .normal)
         facility.append(checkBoxString)
+        print(facility)
     }
     
-    //set uncheck image on checkbox button uncheck
+    
+    //Set uncheck image on checkbox button uncheck
     func checkBoxUnchecked(button: UIButton, checkBoxString : String)  {
         
         button.setImage(#imageLiteral(resourceName: "uncheck"), for: .normal)
@@ -69,7 +63,7 @@ class AddRoomViewController: BaseViewController {
     }
     
     
-    //checkbox button click action
+    //Checkbox button click action
     @IBAction func onCheckBoxClickAction(_ sender: UIButton) {
         var checkBoxString = " "
         
@@ -98,7 +92,8 @@ class AddRoomViewController: BaseViewController {
         
     }
     
-    //on alert cancel title click, move to home page VC
+    
+    //On alert cancel title click, move to home page VC
     func alertAddingRoom(title: String, message :  String, cancelTitle : String) {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
@@ -113,22 +108,20 @@ class AddRoomViewController: BaseViewController {
     
     
     
-    // add Rooms to firebase database
+    //Add Rooms to firebase database, on AddRoom button press action
     @IBAction func addRoomToDatabse(_ sender: Any) {
         
-        guard ( (roomNameTextField.text?.isEmpty)! || (roomCapacityTextField.text?.isEmpty)!) else {
+        guard let roomName = roomNameTextField.text, let roomCapacity = roomCapacityTextField.text, !( (roomName.isEmpty) || (roomCapacity.isEmpty)) else {
             
-            if let roomName = roomNameTextField.text, let roomCapacity = roomCapacityTextField.text {
-                
-                databaseref?.child("rooms").child(roomName).setValue(["RoomName": roomName, "Capacity": roomCapacity, "facility" : facility])
-                alertAddingRoom(title: "room added succesfully", message: "Thank you ", cancelTitle: "OK")
-                
-                
-            }
+            addAlert(title: "PLEASE FILL ALL THE DETAIL", message: "Try again", cancelTitle: "OK")
             return
+            
         }
+        print("facility= \(facility)")
+        databaseref?.child("rooms").child(roomName).setValue(["RoomName": roomName, "Capacity": roomCapacity, "facility" : facility])
+        alertAddingRoom(title: "room added succesfully", message: "Thank you ", cancelTitle: "OK")
+
         
-        addAlert(title: "PLEASE FILL ALL THE DETAIL", message: "Try again", cancelTitle: "OK")
     }
     
 }

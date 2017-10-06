@@ -1,10 +1,3 @@
-//
-//  BookMeetingRoom.swift
-//  MeetingRoomBooker
-//
-//  Created by Deeksha Shenoy on 03/10/17.
-//  Copyright © 2017 Deeksha Shenoy. All rights reserved.
-//
 
 import UIKit
 import Firebase
@@ -31,35 +24,15 @@ class BookMeetingRoom: NSObject {
     var roomDetails = [MeetingRoomDetail]()
     var databaseReference : DatabaseReference?
     
-    
-    //TO get detail of Rooms
-//    func getRoomDetail(roomname: String, callback: @escaping(Bool) -> ()){
-//        var sucess = false
-//        
-//        databaseReference = Database.database().reference()
-//        
-//        databaseReference?.child("rooms").child(roomname).observeSingleEvent(of: .value, with: { (snapshot) in
-//            if let dictionary = snapshot.value as? [String: AnyObject] {
-//                
-//                self.roomDetail.RoomName = (dictionary["RoomName"] as? String)!
-//                self.roomDetail.Capacity = (dictionary["Capacity"] as? String)!
-//                self.roomDetail.Facility = dictionary["facility"] as! [String]
-//                
-//            }
-//            sucess = true
-//            
-//            callback(sucess)
-//        })
-//        
-//    }
-    
+
     
     //To fetch booking of particular day
     func getBookedRoom(dateString : String, emailid : String, callback: @escaping (Bool, [String]) -> () ) {
         var success = false
         var idkeys = [String]()
         var bookingid = [String]()
-        roomDetails = []
+        self.roomDetails = []
+
         databaseReference = Database.database().reference()
         if let query = databaseReference?.child("RoomBooking").queryOrdered(byChild: "date").queryEqual(toValue: dateString){
             //startActivityIndicator()
@@ -79,16 +52,25 @@ class BookMeetingRoom: NSObject {
                             
                             if let name = (dictionary["RoomName"] as? String), let startTime = (dictionary["startTime"] as? String), let endTime = (dictionary["endTime"] as? String) ,let email = (dictionary["email"] as? String), let meetingName =  (dictionary["MeetingName"] as? String) {
                                 
-                                self.roomDetail.RoomName = name
-                                self.roomDetail.startTime = startTime
-                                self.roomDetail.endTime = endTime
-                                self.roomDetail.email = email
-                                self.roomDetail.MeetingName = meetingName
+                                var roomDetail = MeetingRoomDetail()
+                                
+                                roomDetail.RoomName = name
+                                roomDetail.startTime = startTime
+                                roomDetail.endTime = endTime
+                                roomDetail.email = email
+                                roomDetail.MeetingName = meetingName
                                 
                                 if( emailid == email) {
+                                    
+                                     self.roomDetail.RoomName = name
+                                     self.roomDetail.startTime = startTime
+                                     self.roomDetail.endTime = endTime
+                                     self.roomDetail.email = email
+                                     self.roomDetail.MeetingName = meetingName
+
                                 bookingid.append(keys)
                                 }
-                                self.roomDetails.append(self.roomDetail)
+                                self.roomDetails.append(roomDetail)
                                 success = true
                             }
                         }
@@ -100,8 +82,69 @@ class BookMeetingRoom: NSObject {
         
     }
     
-    
-    
-    
-    
 }
+    
+    
+   /* func fetchFreeRoomsFromFirebase(roomlist : [String] , callback: @escaping (Bool) -> ()) {
+        var success = false
+        //let name = "Kings Landing"
+        let calendar = Calendar.current
+        var hours = " "
+        let hour = calendar.component(.hour, from: Date())
+        let minute = calendar.component(.minute, from: Date())
+        let today = Utility.dateFormatter.string(from: Date())
+        let foundbusy = false
+        if(hour <= 9){
+            hours = "0" + String(hour)
+            
+        }
+        else {
+            hours = String(hour)
+        }
+
+        print(roomlist)
+        let currentTime = hours + ":" + String(minute)
+        
+        databaseReference = Database.database().reference()
+        databaseReference?.child("RoomBooking").observe(.value, with: { (snapshot) in
+            
+            
+            if let snapshots = snapshot.value as? [String: Any] {
+                let keys = snapshots.keys
+                for key in keys {
+                    success = true
+                    
+                    let obj = snapshots[key] as? [String: Any]
+                    
+                    for name in roomlist {
+                        
+                    if  name == (obj?["RoomName"] as? String) {
+                        
+                        print(key)
+                        print(name)
+                        
+                        if ( today == obj?["date"] as? String && currentTime == obj?["startTime"] as? String){
+                            
+                            print("\(name) room is already booked")
+                            break
+                        }
+                        else {
+                            print("room is free now")
+                        }
+
+
+                    
+                }
+                
+            }
+                }
+            callback(success)
+            }
+        })
+        
+    }
+ 
+    
+    
+    
+}*/

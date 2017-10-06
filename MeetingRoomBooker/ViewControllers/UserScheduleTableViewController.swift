@@ -5,18 +5,17 @@ import FirebaseDatabase
 import EventKit
 
 class UserScheduleTableViewController: BaseViewController {
-    @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var prevButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var button1: UIButton!
-    
     @IBOutlet weak var button2: UIButton!
     @IBOutlet weak var button3: UIButton!
     @IBOutlet weak var button4: UIButton!
+    
     var dabaseReference : DatabaseReference?
-    var databaaseHandle : DatabaseHandle?
-    //    var idkeys = [String]()
+    
     var uid = [String]()
     var startTimeArray = [String]()
     var roomNameArray = [String]()
@@ -24,9 +23,10 @@ class UserScheduleTableViewController: BaseViewController {
     var selectedDate : String = " "
     var eventId = [String]()
     var meetingTitle = [String]()
-    let calendar = Calendar.current
     var tagValue : Int = 0
     var bookMeetingRoom = BookMeetingRoom()
+    
+    let calendar = Calendar.current
     
 
     override func viewDidLoad() {
@@ -130,6 +130,7 @@ class UserScheduleTableViewController: BaseViewController {
         roomNameArray = []
         endTimeArray = []
         uid = []
+        
         let userEmail = UserDefaults.standard.string(forKey: "userName")
         let bookMeetingRoom = BookMeetingRoom()
         
@@ -156,7 +157,9 @@ class UserScheduleTableViewController: BaseViewController {
                     self?.meetingTitle.append(bookMeetingRoom.roomDetail.MeetingName)
                     
                     for id in bookingid {
+                        
                         self?.uid.append(id)
+                        
                     }
                     
                     self?.tableView.reloadData()
@@ -193,9 +196,11 @@ class UserScheduleTableViewController: BaseViewController {
     
     
     func fetchEventsFromCalendar(calendarTitle: String, startAt: String , endAt: String) -> Void {
+        
         let eventStore = EKEventStore()
         var string = " "
         var endStringTime = " "
+        
 //        let event = EKEvent(eventStore: eventStore)
         
         string = selectedDate + " at " + startAt
@@ -205,24 +210,24 @@ class UserScheduleTableViewController: BaseViewController {
         //Utility.dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         Utility.dateFormatter.dateFormat = "MM/dd/yy 'at' HH:mm" //"M/dd/yyyy 'at' h:mm a "
         
-        let startDate = Utility.dateFormatter.date(from: string) ?? Calendar.current.date(byAdding: .day, value: 5, to: Date())!//Date()
+        let startDate = Utility.dateFormatter.date(from: string) ?? Date()
         
-        let endDate = Utility.dateFormatter.date(from: endStringTime) ?? Calendar.current.date(byAdding: .day, value: 5, to: Date())!//Date()
+        let endDate = Utility.dateFormatter.date(from: endStringTime) ?? Date()
         
-//        event.startDate = Utility.dateFormatter.date(from: string) ?? Calendar.current.date(byAdding: .day, value: 5, to: Date())!//Date()
-//        print(event.startDate.description(with: .current) )
-//        
-//        event.endDate =  Utility.dateFormatter.date(from: endStringTime) ?? Calendar.current.date(byAdding: .day, value: 5, to: Date())!//Date()
-        
+
         let predicate = eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: nil)
         let existingEvents = eventStore.events(matching: predicate)
         for singleEvent in existingEvents {
+            
             if singleEvent.title == calendarTitle && singleEvent.startDate ==  Utility.dateFormatter.date(from: string) {
+                
                 print("event exist")
                 do {
+                    
                     print("event found")
                     try eventStore.remove(singleEvent, span: .thisEvent, commit: true)
                 } catch {
+                    
                     print("error during fetch delete\(error)")
                 }
                 

@@ -42,6 +42,7 @@ class MeetingRoom: NSObject {
                 
                     self.roomdetail.Capacity = capacity
                     self.roomdetail.facility = obj?["facility"] as! [String]
+//                    print("romm facility \(self.roomdetail.facility)")
                     self.roomdetails.append(self.roomdetail)
                     
                 }

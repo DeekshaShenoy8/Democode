@@ -5,11 +5,10 @@ class AdminPageTableViewController: BaseViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    
     var buttonTitle = ["Add User", "Add Room", "View Rooms", "View Schedule"]
     
+    
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         
         navigationController?.navigationBar.isTranslucent = true
@@ -27,7 +26,7 @@ class AdminPageTableViewController: BaseViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
     
     
@@ -39,7 +38,7 @@ class AdminPageTableViewController: BaseViewController {
         userData.removeObject(forKey: "userPassword")
         userData.synchronize()
         
-        let mainVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        let mainVC = self.storyboard?.instantiateViewController(withIdentifier: "ViewController") as! ViewController
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
@@ -74,12 +73,12 @@ extension AdminPageTableViewController : UITableViewDataSource, UITableViewDeleg
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if(indexPath.row == 0){
             
-            let registerVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RegistrationViewController") as! RegistrationViewController
+            let registerVC = self.storyboard?.instantiateViewController(withIdentifier: "RegistrationViewController") as! RegistrationViewController
             self.navigationController?.pushViewController(registerVC, animated: true)
             
         } else if( indexPath.row == 1) {
             
-            let addRoomVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddRoomViewController") as! AddRoomViewController
+            let addRoomVC = self.storyboard?.instantiateViewController(withIdentifier: "AddRoomViewController") as! AddRoomViewController
             self.navigationController?.pushViewController(addRoomVC, animated: true)
             
         } else if(indexPath.row == 2){
@@ -89,7 +88,7 @@ extension AdminPageTableViewController : UITableViewDataSource, UITableViewDeleg
             
         } else if(indexPath.row == 3) {
             
-            let calendarTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CalandarTableViewController") as! CalandarTableViewController
+            let calendarTableVC = self.storyboard?.instantiateViewController(withIdentifier: "CalandarTableViewController") as! CalandarTableViewController
             self.navigationController?.pushViewController(calendarTableVC, animated: true)
         }
         tableView.deselectRow(at: indexPath, animated: true)

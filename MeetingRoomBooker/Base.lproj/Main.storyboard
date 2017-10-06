@@ -687,7 +687,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="addEventButtonTapAction:" destination="KVp-fh-Rhh" eventType="touchUpInside" id="Oqk-9r-KkA"/>
+                                    <action selector="deleteCalendarEvent:" destination="KVp-fh-Rhh" eventType="touchUpInside" id="2Ey-ue-KcU"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f9m-CP-Sbv">
@@ -1582,7 +1582,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="AzR-hf-qIt" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="UYl-uq-VEX">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="UYl-uq-VEX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.31764705879999999" green="0.14901960780000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

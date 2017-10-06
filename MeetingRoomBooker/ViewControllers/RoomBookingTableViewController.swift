@@ -14,17 +14,18 @@ class RoomBookingTableViewController: BaseViewController{// CellResponder  {
     var facilityArray = [String]()
     
     let roomsDetail = [ "Meeting Title", "Description", "Date", "Start Time","End Time", "Capacity", "Facility"]
-    
     let userEmail = UserDefaults.standard.string(forKey: "userName")
+    let eventStore = EKEventStore()
+    let calendar = Calendar.current
+    let dispatchGroup = DispatchGroup()
+    let toolbar = UIToolbar()
+    let toolbar2 = UIToolbar()
+    let toolbar3 = UIToolbar()
+    let formatter = DateFormatter()
     
     var datePicker = UIDatePicker()
     var startTimePicker = UIDatePicker()
     var endTimePicker = UIDatePicker()
-    let formatter = DateFormatter()
-    
-    let toolbar = UIToolbar()
-    let toolbar2 = UIToolbar()
-    let toolbar3 = UIToolbar()
     
     var meetingName : String?
     var meetingDescription : String?
@@ -34,21 +35,16 @@ class RoomBookingTableViewController: BaseViewController{// CellResponder  {
     var capacity : String?
     var facility = [String]()
     var eventId = " "
-    let calendar = Calendar.current
-    let dispatchGroup = DispatchGroup()
     var databaseReference : DatabaseReference?
     var startHour : Int = 0
     var startMinute: Int = 0
-    
-    let eventStore = EKEventStore()
-    
     
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
+         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardDidHide, object: nil) 
         
         tableView.tableFooterView = UIView()
         tableView.allowsSelection = false
@@ -152,26 +148,28 @@ class RoomBookingTableViewController: BaseViewController{// CellResponder  {
         
     }
     
+    //On EndTime picker, done press action
     func setEndTime()
     {
-
+        
         endTime = formatter.string(from: endTimePicker.date)
+        
         tableView.reloadData()
         self.view.endEditing(true)
         
     }
     
+    //On startTime picker , done press action
     func setTime()
     {
-        
-        //formatter.timeStyle = .short
-        //        startTimeText.text = Utility.dateFormatter.string(from: startTimePicker.date)
         startTime = formatter.string(from: startTimePicker.date)
         startHour = calendar.component(.hour, from: startTimePicker.date)
         startMinute = calendar.component(.minute, from: startTimePicker.date)
+        
         tableView.reloadData()
         self.view.endEditing(true)
         endTimePickerCreation()
+        
     }
     
     
@@ -276,7 +274,6 @@ class RoomBookingTableViewController: BaseViewController{// CellResponder  {
     
     
     // Successfully loaded function
-    
     func loadToFirebase(roomname: String, meetingname: String, meetingDescription: String, dateTime: String, startTime : String, endTime:String, mailId : String)
     {
         
@@ -365,54 +362,74 @@ class RoomBookingTableViewController: BaseViewController{// CellResponder  {
         
     }
     
+    //On View Schedule button action, move to viewschedule vc
     func viewScheduleTapped() {
         
-        let calendarTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CalandarTableViewController") as! CalandarTableViewController
+        let calendarTableVC = self.storyboard?.instantiateViewController(withIdentifier: "CalandarTableViewController") as! CalandarTableViewController
         self.navigationController?.pushViewController(calendarTableVC, animated: true)
     }
     
     
-    
-    func createEvent(eventStore : EKEventStore, title : String ) {
+    //Check box click action
+    func checkBoxClickAction(button : UIButton) {
         
-        var string = " "
-        var endStringTime = " "
-        //        var eventId = " "
-        let event = EKEvent(eventStore: eventStore)
-        event.title = title
+        print(button.isSelected)
+        button.isSelected = !button.isSelected
         
-        if let date = self.selectedDate , let startAt = self.startTime, let endAt = self.endTime {
+        switch button.tag {
             
-            string = date + " at " + startAt
-            endStringTime = date + " at " + endAt
-            Utility.dateFormatter.locale = Locale.current
-            //Utility.dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-            Utility.dateFormatter.dateFormat = "MM/dd/yy 'at' HH:mm" //"M/dd/yyyy 'at' h:mm a " //
+        case 0:
+            if button.isSelected == true {
+                facility.append(facilityArray[0])
+                
+            }
+            else {
+                
+                if let index = facility.index(of: facilityArray[0]) {
+                    facility.remove(at: index)
+                    
+                }
+                
+            }
             
+        case 1:
+            if button.isSelected == true {
+                facility.append(facilityArray[1])
+            }
+            else {
+                
+                if let index = facility.index(of: facilityArray[1]) {
+                    facility.remove(at: index)
+                }
+            }
             
-            event.startDate = Utility.dateFormatter.date(from: string) ?? Calendar.current.date(byAdding: .day, value: 5, to: Date())!//Date()
-            print(event.startDate.description(with: .current) )
+        case 2 :
+            if button.isSelected == true {
+                facility.append(facilityArray[2])
+            }
+            else {
+                if let index = facility.index(of: facilityArray[2]) {
+                    facility.remove(at: index)
+                }
+            }
             
-            event.endDate =  Utility.dateFormatter.date(from: endStringTime) ?? Calendar.current.date(byAdding: .day, value: 5, to: Date())!//Date()
-            
+        default:
+            if button.isSelected == true {
+                facility.append(facilityArray[3])
+            }
+            else {
+                
+                if let index = facility.index(of: facilityArray[3]) {
+                    facility.remove(at: index)
+                }
+            }
         }
-        print(event.startDate)
-        print(event.endDate)
+        print(facility)
         
-        event.calendar = eventStore.defaultCalendarForNewEvents
         
-        do {
-            try eventStore.save(event, span: .thisEvent, commit: true)
-            print("saved")
-            eventId = event.eventIdentifier
-            print(eventId)
-            //update(eventId: eventId)
-            //update()
-        } catch {
-            print(error)
-            print("bad thing  happnd")
-        }
     }
+    
+    
 }
 
 
@@ -451,7 +468,7 @@ extension RoomBookingTableViewController : UITableViewDataSource, UITableViewDel
             return cell
         }
         else
-            if (indexPath.row == 1 && indexPath.section == 0)
+            if (indexPath.row == 1 )
             {
                 
                 let cell = tableView.dequeueReusableCell(withIdentifier: "roomBookingCustomTableViewCell", for: indexPath) as! RoomBookingCustomTableViewCell
@@ -475,14 +492,14 @@ extension RoomBookingTableViewController : UITableViewDataSource, UITableViewDel
                 
                 cell.roomsDetailLabel.text = roomsDetail[indexPath.row]
                 
-                if(indexPath.row == 0 && indexPath.section == 0){
+                if(indexPath.row == 0 ){
                     
                     meetingName = cell.roomsDetailTextField.text
                     
                 }
                 
                 //access date picker value
-                if ( indexPath.row == 2 && indexPath.section == 0) {
+                if ( indexPath.row == 2 ) {
                     
                     cell.roomsDetailTextField.inputAccessoryView = toolbar
                     cell.roomsDetailTextField.inputView = datePicker
@@ -491,7 +508,7 @@ extension RoomBookingTableViewController : UITableViewDataSource, UITableViewDel
                 }
                 
                 //access start time picker value
-                if (indexPath.row == 3 && indexPath.section == 0) {
+                if (indexPath.row == 3 ) {
                     
                     cell.roomsDetailTextField.inputAccessoryView = toolbar2
                     cell.roomsDetailTextField.inputView = startTimePicker
@@ -500,7 +517,7 @@ extension RoomBookingTableViewController : UITableViewDataSource, UITableViewDel
                 }
                 
                 //access end time picker value
-                if (indexPath.row == 4 && indexPath.section == 0) {
+                if (indexPath.row == 4 ) {
                     
                     cell.roomsDetailTextField.inputAccessoryView = toolbar3
                     cell.roomsDetailTextField.inputView = endTimePicker
@@ -508,14 +525,14 @@ extension RoomBookingTableViewController : UITableViewDataSource, UITableViewDel
                     
                     
                 }
-                if (indexPath.row == 5 && indexPath.section == 0) {
+                if (indexPath.row == 5 ) {
                     
                     cell.roomsDetailLabel.text = roomsDetail[indexPath.row]
                     cell.roomsDetailTextField.keyboardType = .numberPad
                     capacity = cell.roomsDetailTextField.text
                     
                 }
-                if(indexPath.row == 6 && indexPath.section == 0) {
+                if(indexPath.row == 6 ) {
                     
                     cell.roomsDetailLabel.text = roomsDetail[indexPath.row]
                     cell.roomsDetailTextField.placeholder = "Others"
@@ -523,6 +540,7 @@ extension RoomBookingTableViewController : UITableViewDataSource, UITableViewDel
                     if let mentionedFacility = cell.roomsDetailTextField.text {
                         
                         if !(mentionedFacility.isEmpty) {
+                            
                             facility.append(mentionedFacility)
                         }
                     }
@@ -548,8 +566,6 @@ extension RoomBookingTableViewController : UITableViewDataSource, UITableViewDel
         button.setTitle("Book Room", for: .normal)
         button.backgroundColor = UIColor(red: 81.0/255.0, green: 38.0/255.0, blue: 69.0/255.0, alpha: 1.0)
         button.addTarget(self, action: #selector(addRoomTooDatabase), for: .touchUpInside)
-        
-        
         
         let viewSchedule = UIButton(frame: CGRect(x: (footerView.frame.width/2) - 60  , y: 70 , width: 130, height: 30))
         viewSchedule.setTitle("View Schedule", for: .normal)
@@ -580,89 +596,16 @@ extension RoomBookingTableViewController : UITableViewDataSource, UITableViewDel
         }
     }
     
-    func checkBoxClickAction(button : UIButton) {
-        
-        print(button.isSelected)
-        button.isSelected = !button.isSelected
-        
-        switch button.tag {
-        case 0:
-            if button.isSelected == true {
-                facility.append(facilityArray[0])
-                
-            }
-            else {
-                
-                if let index = facility.index(of: facilityArray[0]) {
-                    facility.remove(at: index)
-                    
-                }
-                
-            }
-        case 1:
-            if button.isSelected == true {
-                facility.append(facilityArray[1])
-            }
-            else {
-                
-                if let index = facility.index(of: facilityArray[1]) {
-                    facility.remove(at: index)
-                }
-            }
-        case 2 :
-            if button.isSelected == true {
-                facility.append(facilityArray[2])
-            }
-            else {
-                if let index = facility.index(of: facilityArray[2]) {
-                    facility.remove(at: index)
-                }
-            }
-            
-        default:
-            if button.isSelected == true {
-                facility.append(facilityArray[3])
-            }
-            else {
-                
-                if let index = facility.index(of: facilityArray[3]) {
-                    facility.remove(at: index)
-                }
-            }
-        }
-        print(facility)
-        
-        
-    }
     
 }
 
 extension RoomBookingTableViewController : UITextFieldDelegate {
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
-            
-            
-            nextField.becomeFirstResponder()
-            
-        }
-            
-        else {
-            
-            textField.resignFirstResponder()
-            return true
-            
-        }
-        return false
-        
-    }
-    
-    
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        let keyboardHeight = 250
         
         if(textField.tag == 6) {
-            moveTextField(textField, moveDistance: -250, up: true)
+            moveTextField(textField, moveDistance: -keyboardHeight, up: true)
         }
     }
     
@@ -672,6 +615,7 @@ extension RoomBookingTableViewController : UITextFieldDelegate {
         let movement: CGFloat = CGFloat(up ? moveDistance : -moveDistance)
         
         UIView.beginAnimations("animateTextField", context: nil)
+        //current view position used for animation
         UIView.setAnimationBeginsFromCurrentState(true)
         UIView.setAnimationDuration(moveDuration)
         self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
@@ -681,9 +625,10 @@ extension RoomBookingTableViewController : UITextFieldDelegate {
     
     // Finish Editing The Text Field
     func textFieldDidEndEditing(_ textField: UITextField) {
+        let keyboardHeight = 250
         
         if(textField.tag == 6) {
-            moveTextField(textField, moveDistance: -250, up: false)
+            moveTextField(textField, moveDistance: -keyboardHeight, up: false)
             
         }
     }
@@ -712,24 +657,22 @@ extension RoomBookingTableViewController : UITextViewDelegate  {
 
 
 extension RoomBookingTableViewController {
-    
-    func keyboardWillShow(notification: NSNotification) {
-        if let keyboardHeight = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height {
-            tableView.contentInset = UIEdgeInsetsMake(64, 0, keyboardHeight, 0)
-        }
-    }
-    
-    
-    func keyboardWillHide(notification: NSNotification) {
-        
-        UIView.animate(withDuration: 0.2, animations: {
-            self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0)
-            
-        })
-        
-    }
-    
-    
-    
-}
-
+ 
+ func keyboardWillShow(notification: NSNotification) {
+ 
+ if let keyboardHeight = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height {
+ tableView.contentInset = UIEdgeInsetsMake(64, 0, keyboardHeight, 0)
+ }
+ }
+ 
+ 
+ func keyboardWillHide(notification: NSNotification) {
+ 
+ UIView.animate(withDuration: 0.2, animations: {
+ self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0)
+ 
+ })
+ 
+ }
+ 
+ }
