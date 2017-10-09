@@ -9,15 +9,13 @@
 import UIKit
 
 class Utility: NSObject {
-    
           static let dateFormatter = DateFormatter()
-    
 }
 
 extension UIViewController {
     
     //Alert controller function
-    func addAlert(title:String,message:String,cancelTitle:String) {
+    func addAlert(title:String, message:String, cancelTitle:String ) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: cancelTitle, style: UIAlertActionStyle.default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
@@ -35,8 +33,18 @@ extension UIViewController {
         view.endEditing(true)
     }
     
-
     
+    //Alert and pop to VC
+    func alertController(title:String, message:String, cancelTitles:[String], actions : [(UIAlertAction) -> ()]) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        for (index,title) in cancelTitles.enumerated() {
+            let action = UIAlertAction(title: title, style: .default, handler: actions[index])
+            alertController.addAction(action)
+        }
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
     
 }
 

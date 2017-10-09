@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--LoginVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="ViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="MeetingRoomBooker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginVC" id="BYZ-38-t0r" customClass="LoginVC" customModule="MeetingRoomBooker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -23,7 +23,7 @@
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dLh-n1-rMZ">
                                 <rect key="frame" x="40" y="211" width="295" height="40"/>
-                                <color key="backgroundColor" red="0.31764705882352939" green="0.14901960784313725" blue="0.25098039215686274" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.31764705879999999" green="0.14901960780000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="rCF-OB-Web"/>
@@ -42,7 +42,7 @@
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jVg-qg-3kT">
                                 <rect key="frame" x="40" y="291" width="295" height="40"/>
-                                <color key="backgroundColor" red="0.31764705879999999" green="0.14901960780000001" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.31764705879999999" green="0.14901960780000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Qns-UV-cZu"/>
@@ -163,10 +163,10 @@
             </objects>
             <point key="canvasLocation" x="1056.8" y="118.29085457271366"/>
         </scene>
-        <!--Admin Page Table View Controller-->
+        <!--Admin Page TableVC-->
         <scene sceneID="QBp-0z-ky8">
             <objects>
-                <viewController storyboardIdentifier="AdminPageTableViewController" id="HpG-Um-coR" customClass="AdminPageTableViewController" customModule="MeetingRoomBooker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AdminPageTableVC" id="HpG-Um-coR" customClass="AdminPageTableVC" customModule="MeetingRoomBooker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="GVH-GD-YqO"/>
                         <viewControllerLayoutGuide type="bottom" id="9Ij-Lb-dyj"/>
@@ -181,7 +181,7 @@
                                 <edgeInsets key="layoutMargins" top="8" left="0.0" bottom="8" right="8"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="adminCell" rowHeight="35" id="TiP-T2-TyQ" customClass="AdminPageTableViewCell" customModule="MeetingRoomBooker" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AdminPageTableViewCell" rowHeight="35" id="TiP-T2-TyQ" customClass="AdminPageTableViewCell" customModule="MeetingRoomBooker" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="35"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TiP-T2-TyQ" id="nSq-0n-vEK">
@@ -232,10 +232,10 @@
             </objects>
             <point key="canvasLocation" x="88.799999999999997" y="807.34632683658174"/>
         </scene>
-        <!--Registration View Controller-->
+        <!--Registration Vc-->
         <scene sceneID="X4D-fQ-pHK">
             <objects>
-                <viewController storyboardIdentifier="RegistrationViewController" id="MeV-E9-nbB" customClass="RegistrationViewController" customModule="MeetingRoomBooker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RegistrationVc" id="MeV-E9-nbB" customClass="RegistrationVc" customModule="MeetingRoomBooker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Vsf-TX-NQ8"/>
                         <viewControllerLayoutGuide type="bottom" id="SeN-sB-2hw"/>
@@ -266,6 +266,9 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="MeV-E9-nbB" id="Jyv-0X-gA6"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="n98-nD-Oo8">
                                 <rect key="frame" x="40" y="220" width="295" height="40"/>
@@ -276,6 +279,9 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="MeV-E9-nbB" id="fz2-EZ-dBz"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YAF-o2-1Ye">
                                 <rect key="frame" x="40" y="140" width="295" height="40"/>
@@ -286,6 +292,9 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="MeV-E9-nbB" id="EhT-2D-8nh"/>
+                                </connections>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -315,10 +324,10 @@
             </objects>
             <point key="canvasLocation" x="1632.8" y="897.30134932533736"/>
         </scene>
-        <!--Rooms Table View Controller-->
+        <!--Rooms TableVC-->
         <scene sceneID="VwL-xz-8Nj">
             <objects>
-                <viewController storyboardIdentifier="RoomsTableViewController" id="MpE-6c-41Z" customClass="RoomsTableViewController" customModule="MeetingRoomBooker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RoomsTableVC" id="MpE-6c-41Z" customClass="RoomsTableVC" customModule="MeetingRoomBooker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="WjR-rS-LDN"/>
                         <viewControllerLayoutGuide type="bottom" id="KTY-Na-Xet"/>
@@ -333,7 +342,7 @@
                                 <edgeInsets key="layoutMargins" top="8" left="0.0" bottom="8" right="8"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" rowHeight="60" id="gap-Uz-ZA9" customClass="RoomsTableViewCell" customModule="MeetingRoomBooker" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RoomsTableViewCell" rowHeight="60" id="gap-Uz-ZA9" customClass="RoomsTableViewCell" customModule="MeetingRoomBooker" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gap-Uz-ZA9" id="Vvf-31-Y3E">
@@ -380,10 +389,10 @@
             </objects>
             <point key="canvasLocation" x="2509.5999999999999" y="838.83058470764627"/>
         </scene>
-        <!--Room Booking Table View Controller-->
+        <!--Room Booking TableVC-->
         <scene sceneID="gTR-e9-lzx">
             <objects>
-                <viewController storyboardIdentifier="RoomBookingTableViewController" id="hP0-vt-RSw" customClass="RoomBookingTableViewController" customModule="MeetingRoomBooker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RoomBookingTableVC" id="hP0-vt-RSw" customClass="RoomBookingTableVC" customModule="MeetingRoomBooker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="er1-gA-OxM"/>
                         <viewControllerLayoutGuide type="bottom" id="XD7-y7-cgH"/>
@@ -397,7 +406,7 @@
                                 <color key="backgroundColor" red="0.50196081400000003" green="0.0" blue="0.25098040700000002" alpha="0.38556827906027397" colorSpace="calibratedRGB"/>
                                 <color key="separatorColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="roomBookingTableViewCell" rowHeight="70" id="Dai-ls-mMO" customClass="RoomBookingTableViewCell" customModule="MeetingRoomBooker" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RoomBookingTableViewCell" rowHeight="70" id="Dai-ls-mMO" customClass="RoomBookingTableViewCell" customModule="MeetingRoomBooker" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Dai-ls-mMO" id="Ipy-aC-IUZ">
@@ -439,7 +448,7 @@
                                             <outlet property="roomsDetailTextField" destination="RFN-p1-Nwe" id="bXs-mn-eRz"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="roomBookingCustomTableViewCell" rowHeight="80" id="3Y1-q4-EIF" customClass="RoomBookingCustomTableViewCell" customModule="MeetingRoomBooker" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RoomBookingCustomTableViewCell" rowHeight="80" id="3Y1-q4-EIF" customClass="RoomBookingCustomTableViewCell" customModule="MeetingRoomBooker" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="98" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3Y1-q4-EIF" id="DNl-ay-nOL">
@@ -479,7 +488,7 @@
                                             <outlet property="roomsDetailLabel" destination="8ae-DJ-1tq" id="QZC-No-KWw"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="roomBookingCheckboxTableViewCell" rowHeight="40" id="ihj-yf-tx0" customClass="RoomBookingCheckBoxTableViewCell" customModule="MeetingRoomBooker" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RoomBookingCheckBoxTableViewCell" rowHeight="40" id="ihj-yf-tx0" customClass="RoomBookingCheckBoxTableViewCell" customModule="MeetingRoomBooker" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="178" width="375" height="40"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ihj-yf-tx0" id="J8L-i9-VtQ">
@@ -541,10 +550,10 @@
             </objects>
             <point key="canvasLocation" x="4237.6000000000004" y="834.33283358320841"/>
         </scene>
-        <!--Meeting Invite View Controller-->
+        <!--Meeting InviteVC-->
         <scene sceneID="E0K-Ht-xM5">
             <objects>
-                <viewController storyboardIdentifier="MeetingInviteViewController" id="KVp-fh-Rhh" customClass="MeetingInviteViewController" customModule="MeetingRoomBooker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MeetingInviteVC" id="KVp-fh-Rhh" customClass="MeetingInviteVC" customModule="MeetingRoomBooker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fHX-P9-37o"/>
                         <viewControllerLayoutGuide type="bottom" id="v4m-Jh-6MA"/>
@@ -794,10 +803,10 @@
             </objects>
             <point key="canvasLocation" x="5112.8000000000002" y="694.90254872563719"/>
         </scene>
-        <!--User Profile Table View Controller-->
+        <!--User Profile TableVC-->
         <scene sceneID="WWK-it-m53">
             <objects>
-                <viewController storyboardIdentifier="UserProfileTableViewController" id="bFC-Ka-XiX" customClass="UserProfileTableViewController" customModule="MeetingRoomBooker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserProfileTableVC" id="bFC-Ka-XiX" customClass="UserProfileTableVC" customModule="MeetingRoomBooker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wI6-6X-Vcw"/>
                         <viewControllerLayoutGuide type="bottom" id="QXK-Jy-JB5"/>
@@ -812,7 +821,7 @@
                                 <edgeInsets key="layoutMargins" top="8" left="0.0" bottom="8" right="8"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="userProfileCell" focusStyle="custom" id="cdK-PF-zBa" customClass="UserProfileTableViewCell" customModule="MeetingRoomBooker" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UserProfileTableViewCell" focusStyle="custom" id="cdK-PF-zBa" customClass="UserProfileTableViewCell" customModule="MeetingRoomBooker" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cdK-PF-zBa" id="TfY-iK-JwQ">
@@ -875,10 +884,10 @@
             </objects>
             <point key="canvasLocation" x="2031" y="1598"/>
         </scene>
-        <!--Calandar Table View Controller-->
+        <!--Calandar TableVC-->
         <scene sceneID="JdZ-4N-nsl">
             <objects>
-                <viewController storyboardIdentifier="CalandarTableViewController" id="yZO-D9-6J1" customClass="CalandarTableViewController" customModule="MeetingRoomBooker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CalandarTableVC" id="yZO-D9-6J1" customClass="CalandarTableVC" customModule="MeetingRoomBooker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5ej-0p-545"/>
                         <viewControllerLayoutGuide type="bottom" id="gcQ-Hs-cRN"/>
@@ -945,7 +954,7 @@
                                 <edgeInsets key="layoutMargins" top="8" left="0.0" bottom="8" right="8"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="calandarCell" rowHeight="40" id="j0d-pH-6dI" customClass="CalanderTableViewCell" customModule="MeetingRoomBooker" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CalanderTableViewCell" rowHeight="40" id="j0d-pH-6dI" customClass="CalanderTableViewCell" customModule="MeetingRoomBooker" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="339" height="40"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="j0d-pH-6dI" id="MEZ-7I-Iwt">
@@ -1095,10 +1104,10 @@
             </objects>
             <point key="canvasLocation" x="3308" y="1506.296851574213"/>
         </scene>
-        <!--Rooms Detail View Controller-->
+        <!--Rooms DetailVC-->
         <scene sceneID="Vvt-pr-pAg">
             <objects>
-                <viewController storyboardIdentifier="RoomsDetailViewController" id="OgD-hj-oRf" customClass="RoomsDetailViewController" customModule="MeetingRoomBooker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RoomsDetailVC" id="OgD-hj-oRf" customClass="RoomsDetailVC" customModule="MeetingRoomBooker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3u1-Ts-rY9"/>
                         <viewControllerLayoutGuide type="bottom" id="82q-fa-pUP"/>
@@ -1187,10 +1196,10 @@
             </objects>
             <point key="canvasLocation" x="4021.5999999999999" y="1505.3973013493255"/>
         </scene>
-        <!--User Schedule Table View Controller-->
+        <!--User Schedule TableVC-->
         <scene sceneID="ZHL-Fu-jo9">
             <objects>
-                <viewController storyboardIdentifier="UserScheduleTableViewController" id="Yo2-l5-Hzm" customClass="UserScheduleTableViewController" customModule="MeetingRoomBooker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserScheduleTableVC" id="Yo2-l5-Hzm" customClass="UserScheduleTableVC" customModule="MeetingRoomBooker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tyW-kz-1h7"/>
                         <viewControllerLayoutGuide type="bottom" id="f8m-Zy-vyO"/>
@@ -1306,7 +1315,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="userScheduleTableViewCell" id="BJC-Ts-mQc" customClass="UserScheduleTableViewCell" customModule="MeetingRoomBooker" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UserScheduleTableViewCell" id="BJC-Ts-mQc" customClass="UserScheduleTableViewCell" customModule="MeetingRoomBooker" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="341" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BJC-Ts-mQc" id="EAz-pa-Bd5">
@@ -1396,10 +1405,10 @@
             </objects>
             <point key="canvasLocation" x="4768.8000000000002" y="1504.4977511244379"/>
         </scene>
-        <!--Add Room View Controller-->
+        <!--Add RoomVC-->
         <scene sceneID="kGN-kv-xKJ">
             <objects>
-                <viewController storyboardIdentifier="AddRoomViewController" id="Ahx-le-8Gb" customClass="AddRoomViewController" customModule="MeetingRoomBooker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddRoomVC" id="Ahx-le-8Gb" customClass="AddRoomVC" customModule="MeetingRoomBooker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Db9-Ch-6Pn"/>
                         <viewControllerLayoutGuide type="bottom" id="MyK-T2-8ly"/>
@@ -1498,6 +1507,9 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Ahx-le-8Gb" id="3TD-lt-X1F"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Room Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VKc-Y5-su2">
                                 <rect key="frame" x="20" y="60" width="335" height="40"/>
@@ -1508,6 +1520,9 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Ahx-le-8Gb" id="KY5-nd-1cy"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HC4-fW-HGz">
                                 <rect key="frame" x="20" y="430" width="335" height="44"/>

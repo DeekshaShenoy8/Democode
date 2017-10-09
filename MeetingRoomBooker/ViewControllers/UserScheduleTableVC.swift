@@ -4,7 +4,7 @@ import Firebase
 import FirebaseDatabase
 import EventKit
 
-class UserScheduleTableViewController: BaseViewController {
+class UserScheduleTableVC: BaseViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var prevButton: UIButton!
@@ -28,14 +28,14 @@ class UserScheduleTableViewController: BaseViewController {
     
     let calendar = Calendar.current
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
         prevButton.isEnabled = false
         dabaseReference = Database.database().reference()
         button1.backgroundColor = UIColor(red: 81.0/255.0, green: 38.0/255.0, blue: 69.0/255.0, alpha: 1.0)
-
+        
         setTitleToButton()
         fetchTodaysRoomBook(dateString: findDates(tag: button1.tag) )
         
@@ -63,14 +63,14 @@ class UserScheduleTableViewController: BaseViewController {
     }
     
     
-        func findDates(tag : Int) -> String  {
-            selectedDate = Utility.dateFormatter.string(from:Calendar.current.date(byAdding: .day, value: tag, to: Date())!)
-            return Utility.dateFormatter.string(from:Calendar.current.date(byAdding: .day, value: tag, to: Date())!)
-            // return selectedDate
-        }
-   
+    func findDates(tag : Int) -> String  {
+        selectedDate = Utility.dateFormatter.string(from:Calendar.current.date(byAdding: .day, value: tag, to: Date())!)
+        return Utility.dateFormatter.string(from:Calendar.current.date(byAdding: .day, value: tag, to: Date())!)
+        // return selectedDate
+    }
     
-  
+    
+    
     
     //On Dates BUtton click Action
     
@@ -119,7 +119,7 @@ class UserScheduleTableViewController: BaseViewController {
         
     }
     
-
+    
     
     
     //Fetch Booked rooms of selected date of particular user
@@ -131,7 +131,7 @@ class UserScheduleTableViewController: BaseViewController {
         endTimeArray = []
         uid = []
         
-        let userEmail = UserDefaults.standard.string(forKey: "userName")
+        let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail)
         let bookMeetingRoom = BookMeetingRoom()
         
         tableView.reloadData()
@@ -139,31 +139,27 @@ class UserScheduleTableViewController: BaseViewController {
         
         bookMeetingRoom.getBookedRoom(dateString: dateString, emailid : userEmail!, callback: { [weak self] (success, bookingid) in
             //self?.stopActivityIndicator()
-
+            
             if success {
                 
-
-                if ( bookMeetingRoom.roomDetail.email == userEmail) {
+                for email in bookMeetingRoom.roomDetails {
                     
-//                    self?.bookMeetingRoom = bookMeetingRoom
-//                    self?.bookMeetingRoom.roomDetail.RoomName = bookMeetingRoom.roomDetail.RoomName
-//                    self?.bookMeetingRoom.roomDetail.startTime = bookMeetingRoom.roomDetail.startTime
-//                    self?.bookMeetingRoom.roomDetail.endTime = bookMeetingRoom.roomDetail.endTime
-//                    self?.bookMeetingRoom.roomDetail.MeetingName = bookMeetingRoom.roomDetail.MeetingName
-                    
-                    self?.roomNameArray.append(bookMeetingRoom.roomDetail.RoomName)
-                    self?.startTimeArray.append(bookMeetingRoom.roomDetail.startTime)
-                    self?.endTimeArray.append(bookMeetingRoom.roomDetail.endTime)
-                    self?.meetingTitle.append(bookMeetingRoom.roomDetail.MeetingName)
-                    
-                    for id in bookingid {
+                    if (email.email == userEmail) {
                         
-                        self?.uid.append(id)
+                        self?.roomNameArray.append(email.RoomName)
+                        self?.startTimeArray.append(email.startTime)
+                        self?.endTimeArray.append(email.endTime)
+                        self?.meetingTitle.append(email.MeetingName)
+                        
+                        for id in bookingid {
+                            
+                            self?.uid.append(id)
+                            
+                        }
+                        
+                        self?.tableView.reloadData()
                         
                     }
-                    
-                    self?.tableView.reloadData()
-                    
                 }
             }
             
@@ -171,7 +167,7 @@ class UserScheduleTableViewController: BaseViewController {
         
     }
     
-
+    
     
     //MARK: Delete based on event identifier
     func deleteEvent( eventIdentifier : String) {
@@ -201,7 +197,7 @@ class UserScheduleTableViewController: BaseViewController {
         var string = " "
         var endStringTime = " "
         
-//        let event = EKEvent(eventStore: eventStore)
+        //        let event = EKEvent(eventStore: eventStore)
         
         string = selectedDate + " at " + startAt
         endStringTime = selectedDate + " at " + endAt
@@ -214,21 +210,21 @@ class UserScheduleTableViewController: BaseViewController {
         
         let endDate = Utility.dateFormatter.date(from: endStringTime) ?? Date()
         
-
+        
         let predicate = eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: nil)
         let existingEvents = eventStore.events(matching: predicate)
         for singleEvent in existingEvents {
             
             if singleEvent.title == calendarTitle && singleEvent.startDate ==  Utility.dateFormatter.date(from: string) {
                 
-                print("event exist")
+//                print("event exist")
                 do {
                     
-                    print("event found")
+//                    print("event found")
                     try eventStore.remove(singleEvent, span: .thisEvent, commit: true)
                 } catch {
                     
-                    print("error during fetch delete\(error)")
+                    print(error)
                 }
                 
             }
@@ -242,7 +238,7 @@ class UserScheduleTableViewController: BaseViewController {
 
 
 
-extension UserScheduleTableViewController : UITableViewDataSource ,UITableViewDelegate {
+extension UserScheduleTableVC : UITableViewDataSource ,UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -256,7 +252,7 @@ extension UserScheduleTableViewController : UITableViewDataSource ,UITableViewDe
         
         tableView.tableFooterView = UIView()
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "userScheduleTableViewCell", for: indexPath) as! UserScheduleTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: UserScheduleTableViewCell.self), for: indexPath) as! UserScheduleTableViewCell
         cell.startTimeLabel.text = startTimeArray[indexPath.row] //bookMeetingRoom.roomDetails[indexPath.row].startTime //
         cell.roomNameLabel.text = roomNameArray[indexPath.row] //bookMeetingRoom.roomDetails[indexPath.row].RoomName//
         cell.endTimeLabel.text = endTimeArray[indexPath.row] //bookMeetingRoom.roomDetails[indexPath.row].endTime//
@@ -284,16 +280,16 @@ extension UserScheduleTableViewController : UITableViewDataSource ,UITableViewDe
         let today = Utility.dateFormatter.string(from: Date())
         if selectedDate == today {
             if(startTimeArray[indexPath.row] <= hours) {
-                addAlert(title: "meeting is already over", message: "You Canot Edit the Meeting Now", cancelTitle: "ok")
+                addAlert(title: EventAlert.meetingOverAlertTitle, message: EventAlert.meetingOverMessage, cancelTitle: canceltitle)
             }
         }
         
-        let meetingInviteVC = self.storyboard?.instantiateViewController(withIdentifier: "MeetingInviteViewController") as! MeetingInviteViewController
+        let meetingInviteVC = self.storyboard?.instantiateViewController(withIdentifier: String(describing :MeetingInviteVC.self)) as! MeetingInviteVC
         tableView.deselectRow(at: indexPath, animated: true)
-        meetingInviteVC.roomname = roomNameArray[indexPath.row] //bookMeetingRoom.roomDetails[indexPath.row].RoomName //
-        meetingInviteVC.startTime = startTimeArray[indexPath.row] //bookMeetingRoom.roomDetails[indexPath.row].startTime//
-        meetingInviteVC.endTime = endTimeArray[indexPath.row] //bookMeetingRoom.roomDetails[indexPath.row].endTime//
-        meetingInviteVC.selectedDate =  selectedDate //bookMeetingRoom.roomDetails[indexPath.row].date //
+        meetingInviteVC.roomname = roomNameArray[indexPath.row]
+        meetingInviteVC.startTime = startTimeArray[indexPath.row]
+        meetingInviteVC.endTime = endTimeArray[indexPath.row]
+        meetingInviteVC.selectedDate =  selectedDate
         self.navigationController?.pushViewController(meetingInviteVC, animated: true)
         
     }
@@ -306,23 +302,14 @@ extension UserScheduleTableViewController : UITableViewDataSource ,UITableViewDe
         
         let bookingUid = uid[indexPath.row]
         let eventTitle = meetingTitle[indexPath.row]
-        // print("indexpath uid= \(bookingUid)")
-        print("meeting name is \(eventTitle)")
-        print("start time = \(startTimeArray[indexPath.row])")
-        print("start time = \(endTimeArray[indexPath.row])")
-        
+
         if editingStyle == .delete {
             
             self.fetchEventsFromCalendar(calendarTitle: eventTitle , startAt: startTimeArray[indexPath.row], endAt: endTimeArray[indexPath.row])
             
             if self.eventId.count != 0 {
-                
                 let eventuid = self.eventId[indexPath.row]
-                
                 self.deleteEvent(eventIdentifier: eventuid)
-                print("deleted")
-                //print(self.eventId)
-                
             }
             
             self.fetchTodaysRoomBook(dateString: self.selectedDate)
@@ -330,7 +317,7 @@ extension UserScheduleTableViewController : UITableViewDataSource ,UITableViewDe
             
             
             
-            dabaseReference?.child("RoomBooking").child(bookingUid).removeValue(completionBlock: { (error, databaseReference) in
+            dabaseReference?.child(FirebaseRoomBookingKey.endTime).child(bookingUid).removeValue(completionBlock: { (error, databaseReference) in
                 if error != nil {
                     print(error ?? "erroe during deletion")
                 } else {

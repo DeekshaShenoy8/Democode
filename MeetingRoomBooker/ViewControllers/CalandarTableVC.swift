@@ -3,7 +3,7 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
-class CalandarTableViewController: BaseViewController{
+class CalandarTableVC: BaseViewController{
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -19,26 +19,19 @@ class CalandarTableViewController: BaseViewController{
     
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         
         tableView.tableFooterView = UIView()
         prevButton.isEnabled = false
         
         formatDate()
-        
         setColorToButton()
-        
         setTitleToButton()
-        
         fetchTodaysRoomBook(dateString: findDates(tag: button1.tag) )
-        
-        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        
     }
     
     //To set dateformat
@@ -50,7 +43,6 @@ class CalandarTableViewController: BaseViewController{
     
     //Set grey color for all button, highlight todays date
     func setColorToButton() {
-        
         button4.backgroundColor = UIColor.gray
         button1.backgroundColor = UIColor(red: 81.0/255.0, green: 38.0/255.0, blue: 69.0/255.0, alpha: 1.0)
         button2.backgroundColor = UIColor.gray
@@ -60,18 +52,15 @@ class CalandarTableViewController: BaseViewController{
     
     //Set button title (starting from todays date to next 7 days)
     func setTitleToButton() {
-        
         button1.setTitle(findDates(tag: button1.tag), for: .normal)
         button2.setTitle(findDates(tag: button2.tag), for: .normal)
         button3.setTitle(findDates(tag: button3.tag), for: .normal)
         button4.setTitle(findDates(tag: button4.tag), for: .normal)
-        
     }
     
     //To find date based on button tag value
     func findDates( tag : Int)-> String
     {
-        
         return Utility.dateFormatter.string(from:Calendar.current.date(byAdding: .day, value: tag, to: Date())!)
         
     }
@@ -81,7 +70,7 @@ class CalandarTableViewController: BaseViewController{
     func fetchTodaysRoomBook(dateString: String) {
         
         //  startActivityIndicator()
-        let userEmail = UserDefaults.standard.string(forKey: "userName")
+        let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail)
         
         self.bookMeetingRoom.getBookedRoom(dateString: dateString, emailid : userEmail!, callback: { [weak self] (success, bookingid) in
             
@@ -157,7 +146,7 @@ class CalandarTableViewController: BaseViewController{
     
 }
 
-extension CalandarTableViewController: UITableViewDataSource, UITableViewDelegate {
+extension CalandarTableVC: UITableViewDataSource, UITableViewDelegate {
     
     //Number of rows in table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -170,7 +159,7 @@ extension CalandarTableViewController: UITableViewDataSource, UITableViewDelegat
     //To display romname & time in row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "calandarCell", for: indexPath) as? CalanderTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing : CalanderTableViewCell.self) , for: indexPath) as? CalanderTableViewCell
         
         cell?.timeCellLabel.text = bookMeetingRoom.roomDetails[indexPath.row].startTime //startTimeArray[indexPath.row]
         cell?.roomNameLbel.text = bookMeetingRoom.roomDetails[indexPath.row].RoomName //roomNameArray[indexPath.row]

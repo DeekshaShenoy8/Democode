@@ -6,7 +6,7 @@ import MessageUI
 import EventKit
 import  EventKitUI
 
-class MeetingInviteViewController: BaseViewController {
+class MeetingInviteVC: BaseViewController {
     
     @IBOutlet weak var meetingTitleTextField: UITextField!
     @IBOutlet weak var roomnameTextField: UITextField!
@@ -239,9 +239,9 @@ class MeetingInviteViewController: BaseViewController {
     func fetchTodaysRoomBook(dateString: String){
         
         var idkeys = [String]()
-        let userEmail = UserDefaults.standard.string(forKey: "userName")
+        let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail)
         
-        if let query = dabaseReference?.child("RoomBooking").queryOrdered(byChild: "date").queryEqual(toValue: dateString){
+        if let query = dabaseReference?.child(FirebaseRoomBookingKey.entity).queryOrdered(byChild: FirebaseRoomBookingKey.date).queryEqual(toValue: dateString){
             
             startActivityIndicator()
             
@@ -255,12 +255,12 @@ class MeetingInviteViewController: BaseViewController {
                 
                 for keys in idkeys {
                     
-                    self.dabaseReference?.child("RoomBooking").child(keys).observeSingleEvent(of: .value, with: { (snapshots) in
+                    self.dabaseReference?.child(FirebaseRoomBookingKey.entity).child(keys).observeSingleEvent(of: .value, with: { (snapshots) in
                         
                         if let dictionary = snapshots.value as? [String: AnyObject] {
                             
                             
-                            if let roomName = (dictionary["RoomName"] as? String), let startTime = (dictionary["startTime"] as? String), let endTime = (dictionary["endTime"] as? String), let email = (dictionary["email"] as? String), let meetingName = (dictionary["MeetingName"] as? String), let meetingDetail = (dictionary["MeetingDescription"]) {
+                            if let roomName = (dictionary[FirebaseRoomBookingKey.roomName] as? String), let startTime = (dictionary[FirebaseRoomBookingKey.startTime] as? String), let endTime = (dictionary[FirebaseRoomBookingKey.endTime] as? String), let email = (dictionary[FirebaseRoomBookingKey.email] as? String), let meetingName = (dictionary[FirebaseRoomBookingKey.meetingTitle] as? String), let meetingDetail = (dictionary[FirebaseRoomBookingKey.meetingDescription]) {
                                 
                                 if( email == userEmail && roomName == self.roomname && startTime == self.startTime && endTime == self.endTime ) {
                                     
@@ -290,7 +290,7 @@ class MeetingInviteViewController: BaseViewController {
     func fetchRoomName()
     {
         var idKeys = [String]()
-        let query = dabaseReference?.child("rooms").queryOrdered(byChild: "RoomName")
+        let query = dabaseReference?.child(FirebaseRoomData.entity).queryOrdered(byChild: FirebaseRoomData.roomName)
         
         query?.observeSingleEvent(of: .value, with: { (snapshot) in
             
@@ -396,35 +396,22 @@ class MeetingInviteViewController: BaseViewController {
             for singleEvent in existingEvents {
                 
                 if singleEvent.title == calendarTitle && singleEvent.startDate ==  Utility.dateFormatter.date(from: string) {
-                    
                     do {
-                        
                         eventFound = true
                         try eventStore.remove(singleEvent, span: .thisEvent, commit: true)
-                        addAlert(title: "Event removed from Calendar", message: "Successfully removed", cancelTitle: "ok")
-                        
+                        addAlert(title: EventAlert.eventRemoved, message: SuccessAlert.message, cancelTitle: canceltitle)
                     } catch {
-                        print("error during fetch delete\(error)")
+                        print(error)
                     }
-                    
                 }
-                
             }
-            
             if (eventFound == false) {
-                
-                addAlert(title: "Event is not added", message: "No events found", cancelTitle: "ok")
-                
+                addAlert(title: EventAlert.noEventFound, message: EventAlert.notFoundMessage, cancelTitle: canceltitle)
             }
-            
-            
         }
-        
     }
     
-    
     //Find Calendar event is already present, then delete it before update
-    
     func FindcalendarEvent() {
         //let eventStore = EKEventStore()
         var prevstring = " "
@@ -450,14 +437,12 @@ class MeetingInviteViewController: BaseViewController {
             let existingEvents = eventStore.events(matching: predicate)
             
             for singleEvent in existingEvents {
+                
                 if singleEvent.title == prevMeetingTitle && singleEvent.startDate ==  startDate {
-                    
                     singleEvent.startDate = Utility.dateFormatter.date(from: string) ?? Date()
                     singleEvent.endDate = Utility.dateFormatter.date(from: endStringTime) ?? Date()
                     singleEvent.title = meetingTitle
                     singleEvent.calendar = eventStore.defaultCalendarForNewEvents
-                    print("event exist")
-                    
                     do {
                         
                         event.calendar = eventStore.defaultCalendarForNewEvents
@@ -465,14 +450,11 @@ class MeetingInviteViewController: BaseViewController {
                         
                     } catch {
                         
-                        print("error during fetch delete\(error)")
+                        print(error)
                     }
-                    
                 }
-                
             }
         }
-        
     }
     
     
@@ -494,7 +476,7 @@ class MeetingInviteViewController: BaseViewController {
         
         guard  let startTime = startTimeTextField.text , let endTime = endTimeTextField.text , let dateTime = dateTextField.text, let meetingname = meetingTitleTextField.text, let meetingDescription = meetingDescriptionTextView.text, let roomName = roomnameTextField.text,  !( (meetingname.isEmpty) || (meetingDescription.isEmpty) || (dateTime.isEmpty) || (startTime.isEmpty) || (endTime.isEmpty)) else {
             
-            addAlert(title: "PLEASE FILL ALL THE DETAIL", message: "Try again", cancelTitle: "ok")
+            addAlert(title: EmptyFieldAlert.alertTitle, message: EmptyFieldAlert.message, cancelTitle: EmptyFieldAlert.cancelTile)
             return
         }
         
@@ -510,7 +492,7 @@ class MeetingInviteViewController: BaseViewController {
             
             
             guard (startTime < endTime ) else {
-                addAlert(title: "Enter valid Start and End Time", message: "Room booking is valid from 8am to 8pm", cancelTitle: "Ok")
+                addAlert(title: RoomBookingAlert.validStartAndEndTimeAlertTitle, message: RoomBookingAlert.validStartAndEndTimeMessage, cancelTitle: canceltitle)
                 return
                 
             }
@@ -535,7 +517,7 @@ class MeetingInviteViewController: BaseViewController {
                 if(startTime < hours) {
                     
                     let  timeTitle = "Time is Alredy" + "\(hours)"
-                    addAlert(title: timeTitle, message: "select any other valid time", cancelTitle: "Ok")
+                    addAlert(title: timeTitle, message: RoomBookingAlert.validStartAndEndTimeMessage, cancelTitle: canceltitle)
                     
                 }
             }
@@ -547,7 +529,7 @@ class MeetingInviteViewController: BaseViewController {
             //compare booking detail with firebase already booked detail
             //find same date booked room uid
             dispatchGroup.enter()
-            let query = dabaseReference?.child("RoomBooking").queryOrdered(byChild: "date").queryEqual(toValue: dateTime)
+            let query = dabaseReference?.child(FirebaseRoomBookingKey.entity).queryOrdered(byChild: FirebaseRoomBookingKey.date).queryEqual(toValue: dateTime)
             query?.observeSingleEvent(of: .value, with: { (snapshot) in
                 
                 
@@ -589,10 +571,10 @@ class MeetingInviteViewController: BaseViewController {
             
             dispatchGroup.enter()
             
-            self.dabaseReference?.child("RoomBooking").child(keys).observeSingleEvent(of: .value, with: { (snapshot) in
+            self.dabaseReference?.child(FirebaseRoomBookingKey.roomName).child(keys).observeSingleEvent(of: .value, with: { (snapshot) in
                 if let dictionary = snapshot.value as? [String: AnyObject] {
                     
-                    if let name = (dictionary["RoomName"] as? String), let beginningtime = (dictionary["startTime"] as? String), let endingtime = (dictionary["endTime"] as? String){
+                    if let name = (dictionary[FirebaseRoomBookingKey.roomName] as? String), let beginningtime = (dictionary[FirebaseRoomBookingKey.startTime] as? String), let endingtime = (dictionary[FirebaseRoomBookingKey.endTime] as? String){
                         
                         
                         // condition to check roomname and booked time
@@ -600,9 +582,9 @@ class MeetingInviteViewController: BaseViewController {
                         {
                             foundNameTimeBool = true
                             //room is booked on same date and time
-                            print("enterd room \(String(describing: roomname))")
+//                            print((String(describing: roomname)))
                             
-                            self.addAlert(title: "Room is alreday booked", message: "try with other rooms", cancelTitle: "Ok")
+                            self.addAlert(title: RoomBookingAlert.roomIsBookedAlertTitle, message: RoomBookingAlert.roomIsBookedMessage, cancelTitle: canceltitle)
                             return
                             
                         }
@@ -631,14 +613,14 @@ class MeetingInviteViewController: BaseViewController {
         FindcalendarEvent()
         if  let meetingTitle = meetingTitleTextField.text , let description = meetingDescriptionTextView.text , let roomName = roomnameTextField.text , let date = dateTextField.text, let starttingTime = startTimeTextField.text , let endingTime = endTimeTextField.text{
             
-            dabaseReference?.child("RoomBooking").child(uid).updateChildValues(["MeetingName" : meetingTitle, "MeetingDescription" : description, "RoomName": roomName, "date" : date, "startTime" : starttingTime, "endTime": endingTime], withCompletionBlock: { (error, databaseReference) in
+            dabaseReference?.child(FirebaseRoomBookingKey.roomName).child(uid).updateChildValues([FirebaseRoomBookingKey.meetingTitle : meetingTitle, FirebaseRoomBookingKey.meetingDescription : description, FirebaseRoomBookingKey.roomName: roomName, FirebaseRoomBookingKey.date: date, FirebaseRoomBookingKey.startTime : starttingTime, FirebaseRoomBookingKey.endTime: endingTime], withCompletionBlock: { (error, databaseReference) in
                 
                 if error != nil {
-                    print("erroe during update\(String(describing: error))")
-                    
+                    print(String(describing: error))
                 }
-                
-                self.addAlert(title: "Changes saved successfully", message: "Thank you", cancelTitle: "ok")
+                else {
+                self.addAlert(title: SuccessAlert.changesSaved, message: SuccessAlert.message, cancelTitle: SuccessAlert.cancelTitle)
+                }
             })
         }
     }
@@ -646,7 +628,7 @@ class MeetingInviteViewController: BaseViewController {
 }
 
 
-extension MeetingInviteViewController : UIPickerViewDelegate, UIPickerViewDataSource {
+extension MeetingInviteVC : UIPickerViewDelegate, UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -669,10 +651,9 @@ extension MeetingInviteViewController : UIPickerViewDelegate, UIPickerViewDataSo
 
 
 
-extension MeetingInviteViewController :  EKEventEditViewDelegate {//EKEventViewDelegate,
+extension MeetingInviteVC :  EKEventEditViewDelegate {
     
     func addEvent() {
-        
         var string = " "
         var endStringTime = " "
         let addController = EKEventEditViewController()

@@ -4,7 +4,7 @@ import Firebase
 import FirebaseAuth
 
 
-class ViewController: BaseViewController {
+class LoginVC: BaseViewController {
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -15,23 +15,20 @@ class ViewController: BaseViewController {
     @IBOutlet weak var adminView: UIView!
     @IBOutlet weak var loginButton: UIButton!
     
-    let userData = UserDefaults.standard
+    let userDefault = UserDefaults.standard
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         hideKeyboardWhenTappedAround()
         
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.setBackgroundImage(#imageLiteral(resourceName: "primaryHex") , for: .default)
-        
-        view.layer.backgroundColor = UIColor(red: 81.0/255.0, green: 38.0/255.0, blue: 69.0/255.0, alpha: 1.0).cgColor
-        emailTextField.backgroundColor = UIColor(red: 81.0/255.0, green: 38.0/255.0, blue: 69.0/255.0, alpha: 1.0)
-        passwordTextField.backgroundColor = UIColor(red: 81.0/255.0, green: 38.0/255.0, blue: 69.0/255.0, alpha: 1.0)
+        navigationController?.navigationBar.barTintColor = UIColor(red: 81.0/255.0, green: 38.0/255.0, blue: 69.0/255.0, alpha: 1.0)
         
         textFieldBorder(textField: emailTextField, color : .white, edge : 80)
         textFieldBorder(textField: passwordTextField, color : .white, edge : 80)
         
+        emailTextField.text = ""
+        passwordTextField.text = ""
         adminView.isHidden = true
         userButton.isSelected = true
         
@@ -45,7 +42,6 @@ class ViewController: BaseViewController {
     
     //On click of USER , (logged in as user)
     @IBAction func userButtonAction(_ sender: Any) {
-        
         userButton.isSelected = true
         adminButton.isSelected = false
         adminView.isHidden = true
@@ -58,7 +54,6 @@ class ViewController: BaseViewController {
     
     //On click of ADMIN, (logged in as Admin)
     @IBAction func adminButtonAction(_ sender: Any) {
-        
         userButton.isSelected = false
         adminButton.isSelected = true
         adminView.isHidden = false
@@ -78,54 +73,39 @@ class ViewController: BaseViewController {
         if let email = emailTextField.text, let password = passwordTextField.text , email.characters.count > 0, password.characters.count > 0 {
             
             if  userButton.isSelected == true {
-                
                 if(email == adminEmail) && (password == adminPassword) {
-                    addAlert(title: "Invalid user", message: "try again", cancelTitle: "ok")
+                    addAlert(title: InvalidPasswordOrEmailAlert.alertTitle, message: InvalidPasswordOrEmailAlert.message, cancelTitle: InvalidPasswordOrEmailAlert.cancelTile)
                     return
                 }
-                
                 startActivityIndicator()
                 userLogin(userEmail:email, userPassword: password)
-                
             } else {
-                
                 adminLogin(email: email, password: password)
             }
         }
         else {
-            self.addAlert(title: "PLEASE FILL ALL THE DETAIL", message: "Try again", cancelTitle: "OK")
-            
+            self.addAlert(title: EmptyFieldAlert.alertTitle , message: EmptyFieldAlert.message, cancelTitle: EmptyFieldAlert.cancelTile)
         }
-        
     }
     
     //login for User
     func userLogin(userEmail: String, userPassword: String)  {
         
         Auth.auth().signIn(withEmail: userEmail, password: userPassword, completion: { (user, error) in
-            
             if  let error = error  {
-                self.addAlert(title: "Error" , message: error.localizedDescription, cancelTitle: "OK")
+                self.addAlert(title: ErrorAlert.alertTitle  , message: error.localizedDescription, cancelTitle: ErrorAlert.cancelTitle)
             }
             
-            
             if user != nil {
+                self.userDefault.set(userEmail, forKey: UserDefaultKey.userEmail)
+                self.userDefault.set(userPassword, forKey: UserDefaultKey.userPassword)
                 
-                self.userData.set(userEmail, forKey: "userName")
-                self.userData.set(userPassword, forKey: "userPassword")
-                
-                let roomsTableVC = self.storyboard?.instantiateViewController(withIdentifier: "RoomsTableViewController") as! RoomsTableViewController
-                
+                let roomsTableVC = self.storyboard?.instantiateViewController(withIdentifier: String(describing: RoomsTableVC.self)) as! RoomsTableVC
                 self.navigationController?.pushViewController(roomsTableVC, animated: true)
-                
                 
             }
             self.stopActivityIndicator()
-            
-            
         })
-        
-        
     }
     
     
@@ -140,50 +120,34 @@ class ViewController: BaseViewController {
             startActivityIndicator()
             
             Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
-                
                 if user != nil {
+                    self.userDefault.set(email, forKey: UserDefaultKey.userEmail)
+                    self.userDefault.set(password, forKey: UserDefaultKey.userPassword)
                     
-                    self.userData.set(email, forKey: "userName")
-                    self.userData.set(password, forKey: "userPassword")
-                    
-                    let adminPageTableVC = self.storyboard?.instantiateViewController(withIdentifier: "AdminPageTableViewController") as!  AdminPageTableViewController
+                    let adminPageTableVC = self.storyboard?.instantiateViewController(withIdentifier: String(describing : AdminPageTableVC.self)) as!  AdminPageTableVC
                     self.navigationController?.pushViewController(adminPageTableVC, animated: true)
-                    
                 }
                 self.stopActivityIndicator()
-                
             })
-            
         }
         else {
-            
-            addAlert(title: "PLEASE ENTER CORRECT PASSWORD AND EMAIL ID", message: "Try again", cancelTitle: "OK")
+            addAlert(title: InvalidPasswordOrEmailAlert.alertTitle, message: InvalidPasswordOrEmailAlert.message, cancelTitle: InvalidPasswordOrEmailAlert.cancelTile)
         }
     }
     
 }
 
 
-
-extension ViewController : UITextViewDelegate {
+extension LoginVC : UITextViewDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
         if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
-            
             nextField.becomeFirstResponder()
-            
         }
-            
         else{
-            
             textField.resignFirstResponder()
-            
             return true;
-            
         }
-        
         return false
     }
-    
 }

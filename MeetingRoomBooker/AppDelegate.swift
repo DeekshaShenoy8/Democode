@@ -7,44 +7,41 @@
 import UIKit
 import Firebase
 
+//let isLoginPageIsThereInNavigationStack: String = "isLoginPageIsThereInNavigationStack"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         UIApplication.shared.statusBarStyle = .lightContent
         FirebaseApp.configure()
-        let userData = UserDefaults.standard
-        let userEmail = userData.string(forKey: "userName")
-        //print("in appdelegate page \(String(describing: userEmail))")
+        
+        let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail)
+       
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
-        if(userEmail == "admin@gmail.com")
-        {
-            
-            let adminPageTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AdminPageTableViewController") as! AdminPageTableViewController
-            let navigationController = UINavigationController(rootViewController: adminPageTableVC)
-            self.window?.rootViewController = navigationController
-            self.window?.makeKeyAndVisible()
-            
+        var navigationController: UINavigationController?
+        
+        if userEmail == nil {
+            UserDefaults.standard.set(true, forKey: UserDefaultKey.isLoginPageIsThereInNavigationStack)
+            let loginVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: String(describing: LoginVC.self)) as! LoginVC
+            navigationController = UINavigationController(rootViewController: loginVC)
+        } else {
+            if userEmail ==  "admin@gmail.com"{
+                UserDefaults.standard.set(false, forKey: UserDefaultKey.isLoginPageIsThereInNavigationStack)
+                let adminPageTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: String(describing: AdminPageTableVC.self)) as! AdminPageTableVC
+                navigationController = UINavigationController(rootViewController: adminPageTableVC)
+            } else {
+                UserDefaults.standard.set(false, forKey: UserDefaultKey.isLoginPageIsThereInNavigationStack)
+                let roomsTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: String(describing: RoomsTableVC.self)) as! RoomsTableVC
+                navigationController = UINavigationController(rootViewController: roomsTableVC)
+            }
         }
-        else if (userEmail != nil) {
-            
-            let roomsTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RoomsTableViewController") as! RoomsTableViewController
-            let navigationController = UINavigationController(rootViewController: roomsTableVC)
-            self.window?.rootViewController = navigationController
-            self.window?.makeKeyAndVisible()
-            
-        }
-        else if userEmail == nil {
-            let mainVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
-            let navigationController = UINavigationController(rootViewController: mainVC)
-            self.window?.rootViewController = navigationController
-            self.window?.makeKeyAndVisible()
-            
-        }
+        
+        self.window?.rootViewController = navigationController
+        self.window?.makeKeyAndVisible()
         
         return true
     }

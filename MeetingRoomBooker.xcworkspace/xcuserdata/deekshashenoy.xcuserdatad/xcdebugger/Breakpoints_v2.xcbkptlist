@@ -482,11 +482,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MeetingRoomBooker/ViewControllers/RoomBookingTableViewController.swift"
-            timestampString = "528908060.367027"
+            timestampString = "528963864.786794"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "665"
-            endingLineNumber = "665"
+            startingLineNumber = "862"
+            endingLineNumber = "862"
             landmarkName = "keyboardWillShow(notification:)"
             landmarkType = "7">
             <Locations>
@@ -529,46 +529,30 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MeetingRoomBooker/ViewControllers/UserScheduleTableViewController.swift"
-            timestampString = "528959088.40965"
+            filePath = "MeetingRoomBooker/ViewControllers/AdminPageTableViewController.swift"
+            timestampString = "528977483.334114"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "169"
-            endingLineNumber = "169"
-            landmarkName = "fetchTodaysRoomBook(dateString:)"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "logoutTapped()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MeetingRoomBooker.UserScheduleTableViewController.fetchTodaysRoomBook (dateString : Swift.String) -&gt; ()"
-                  moduleName = "MeetingRoomBooker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/deekshashenoy/Documents/Tried/MeetingRoomBooker/MeetingRoomBooker/ViewControllers/UserScheduleTableViewController.swift"
-                  timestampString = "528959089.538979"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "170"
-                  endingLineNumber = "170"
-                  offsetFromSymbolStart = "1431">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MeetingRoomBooker.UserScheduleTableViewController.(fetchTodaysRoomBook (dateString : Swift.String) -&gt; ()).(closure #1)"
-                  moduleName = "MeetingRoomBooker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/deekshashenoy/Documents/Tried/MeetingRoomBooker/MeetingRoomBooker/ViewControllers/UserScheduleTableViewController.swift"
-                  timestampString = "528959089.540722"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "170"
-                  endingLineNumber = "170"
-                  offsetFromSymbolStart = "4195">
-               </Location>
-            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MeetingRoomBooker/ViewControllers/AdminPageTableViewController.swift"
+            timestampString = "528977483.334114"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "logoutTapped()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

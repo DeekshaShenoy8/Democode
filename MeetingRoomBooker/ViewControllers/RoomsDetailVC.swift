@@ -3,7 +3,7 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
-class RoomsDetailViewController: BaseViewController {
+class RoomsDetailVC: BaseViewController {
     
     @IBOutlet weak var roomNameTextField: UITextField!
     @IBOutlet weak var capacityTextField: UITextField!
@@ -14,7 +14,7 @@ class RoomsDetailViewController: BaseViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        navigationItem.title = "Room Detail "
+        navigationItem.title = NavigationTitle.roomDetail
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "BookRoom", style: .done, target: self, action: #selector(bookRoomTapped))
         
         fetchDetail()
@@ -29,7 +29,7 @@ class RoomsDetailViewController: BaseViewController {
     //ON Book Room click : move to next view Controller
     func bookRoomTapped() {
         
-        let roomBookingTableVC = self.storyboard?.instantiateViewController(withIdentifier: "RoomBookingTableViewController") as! RoomBookingTableViewController
+        let roomBookingTableVC = self.storyboard?.instantiateViewController(withIdentifier: String(describing: RoomBookingTableVC.self)) as! RoomBookingTableVC
         
         roomBookingTableVC.roomname = meetingRoomdetails.roomdetail.RoomName
         roomBookingTableVC.actualCapacity = meetingRoomdetails.roomdetail.Capacity

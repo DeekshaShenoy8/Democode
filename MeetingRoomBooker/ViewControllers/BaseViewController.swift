@@ -16,9 +16,9 @@ class BaseViewController: UIViewController {
     
     //start spinner(activity indicator)
     func startActivityIndicator() {
-        
         view.isUserInteractionEnabled = false
         spinner.center = self.view.center
+        
         //hide when animating set to false
         spinner.hidesWhenStopped = true
         spinner.activityIndicatorViewStyle =  UIActivityIndicatorViewStyle.gray
@@ -29,7 +29,6 @@ class BaseViewController: UIViewController {
         
     }
     
-    
     //To stopSpinner
     func stopActivityIndicator() {
         
@@ -37,7 +36,6 @@ class BaseViewController: UIViewController {
         spinner.stopAnimating()
         
     }
-    
     
     //To give textfield border( To set bottom line of textfield)
     func textFieldBorder(textField : UITextField, color : UIColor, edge : CGFloat) {
@@ -50,6 +48,5 @@ class BaseViewController: UIViewController {
         textField.layer.addSublayer(bottomLine)
         
     }
-    
     
 }

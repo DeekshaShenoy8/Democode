@@ -3,7 +3,7 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
-class AddRoomViewController: BaseViewController {
+class AddRoomVC: BaseViewController {
     
     @IBOutlet weak var projectorChechbox: UIButton!
     @IBOutlet weak var wifiCheckbox: UIButton!
@@ -12,26 +12,18 @@ class AddRoomViewController: BaseViewController {
     @IBOutlet weak var roomNameTextField: UITextField!
     @IBOutlet weak var roomCapacityTextField: UITextField!
     
-    var databaseref : DatabaseReference?
-    var databaseHandle :DatabaseHandle?
-    
     var facility = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         hideKeyboardWhenTappedAround()
-        databaseref = Database.database().reference()
-        
-        navigationItem.title = "Add Room"
+        navigationItem.title = NavigationTitle.addRoom
         
         projectorChechbox.isSelected = false
         wifiCheckbox.isSelected = false
         laptopCheckbox.isSelected = false
         microphoneCheckbox.isSelected = false
-        
-        roomNameTextField.delegate = self
-        roomCapacityTextField.delegate = self
         
         textFieldBorder(textField: roomNameTextField, color : .black, edge: 40)
         textFieldBorder(textField: roomCapacityTextField, color : .black, edge: 40)
@@ -40,13 +32,11 @@ class AddRoomViewController: BaseViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     
     //Set check image on checkbox button click
     func checkBoxClicked(button : UIButton, checkBoxString : String) {
-        
         button.setImage(#imageLiteral(resourceName: "check"), for: .normal)
         facility.append(checkBoxString)
         print(facility)
@@ -55,7 +45,6 @@ class AddRoomViewController: BaseViewController {
     
     //Set uncheck image on checkbox button uncheck
     func checkBoxUnchecked(button: UIButton, checkBoxString : String)  {
-        
         button.setImage(#imageLiteral(resourceName: "uncheck"), for: .normal)
         if let index = facility.index(of: checkBoxString) {
             facility.remove(at: index)
@@ -68,20 +57,23 @@ class AddRoomViewController: BaseViewController {
         var checkBoxString = " "
         
         switch sender.tag {
-        case 0: checkBoxString = "projector"
-        projectorChechbox.isSelected = !projectorChechbox.isSelected
-        case 1: checkBoxString = "wifi"
-        wifiCheckbox.isSelected = !wifiCheckbox.isSelected
-        case 2: checkBoxString = "laptop"
-        laptopCheckbox.isSelected = !laptopCheckbox.isSelected
-        case 3: checkBoxString = "microphone"
-        microphoneCheckbox.isSelected = !microphoneCheckbox.isSelected
+        case 0:
+            checkBoxString =  CheckBoxValue.projector //"projector"
+            projectorChechbox.isSelected = !projectorChechbox.isSelected
+        case 1:
+            checkBoxString = CheckBoxValue.wifi
+            wifiCheckbox.isSelected = !wifiCheckbox.isSelected
+        case 2:
+            checkBoxString = CheckBoxValue.laptop
+            laptopCheckbox.isSelected = !laptopCheckbox.isSelected
+        case 3:
+            checkBoxString = CheckBoxValue.microphone
+            microphoneCheckbox.isSelected = !microphoneCheckbox.isSelected
             
         default:
             break
             
         }
-        
         if sender.isSelected == true {
             checkBoxClicked(button: sender, checkBoxString: checkBoxString)
             
@@ -93,51 +85,48 @@ class AddRoomViewController: BaseViewController {
     }
     
     
-    //On alert cancel title click, move to home page VC
-    func alertAddingRoom(title: String, message :  String, cancelTitle : String) {
+    func alertAddingRoom(title: String, message : String, cancelTitles: [String]) {
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-        alertController.addAction(UIAlertAction(title: cancelTitle, style: UIAlertActionStyle.default, handler: {action in
-            if let controller = self.navigationController?.viewControllers[0] {
-                self.navigationController?.popToViewController(controller, animated: true)
+        alertController(title: title, message: message, cancelTitles: cancelTitles,actions: [{action1 in
+            if let size = self.navigationController?.viewControllers.count {
+                if let controller = self.navigationController?.viewControllers[size - 2] {
+                    self.navigationController?.popToViewController(controller, animated: true)
+                }
             }
-        }))
-        self.present(alertController, animated: true, completion: nil)
-        
+            
+            }])
     }
-    
     
     
     //Add Rooms to firebase database, on AddRoom button press action
     @IBAction func addRoomToDatabse(_ sender: Any) {
+        let meetingRoom = MeetingRoom()
         
         guard let roomName = roomNameTextField.text, let roomCapacity = roomCapacityTextField.text, !( (roomName.isEmpty) || (roomCapacity.isEmpty)) else {
-            
-            addAlert(title: "PLEASE FILL ALL THE DETAIL", message: "Try again", cancelTitle: "OK")
+            addAlert(title: EmptyFieldAlert.alertTitle, message: EmptyFieldAlert.message, cancelTitle: EmptyFieldAlert.cancelTile)
             return
-            
         }
-        print("facility= \(facility)")
-        databaseref?.child("rooms").child(roomName).setValue(["RoomName": roomName, "Capacity": roomCapacity, "facility" : facility])
-        alertAddingRoom(title: "room added succesfully", message: "Thank you ", cancelTitle: "OK")
-
         
+        meetingRoom.roomdetail.RoomName = roomName
+        meetingRoom.roomdetail.Capacity = roomCapacity
+        meetingRoom.roomdetail.facility = facility
+        
+        meetingRoom.loadRoomsToFirebaseDatabase {
+            alertAddingRoom(title: SuccessAlert.roomAdded, message: SuccessAlert.message, cancelTitles: [SuccessAlert.cancelTitle])
+        }
     }
-    
 }
 
 
 
-extension AddRoomViewController : UITextFieldDelegate {
+extension AddRoomVC : UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         if roomNameTextField.isFirstResponder {
-            
             roomCapacityTextField.becomeFirstResponder()
         }
         else if roomCapacityTextField.isFirstResponder {
-            
             roomCapacityTextField.resignFirstResponder()
             return true
         }
